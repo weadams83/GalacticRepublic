@@ -24,6 +24,7 @@ public class User {
 
 	@Id
 	@GeneratedValue
+	@OneToOne
 	private Long id;
 
 	private String userName;
