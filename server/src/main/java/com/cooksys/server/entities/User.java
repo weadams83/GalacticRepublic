@@ -21,37 +21,40 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	private String userName;
-	
+
 	private String firstName;
-	
+
 	private String lastName;
-	
+
 	private String password;
-	
+
 	@CreationTimestamp
 	private Timestamp created;
-	
+
 	@UpdateTimestamp
 	private Timestamp updated;
-	
+
 	@Column(nullable = false)
 	private Boolean isDeleted = false;
-	
+
 	@ManyToOne
 	private Team associatedTeam;
-	
-	@OneToOne(mappedBy ="id") //This can't be right
+
+	@OneToOne(mappedBy = "id") // This can't be right
 	private Long updatedBy;
-	
+
 	@ManyToOne
 	private Company userCompany;
-	
+
+	@ManyToOne
+	private Project userProject;
+
 	@ManyToOne
 	private Role userRole;
 

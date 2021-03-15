@@ -16,18 +16,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Company {
-	
+
 	@Id
 	@GeneratedValue
-	private Long id;
-	
+	private Long companyId;
+
 	private String companyName;
-	
+
 	private String companyDescription;
-	
+
 	@OneToMany(mappedBy = "parentCompany")
 	private List<Team> teams;
-	
+
 	@OneToMany(mappedBy = "userCompany")
 	private List<User> users;
 

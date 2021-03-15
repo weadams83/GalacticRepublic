@@ -14,11 +14,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Role {
-	
+
 	@Id
 	@GeneratedValue
 	private Long roleId;
-	
+
 	@OneToMany(mappedBy = "userRole")
 	private String roleTitle;
 
