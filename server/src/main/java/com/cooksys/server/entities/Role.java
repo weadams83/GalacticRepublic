@@ -3,6 +3,7 @@ package com.cooksys.server.entities;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,9 @@ public class Role {
 	
 	@Id
 	@GeneratedValue
-	private Long id;
+	private Long roleId;
 	
+	@OneToMany(mappedBy = "userRole")
 	private String roleTitle;
 
 }
