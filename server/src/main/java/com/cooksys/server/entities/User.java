@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -24,8 +26,6 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
-	private Long groupId;
-	
 	private String userName;
 	
 	private String firstName;
@@ -43,8 +43,16 @@ public class User {
 	@Column(nullable = false)
 	private Boolean isDeleted = false;
 	
+	@ManyToOne
+	private Team associatedTeam;
+	
+	@OneToOne(mappedBy ="id") //This can't be right
 	private Long updatedBy;
 	
-	private Long rollId;
+	@ManyToOne
+	private Company userCompany;
+	
+	@ManyToOne
+	private Role userRole;
 
 }
