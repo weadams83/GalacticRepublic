@@ -26,9 +26,9 @@ public class Team {
 	@ManyToOne
 	private Company company;
 	
-	private String name;
+	private String teamName;
 	
-	private String description;
+	private String teamDescription;
 	
 	@Column(nullable = false)
 	private Boolean isDeleted = false;
