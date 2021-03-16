@@ -3,6 +3,7 @@
 
 const Card = () => {
     return(
-            
+
     )
+
 }
