@@ -1,0 +1,29 @@
+{"data" : [
+  {"user": [
+    {
+      "username": "gmoney",
+      "password": "password",
+      "group_id": 1,
+      "id": 1,
+      "firstname": "Galo",
+      "lastname": "Sandoval",
+      "role": "member"
+    },
+    {
+      "username": "cooksys",
+      "password": "password",
+      "group_id": 2,
+      "id": 2,
+      "firstname": "cook",
+      "lastname": "systems",
+      "role": "company"
+    }
+  ]},
+  {"company": [
+    {
+      "name": "cooksys",
+      "description": "recruitment agency and so much more",
+      "id": 1
+    }
+  ]}
+]}
