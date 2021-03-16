@@ -39,7 +39,12 @@ public class Company {
 	
 	@Override
 	public String toString() {
-		return(String.format("id %d company name %s", id,companyName));
+		String retString = String.format("id %d company name %s descript %s", id,companyName,companyDescription);
+//		for(User user: teamMembers) {
+//			retString += "/n"+user.toString();
+//		}
+//		retString += parentCompany != null ? "/n"+parentCompany.toString() : "";
+		return retString;
 	}
 	
 	/*
