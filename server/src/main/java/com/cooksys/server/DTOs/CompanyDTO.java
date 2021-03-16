@@ -1,7 +1,5 @@
 package com.cooksys.server.DTOs;
 
-import com.cooksys.server.entities.Company;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,9 +7,5 @@ import lombok.NoArgsConstructor;
 @Data
 
 public class CompanyDTO {
-
-	private Company companyName;
-	
-	private Company companyDescription;
 
 }
