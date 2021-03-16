@@ -8,10 +8,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 
-public class CompanyDTO {
 
+public class CompanyResponseDTO {
+	
 	private Company companyName;
 	
 	private Company companyDescription;
+	
+	private Company teams;
+	
+	private Company users;
 
 }
