@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,20 +28,27 @@ public class Project {
 	@GeneratedValue
 	private Long projectId;
 
-	private String projectName;
-
-	private String projectDescription;
-
+	@ManyToOne
+	private User user;
+	
+	@ManyToOne
+	private Team team;
+	
+	private String name;
+	
+	private String description;
+	
 	@CreationTimestamp
-	private Timestamp created;
-
+	private final Timestamp created = new Timestamp(System.currentTimeMillis());
+	
 	@UpdateTimestamp
 	private Timestamp updated;
 
 	@Column(nullable = false)
 	private Boolean isDeleted = false;
-
-	private Long updatedBy;
+	
+	@OneToOne
+	private User updatedBy;
 
 	@OneToMany(mappedBy = "userProject")
 	private List<User> projectUsers;
