@@ -1,18 +1,14 @@
-import styled from 'styled-components';
-
-
-
 const Navbar = () => {
-    return(
+  return (
     <div>
-        <nav>
-            <a href = 'users'>Users</a>
-            <a href = 'projects'>Projects</a>
-            <a href = 'teams'>Teams</a>
-            <input type = "text">Search</input>
-        </nav>
+      <nav>
+        <a href="#users">Users</a>
+        <a href="#projects">Projects</a>
+        <a href="#teams">Teams</a>
+        <input type="text" />
+      </nav>
     </div>
-    )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
