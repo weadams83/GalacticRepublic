@@ -1,5 +1,6 @@
 import $ from "jquery";
 import { useState } from "react";
+import { useHistory } from "react-router";
 
 import { StyledLogin } from "./StyledLogin";
 const dummyData = require("../../DummyData.json");
@@ -21,6 +22,8 @@ export const Login = () => {
     initialCompanyForm
   );
 
+  const history = useHistory();
+
   const handleChange = (e) => {
     if (e.target.placeholder === "Company Username") {
       setCompanyFormValues({
@@ -39,6 +42,8 @@ export const Login = () => {
     }
   };
 
+  console.log(memberFormValues)
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (e.target.role.value === "company") {
@@ -50,10 +55,9 @@ export const Login = () => {
           (user) => user.password === companyFormValues.password
         )
       ) {
-        console.log("hi");
 
         setCurrentUser(companyFormValues.companyUsername);
-        console.log(currentUser);
+        history.push("/company")
       } else if (e.target.role.value === "member") {
         if (
           dummyData.data[0].user.filter(
@@ -63,9 +67,9 @@ export const Login = () => {
             (user) => user.password === memberFormValues.password
           )
         ) {
-          console.log("hi");
+
           setCurrentUser(memberFormValues.username);
-          console.log(currentUser);
+          history.push("/member")
         }
       }
     }
