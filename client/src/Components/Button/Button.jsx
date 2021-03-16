@@ -1,11 +1,12 @@
 
+import { StyledButton } from './StyledButton';
 
-const Button = () => {
+const Button = props => {
 return(
-    <div>
-        <button>
-            Submit
-        </button>
+    <div className = "button">
+        <StyledButton>
+            {props.name}
+        </StyledButton>
     </div>
 )
 }

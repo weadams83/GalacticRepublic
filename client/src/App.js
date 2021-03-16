@@ -1,16 +1,19 @@
 
 import './App.css';
-import Navbar from './Components/Navbar'; 
-import Button from'./Components/Button';
+
+import Button from './Components/Button/Button';
+import Card from './Components/Card/Card';
+
+
 
 import { Login } from "./Components/Login/Login";
 function App() {
   return (
-    <div className="App">   
-        <Navbar>
+    <div className="App">
+      <Button name="Submit"></Button>  
+      <Card name="Team 1"></Card>  
         <Login />
-          <Button></Button>
-        </Navbar>
+
     </div>
   );
 }
