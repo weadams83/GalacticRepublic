@@ -21,9 +21,9 @@
   ]},
   {"company": [
     {
+      "id": 1,
       "name": "cooksys",
-      "description": "recruitment agency and so much more",
-      "id": 1
+      "description": "recruitment agency and so much more"
     }
   ]}
 ]}
