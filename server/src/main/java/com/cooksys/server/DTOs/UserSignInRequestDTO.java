@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ErrorsDTO {
-	String message;
+public class UserSignInRequestDTO {
+	private String userName;
+	
+	private String password;
 }
