@@ -24,8 +24,8 @@ public class Team {
 	private Long id;
 
 	@ManyToOne
-	private Company company;
-
+	private Company parentCompany;
+	
 	private String teamName;
 
 	private String teamDescription;
@@ -36,7 +36,11 @@ public class Team {
 	@OneToMany(mappedBy = "associatedTeam")
 	private List<User> teamMembers;
 
-	@OneToMany(mappedBy = "projectTeam")
-	private List<Project> teamProjects;
-
+	@OneToMany (mappedBy = "team")
+	private List<Project> projects;
+	
+	@Override
+	public String toString() {
+		return(String.format("id %d team name %s", id,teamName));
+	}
 }

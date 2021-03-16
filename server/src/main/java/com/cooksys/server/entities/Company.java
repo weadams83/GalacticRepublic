@@ -30,5 +30,10 @@ public class Company {
 
 	@OneToMany(mappedBy = "userCompany")
 	private List<User> users;
+	
+	@Override
+	public String toString() {
+		return(String.format("id %d company name %s", companyId,companyName));
+	}
 
 }
