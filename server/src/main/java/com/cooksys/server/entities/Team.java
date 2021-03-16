@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,8 @@ public class Team {
 	@GeneratedValue
 	private Long id;
 	
-	private Long companyId;
+	@ManyToOne
+	private Company company;
 	
 	private String name;
 	
@@ -30,5 +32,8 @@ public class Team {
 	
 	@Column(nullable = false)
 	private Boolean isDeleted = false;
+	
+	@OneToMany (mappedBy = "associatedTeam")
+	private List<User> teamMembers;
 
 }
