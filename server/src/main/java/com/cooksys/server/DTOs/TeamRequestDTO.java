@@ -8,17 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 
-public class TeamDTO {
+public class TeamRequestDTO {
 	
 	private Team teamName;
 	
-	private Team parentCompany;
-	
 	private Team teamDescription;
 	
-	private Team teamMembers;
-	
-	private Team projects;
-	
+	private Team parentCompany;
 
 }
