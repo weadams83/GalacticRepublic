@@ -71,7 +71,10 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return(String.format("id %d firstName %s", id,firstName));
+		String retString = String.format("id %d userName %s isDeleted %b", id,userName,isDeleted);
+		retString += associatedTeam != null ? "\n"+associatedTeam.toString() : "";
+		retString += userCompany != null ? "\n"+userCompany.toString() : "";
+		return retString;
 	}
 	
 	/*
