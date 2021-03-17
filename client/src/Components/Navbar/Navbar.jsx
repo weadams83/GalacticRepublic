@@ -1,8 +1,9 @@
 
+
 import {NavbarStyles} from './StyledNavbar'
 
 const Navbar = () => {
-    return(
+  return (
     <div>
         <NavbarStyles>
             <a href = 'users'>Users</a>
@@ -11,8 +12,9 @@ const Navbar = () => {
             <input type = "text" placeholder="Search"/>
         </NavbarStyles>
     </div>
-    )
-}
+  );
+};
 
 
-export default Navbar
+export default Navbar;
+
