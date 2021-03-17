@@ -19,9 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
@@ -35,60 +33,68 @@ public class Project {
 
 	@ManyToOne
 	private User user;
-	
+
 	@ManyToOne
 	private Team team;
-	
+
 	private String name;
-	
+
 	private String description;
-	
+
 	@CreationTimestamp
 	private final Timestamp created = new Timestamp(System.currentTimeMillis());
-	
+
 	@UpdateTimestamp
 	private Timestamp updated;
 
 	@Column(nullable = false)
 	private Boolean isDeleted = false;
-	
+
 	@OneToOne
 	private User updatedBy;
-	
+
+	@OneToMany(mappedBy = "userProject")
+	private List<User> projectUsers;
+
+	@ManyToOne
+	private Team projectTeam;
+
 	/*
-	 * equals() compares the database entries by id and the objects 
-	 * in memory in Java
+	 * equals() compares the database entries by id and the objects in memory in
+	 * Java
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		
-		//check null and class
+
+		// check null and class
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		}
-		
-		//compare pointers
+
+		// compare pointers
 		if (obj == this) {
 			return true;
 		}
-		
-		//compare id's
+
+		// compare id's
 		return ((Project) obj).getId() == this.getId();
 	}
 
 	@Override
 	public int hashCode() {
-		/* Simplified hash. Use id field instead of username,
-		 * since username can change in the database.
+		/*
+		 * Simplified hash. Use id field instead of username, since username can change
+		 * in the database.
 		 */
 		return Objects.hash(this.id);
 	}
-	
+
 	@Override
 	public String toString() {
-		String retString = String.format("id %d projectname %s isDeleted %b description %s", id,name,isDeleted,description);
-		retString += team != null ? "\n"+team.toString() : "";
-		retString += user != null ? "\n"+user.toString() : "";
+		String retString = String.format("id %d projectname %s isDeleted %b description %s", id, name, isDeleted,
+				description);
+		retString += team != null ? "\n" + team.toString() : "";
+		retString += user != null ? "\n" + user.toString() : "";
 		return retString;
 	}
 

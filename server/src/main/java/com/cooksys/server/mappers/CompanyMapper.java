@@ -1,5 +1,9 @@
 package com.cooksys.server.mappers;
 
+<<<<<<< HEAD
+import org.mapstruct.Mapper;
+
+=======
 import java.util.List;
 
 import org.mapstruct.Mapper;
@@ -8,6 +12,7 @@ import com.cooksys.server.DTOs.CompanyRequestDTO;
 import com.cooksys.server.DTOs.CompanyResponseDTO;
 import com.cooksys.server.entities.Company;
 
+>>>>>>> 26e6fed64b33a57c30d563e33512cd8b2a6a0aea
 @Mapper(componentModel = "spring")
 public interface CompanyMapper {
 

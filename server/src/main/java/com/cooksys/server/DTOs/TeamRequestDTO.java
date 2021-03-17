@@ -1,7 +1,5 @@
 package com.cooksys.server.DTOs;
 
-import com.cooksys.server.entities.Team;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 
 public class TeamRequestDTO {
-	
-	private Team teamName;
-	
-	private Team teamDescription;
-	
-	private Team parentCompany;
+
+	private String teamName;
+
+	private String teamDescription;
 
 }

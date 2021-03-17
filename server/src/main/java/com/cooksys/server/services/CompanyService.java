@@ -1,5 +1,9 @@
 package com.cooksys.server.services;
 
+<<<<<<< HEAD
+public interface CompanyService {
+
+=======
 import java.util.List;
 
 import com.cooksys.server.DTOs.CompanyRequestDTO;
@@ -23,4 +27,5 @@ public interface CompanyService {
 
 	
 	
+>>>>>>> 26e6fed64b33a57c30d563e33512cd8b2a6a0aea
 }

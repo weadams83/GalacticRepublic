@@ -5,7 +5,7 @@ import com.cooksys.server.DTOs.UserEditRequestDTO;
 import com.cooksys.server.DTOs.UserResponseDTO;
 
 public interface UserService {
-	
+
 	UserResponseDTO getUser(String userName);
 
 	UserResponseDTO postUser(UserCreateRequestDTO userRequest);

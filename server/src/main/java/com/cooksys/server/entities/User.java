@@ -31,7 +31,7 @@ public class User {
 	@GeneratedValue
 	private Long id;
 
-	@Column(unique=true)
+	@Column(unique = true)
 	private String userName;
 
 	private String firstName;
@@ -41,8 +41,9 @@ public class User {
 	private String password;
 
 	@CreationTimestamp
+
 	private final Timestamp created = new Timestamp(System.currentTimeMillis());
-	
+
 	@UpdateTimestamp
 	private Timestamp updated;
 
@@ -51,52 +52,55 @@ public class User {
 
 	@ManyToOne
 	private Team associatedTeam;
-	
+
 	@OneToOne
 	private User updatedBy;
-	
+
 	@ManyToOne
 	private Company userCompany;
 
-	@OneToMany (mappedBy = "user")
+	@OneToMany(mappedBy = "user")
 	private List<Project> projects;
-	
+
 	@ManyToOne
 	private Role userRole;
-		
+
 	@Override
 	public String toString() {
-		String retString = String.format("id %d userName %s isDeleted %b firstName %s lastName %s", id,userName,isDeleted,firstName,lastName);
-		retString += associatedTeam != null ? "\n"+associatedTeam.toString() : "";
-		retString += userCompany != null ? "\n"+userCompany.toString() : "";
+		String retString = String.format("id %d userName %s isDeleted %b firstName %s lastName %s", id, userName,
+				isDeleted, firstName, lastName);
+		retString += associatedTeam != null ? "\n" + associatedTeam.toString() : "";
+		retString += userCompany != null ? "\n" + userCompany.toString() : "";
 		return retString;
+
 	}
-	
+
 	/*
-	 * equals() compares the database entries by id and the objects 
-	 * in memory in Java
+	 * equals() compares the database entries by id and the objects in memory in
+	 * Java
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		
-		//check null and class
+
+		// check null and class
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		}
-		
-		//compare pointers
+
+		// compare pointers
 		if (obj == this) {
 			return true;
 		}
-		
-		//compare id's
+
+		// compare id's
 		return ((User) obj).getId() == this.getId();
 	}
 
 	@Override
 	public int hashCode() {
-		/* Simplified hash. Use id field instead of username,
-		 * since username can change in the database.
+		/*
+		 * Simplified hash. Use id field instead of username, since username can change
+		 * in the database.
 		 */
 		return Objects.hash(this.id);
 	}

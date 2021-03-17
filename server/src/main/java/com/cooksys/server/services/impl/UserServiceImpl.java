@@ -32,7 +32,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 	private UserRepository userRepo;
 	private TeamRepository teamRepo;
 	private CompanyRepository companyRepo;
@@ -46,30 +46,33 @@ public class UserServiceImpl implements UserService{
 	private RoleMapper roleMap;
 
 	/*
-	 * GET User 
-	 * if user doesn't exist or is deleted, throw exception
+	 * GET User if user doesn't exist or is deleted, throw exception
 	 */
 	@Override
 	public UserResponseDTO getUser(String userName) {
 		Optional<User> findUser = userRepo.findByUserName(userName);
+
+		if (findUser.isEmpty()) {
+			throw new NotFoundException(String.format("User with user name: '%s' could not be found.", userName));
+
 		if(findUser.isEmpty() || findUser.get().getIsDeleted()) {
 			throw new NotFoundException(String.format("User with user name: '%s' could not be found or has been deleted.", userName));
+
 		}
 		return userMap.EntityToDTO(findUser.get());
 	}
 
 	/*
-	 * POST (Create User) -TODO as written a User can be on a team and on a company, make them mutually exclusive?
-	 * if user entity has been deleted, reactivate and return
-	 * if username exists, throw exception
-	 * if user's team or company exists, add user to them
-	 * else set those field to null
+	 * POST (Create User) -TODO as written a User can be on a team and on a company,
+	 * make them mutually exclusive? if user entity has been deleted, reactivate and
+	 * return if username exists, throw exception if user's team or company exists,
+	 * add user to them else set those field to null
 	 */
 	@Override
 	public UserResponseDTO postUser(UserCreateRequestDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userRequest.getUserName());
-		if(findUser.isPresent()){
-			if(findUser.get().getIsDeleted()) {
+		if (findUser.isPresent()) {
+			if (findUser.get().getIsDeleted()) {
 				findUser.get().setIsDeleted(false);
 				return userMap.EntityToDTO(findUser.get());
 			}
@@ -77,9 +80,9 @@ public class UserServiceImpl implements UserService{
 		}
 		User createUser = userMap.CreateDTOtoEntity(userRequest);
 		Optional<Role> findRole = roleRepo.findByroleTitle(createUser.getUserRole().getRoleTitle());
-		if(findRole.isPresent()) {
+		if (findRole.isPresent()) {
 			createUser.setUserRole(findRole.get());
-		}else {
+		} else {
 			createUser.setUserRole(null);
 		}
 		createUser = userRepo.saveAndFlush(createUser);
@@ -87,26 +90,25 @@ public class UserServiceImpl implements UserService{
 	}
 
 	/*
-	 * PATCH User (edit user info) - only a user can edit their own info
-	 * a user can only edit certain information (they can not add themselves to a team, or project)
-	 * if user does not exist OR deleted throw exception
-	 * if user credentials do not match throw exception
-	 * if changing User team or company:
-	 * 		remove said User from previous team/company (if they exist)
-	 * 		add said User to new team/company 
-	 * set the rest of the fields
+	 * PATCH User (edit user info) - only a user can edit their own info a user can
+	 * only edit certain information (they can not add themselves to a team, or
+	 * project) if user does not exist OR deleted throw exception if user
+	 * credentials do not match throw exception if changing User team or company:
+	 * remove said User from previous team/company (if they exist) add said User to
+	 * new team/company set the rest of the fields
 	 */
 	@Override
 	public UserResponseDTO patchUser(String userName, UserEditRequestDTO userRequest) {
-		Optional<User> findUser = userRepo.findByUserName(userName);		
-		if(findUser.isEmpty() || findUser.get().getIsDeleted()){
+		Optional<User> findUser = userRepo.findByUserName(userName);
+		if (findUser.isEmpty() || findUser.get().getIsDeleted()) {
 			throw new NotFoundException(String.format("User name: '%s' not found or is deleted.", userName));
 		}
 		System.out.println(userRequest);
-		if(!findUser.get().getUserName().equals(userRequest.getCredentials().getUserName()) || !findUser.get().getPassword().equals(userRequest.getCredentials().getPassword())) {
+		if (!findUser.get().getUserName().equals(userRequest.getCredentials().getUserName())
+				|| !findUser.get().getPassword().equals(userRequest.getCredentials().getPassword())) {
 			throw new BadRequestException("Username/Password do not match.");
 		}
-		
+
 		findUser.get().setFirstName(userRequest.getFirstName());
 		findUser.get().setLastName(userRequest.getLastName());
 		findUser.get().setUserName(userRequest.getUserName());
