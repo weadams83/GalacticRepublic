@@ -10,6 +10,6 @@ import com.cooksys.server.entities.User;
 
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
-	Optional<Team> findByteamName(String teamName);
+	Optional<Team> findByTeamName(String teamName);
 
 }
