@@ -16,5 +16,6 @@ border-radius: 2px;
 .viewButton{
     position: absolute;
     float: right;
+    
 }
 `

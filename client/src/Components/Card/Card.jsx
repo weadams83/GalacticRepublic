@@ -16,6 +16,7 @@ const Card = props => {
             </div>
     </StyledCard>
     )
+    
 
 }
 
