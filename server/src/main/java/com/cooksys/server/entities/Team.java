@@ -44,7 +44,16 @@ public class Team {
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		return (String.format("id %d team name %s", id, teamName));
+=======
+		String retString = String.format("id %d team name %s descript %s isDeleted %b", id,teamName,teamDescription,isDeleted);
+//		for(User user: teamMembers) {
+//			retString += "/n"+user.toString();
+//		}
+//		retString += parentCompany != null ? "/n"+parentCompany.toString() : "";
+		return retString;
+>>>>>>> 26e6fed64b33a57c30d563e33512cd8b2a6a0aea
 	}
 
 	/*

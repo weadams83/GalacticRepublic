@@ -66,9 +66,12 @@ public class DatabaseSeeder implements CommandLineRunner {
 		teamRepo.saveAndFlush(cashier);
 
 		Role worker = new Role();
-		worker.setRoleTitle("Team Member");
+		worker.setRoleTitle("Member");
 		Role comp = new Role();
+
 		comp.setRoleTitle("Manager");
+
+		comp.setRoleTitle("Company");
 
 		roleRepo.saveAndFlush(worker);
 		roleRepo.saveAndFlush(comp);

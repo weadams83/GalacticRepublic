@@ -36,7 +36,10 @@ public class Company {
 
 	@Override
 	public String toString() {
-		return (String.format("id %d company name %s", id, companyName));
+
+		String retString = String.format("id %d company name %s descript %s", id, companyName, companyDescription);
+		return retString;
+
 	}
 
 	/*

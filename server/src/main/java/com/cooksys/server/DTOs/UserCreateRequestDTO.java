@@ -7,10 +7,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserSignInRequestDTO {
+public class UserCreateRequestDTO {
 	private String userName;
+
+	private String firstName;
+
+	private String lastName;
 	
 	private String password;
 	
-	
+	private String roleTitle;
 }

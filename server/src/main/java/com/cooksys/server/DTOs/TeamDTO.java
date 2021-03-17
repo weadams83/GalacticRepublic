@@ -7,14 +7,11 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class CompanyResponseDTO {
 
+public class TeamDTO {
+	private Company parentCompany;
 	
-	private Long id;
-	
-	private String companyName;
+	private String teamName;
 
-	private String companyDescription;		
-
-	
+	private String teamDescription;
 }

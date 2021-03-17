@@ -10,6 +10,7 @@ import com.cooksys.server.entities.Team;
 
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
+
 	List<Team> findAllByIsDeletedFalse();
 
 	Optional<Team> findByTeamNameIgnoreCase(String teamName);

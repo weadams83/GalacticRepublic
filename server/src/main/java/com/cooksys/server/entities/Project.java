@@ -89,4 +89,13 @@ public class Project {
 		return Objects.hash(this.id);
 	}
 
+	@Override
+	public String toString() {
+		String retString = String.format("id %d projectname %s isDeleted %b description %s", id, name, isDeleted,
+				description);
+		retString += team != null ? "\n" + team.toString() : "";
+		retString += user != null ? "\n" + user.toString() : "";
+		return retString;
+	}
+
 }
