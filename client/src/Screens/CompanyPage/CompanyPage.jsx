@@ -1,7 +1,13 @@
+import { StyledCompanyPage } from "./StyledCompanyPage";
+
+
 export const CompanyPage = () => {
   return (
-    <div>
-      <h2>Company Page</h2>
-    </div>
+    <StyledCompanyPage className="company-page">
+      <div className="company-page-container">
+        <h2>Company Page</h2>
+
+      </div>
+    </StyledCompanyPage>
   );
 };
