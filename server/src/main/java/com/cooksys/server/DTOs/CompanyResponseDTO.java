@@ -9,14 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 
 
-public class CompanyResponseDTO {
+public class CompanyResponseDTO {	
 	
-	private Company companyName;
+	private Long id;
 	
-	private Company companyDescription;
-	
-	private Company teams;
-	
-	private Company users;
+	private String companyName;
 
+	private String companyDescription;		
+
+	
 }

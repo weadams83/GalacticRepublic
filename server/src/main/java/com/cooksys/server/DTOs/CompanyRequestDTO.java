@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 
 public class CompanyRequestDTO {
 	
-	private Company companyName;
+	private String companyName;
 	
-	private Company companyDescription;
+	private String companyDescription;
 
 
 }
