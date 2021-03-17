@@ -26,7 +26,7 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public ResponseEntity<TeamResponseDTO> getTeam(String teamName) {
 		// TODO Auto-generated method stub
-		Optional<Team> teamToGet = teamRepository.findByteamName(teamName);
+		Optional<Team> teamToGet = teamRepository.findByTeamNameIgnoreCase(teamName);
 		if (teamToGet.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
@@ -50,7 +50,7 @@ public class TeamServiceImpl implements TeamService {
 
 	@Override
 	public ResponseEntity<TeamResponseDTO> updateTeam(String teamName, TeamRequestDTO teamRequestDTO) {
-		Optional<Team> optionalTeam = teamRepository.findByteamName(teamName);
+		Optional<Team> optionalTeam = teamRepository.findByTeamNameIgnoreCase(teamName);
 		if (optionalTeam.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
