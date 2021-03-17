@@ -2,10 +2,9 @@ package com.cooksys.server.services;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
-
 import com.cooksys.server.DTOs.ProjectRequestDTO;
 import com.cooksys.server.DTOs.ProjectResponseDTO;
+import com.cooksys.server.entities.Team;
 
 public interface ProjectService {
 
@@ -13,8 +12,12 @@ public interface ProjectService {
 
 	ProjectResponseDTO createProject(ProjectRequestDTO projectRequestDTO);
 
-	ResponseEntity<ProjectResponseDTO> getProjectById(Long id);
+	ProjectResponseDTO getProjectById(Long id);
 
-	ResponseEntity<ProjectResponseDTO> getProjectById(String projectName);
+	ProjectResponseDTO getProjectByName(String projectName);
+
+	ProjectResponseDTO updateProject(Long id, ProjectRequestDTO projectRequestDTO);
+
+	ProjectResponseDTO getProjectByTeam(Team team);
 
 }

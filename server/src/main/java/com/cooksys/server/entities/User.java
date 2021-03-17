@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,9 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity(name = "users")
 @NoArgsConstructor
@@ -60,8 +57,8 @@ public class User {
 	@ManyToOne
 	private Company userCompany;
 
-	@ManyToOne
-	private Project userProject;
+//	@ManyToOne
+//	private Project userProject;
 
 	@ManyToOne
 	private Role userRole;

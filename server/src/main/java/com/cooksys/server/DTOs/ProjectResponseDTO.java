@@ -1,6 +1,10 @@
 package com.cooksys.server.DTOs;
 
+import java.util.List;
+
 import com.cooksys.server.entities.Project;
+import com.cooksys.server.entities.Team;
+import com.cooksys.server.entities.User;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,14 +15,16 @@ public class ProjectResponseDTO {
 	
 	private Long id;
 	
-	private Project projectName;
+	private String projectName;
 	
-	private Project description;
-	
-	private Project projectUsers;
+	private String description;
 	
 	private Project created;
 	
 	private Project updated;
+	
+	private List<User> projectUsers;
+	
+	private Team projectTeam;
 
 }
