@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledCard = styled.div`
+
 background: lightgray;
 padding: 2px;
 color: black;
