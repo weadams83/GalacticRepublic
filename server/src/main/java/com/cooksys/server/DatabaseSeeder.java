@@ -150,47 +150,47 @@ public class DatabaseSeeder implements CommandLineRunner{
 		
 		Project manageKrustyKrab = new Project();
 		manageKrustyKrab.setUser(mrKrabbs);
-		manageKrustyKrab.setName("Count ma money!");
+		manageKrustyKrab.setProjectName("Count ma money!");
 		manageKrustyKrab.setDescription("Stop the squeaking of horrible boots!");
 
 		
 		Project managedunderMifflin = new Project();
 		managedunderMifflin.setUser(michael);
-		managedunderMifflin.setName("Make Friends, Don't die alone.");
+		managedunderMifflin.setProjectName("Make Friends, Don't die alone.");
 		managedunderMifflin.setDescription("Make more 'thats what she said' jokes.");
 
 		
 		Project sellPaper = new Project();
 		sellPaper.setTeam(salesTeam);
-		sellPaper.setName("Sell Paper");
+		sellPaper.setProjectName("Sell Paper");
 		sellPaper.setDescription("Without watermarks.");
 		
 		Project crunchNumbers = new Project();
 		crunchNumbers.setTeam(accountingTeam);
-		crunchNumbers.setName("Count Paper");
+		crunchNumbers.setProjectName("Count Paper");
 		crunchNumbers.setDescription("At least the sales team can get away from Michael.");
 
 		
 		Project prankDwight = new Project();
 		prankDwight.setUser(Jim);
-		prankDwight.setName("Prank Dwight.");
+		prankDwight.setProjectName("Prank Dwight.");
 		prankDwight.setDescription("Bears, Beets, BattleStar Galactica.");
 
 		Project flipBurgers = new Project();
 		flipBurgers.setTeam(kitchen);
-		flipBurgers.setName("The perfect burger.");
+		flipBurgers.setProjectName("The perfect burger.");
 		flipBurgers.setDescription("Imagination!");
 
 		
 		Project serviceCust = new Project();
 		serviceCust.setTeam(cashier);
-		serviceCust.setName("Endure.");
+		serviceCust.setProjectName("Endure.");
 		serviceCust.setDescription("Envy SpongeBob.");
 
 		
 		Project yolo = new Project();
 		yolo.setUser(spongeBob);
-		yolo.setName("Living life like GOAT.");
+		yolo.setProjectName("Living life like GOAT.");
 		yolo.setDescription("Bring it around town!");
 
 		projectRepo.saveAndFlush(manageKrustyKrab);

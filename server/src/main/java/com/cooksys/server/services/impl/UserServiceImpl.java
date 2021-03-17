@@ -2,8 +2,6 @@ package com.cooksys.server.services.impl;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.server.DTOs.UserCreateRequestDTO;
@@ -25,7 +23,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 	private UserRepository userRepo;
 	private TeamRepository teamRepo;
 	private CompanyRepository companyRepo;
@@ -35,30 +33,28 @@ public class UserServiceImpl implements UserService{
 	private CompanyMapper companyMap;
 
 	/*
-	 * GET User 
-	 * if user doesn't exist or is deleted, notify User
+	 * GET User if user doesn't exist or is deleted, notify User
 	 */
 	@Override
 	public UserResponseDTO getUser(String userName) {
 		Optional<User> findUser = userRepo.findByUserName(userName);
-		if(findUser.isEmpty() || findUser.get().getIsDeleted()) {
-			throw new NotFoundException(String.format("User with user name: '%s' could not be found or has been deleted.", userName));
+		if (findUser.isEmpty() || findUser.get().getIsDeleted()) {
+			throw new NotFoundException(
+					String.format("User with user name: '%s' could not be found or has been deleted.", userName));
 		}
 		return userMap.EntityToDTO(findUser.get());
 	}
 
 	/*
-	 * POST (Create User)
-	 * if user entity has been deleted, reactivate and return
-	 * if username exists, notify user
-	 * if user's team or company exists, add user to them
-	 * else set those field to null
+	 * POST (Create User) if user entity has been deleted, reactivate and return if
+	 * username exists, notify user if user's team or company exists, add user to
+	 * them else set those field to null
 	 */
 	@Override
 	public UserResponseDTO postUser(UserCreateRequestDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userRequest.getUserName());
-		if(findUser.isPresent()){
-			if(findUser.get().getIsDeleted()) {
+		if (findUser.isPresent()) {
+			if (findUser.get().getIsDeleted()) {
 				findUser.get().setIsDeleted(false);
 				return userMap.EntityToDTO(findUser.get());
 			}
@@ -68,19 +64,19 @@ public class UserServiceImpl implements UserService{
 		Optional<Team> findTeam = teamRepo.findByteamName(createUser.getAssociatedTeam().getTeamName());
 		Optional<Company> findCompany = companyRepo.findBycompanyName(createUser.getUserCompany().getCompanyName());
 
-		if(findTeam.isPresent()) {
+		if (findTeam.isPresent()) {
 			findTeam.get().getTeamMembers().add(createUser);
 			teamRepo.saveAndFlush(findTeam.get());
 			createUser.setAssociatedTeam(findTeam.get());
-		}else {
+		} else {
 			createUser.setAssociatedTeam(null);
 		}
-		
-		if(findCompany.isPresent()) {
+
+		if (findCompany.isPresent()) {
 			findCompany.get().getUsers().add(createUser);
 			companyRepo.saveAndFlush(findCompany.get());
 			createUser.setUserCompany(findCompany.get());
-		}else {
+		} else {
 			createUser.setUserCompany(null);
 		}
 

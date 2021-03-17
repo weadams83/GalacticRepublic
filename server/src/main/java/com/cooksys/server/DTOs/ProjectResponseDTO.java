@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-
-
 public class ProjectResponseDTO {
 	
-	private Project name;
+	private Long id;
+	
+	private Project projectName;
 	
 	private Project description;
 	
