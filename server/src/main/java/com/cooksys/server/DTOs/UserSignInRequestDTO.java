@@ -11,4 +11,6 @@ public class UserSignInRequestDTO {
 	private String userName;
 	
 	private String password;
+	
+	
 }

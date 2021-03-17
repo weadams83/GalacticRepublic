@@ -23,8 +23,6 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-
-
 public class CompanyServiceImpl implements CompanyService {
 	private UserRepository userRepo;
 	private TeamRepository teamRepo;
@@ -51,7 +49,7 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	@Override
 	public CompanyResponseDTO getCompany(String companyName) {
-		Optional<Company> findCompany = companyRepo.findBycompanyName(companyName);
+		Optional<Company> findCompany = companyRepo.findByCompanyName(companyName);
 		if (findCompany.isEmpty()) {
 			throw new NotFoundException(String.format("Company with company name: '%s' could not be found.", companyName));
 		}
@@ -65,7 +63,7 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public CompanyRequestDTO postCompany(CompanyRequestDTO companyRequest) {
-		Optional<Company> findCompany = companyRepo.findBycompanyName(companyRequest.getCompanyName());
+		Optional<Company> findCompany = companyRepo.findByCompanyName(companyRequest.getCompanyName());
 		if(findCompany.isPresent()) {
 			throw new ImUsedException(String.format("Company with company name: '%s' already exsist.", findCompany.get().getCompanyName()));
 		}
@@ -78,7 +76,7 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public CompanyRequestDTO updateCompanyDescription(String companyName, CompanyRequestDTO companyUpdate) {
-		Optional<Company> findCompany = companyRepo.findBycompanyName(companyName);
+		Optional<Company> findCompany = companyRepo.findByCompanyName(companyName);
 		if (findCompany.isEmpty()) {
 			throw new NotFoundException(String.format("Company with company name: '%s' could not be found.", companyName));
 		}

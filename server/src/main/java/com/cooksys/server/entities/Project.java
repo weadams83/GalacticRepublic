@@ -54,12 +54,6 @@ public class Project {
 	
 	@OneToOne
 	private User updatedBy;
-
-	@OneToMany(mappedBy = "userProject")
-	private List<User> projectUsers;
-
-	@ManyToOne
-	private Team projectTeam;
 	
 	/*
 	 * equals() compares the database entries by id and the objects 
@@ -88,6 +82,14 @@ public class Project {
 		 * since username can change in the database.
 		 */
 		return Objects.hash(this.id);
+	}
+	
+	@Override
+	public String toString() {
+		String retString = String.format("id %d projectname %s isDeleted %b description %s", id,name,isDeleted,description);
+		retString += team != null ? "\n"+team.toString() : "";
+		retString += user != null ? "\n"+user.toString() : "";
+		return retString;
 	}
 
 }

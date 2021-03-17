@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,9 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity(name = "users")
 @NoArgsConstructor
@@ -34,6 +31,7 @@ public class User {
 	@GeneratedValue
 	private Long id;
 
+	@Column(unique=true)
 	private String userName;
 
 	private String firstName;
@@ -43,7 +41,7 @@ public class User {
 	private String password;
 
 	@CreationTimestamp
-	private final Timestamp created = new Timestamp(System.currentTimeMillis());;
+	private final Timestamp created = new Timestamp(System.currentTimeMillis());
 	
 	@UpdateTimestamp
 	private Timestamp updated;
@@ -60,18 +58,15 @@ public class User {
 	@ManyToOne
 	private Company userCompany;
 
-	@ManyToOne
-	private Project userProject;
-
-	@ManyToOne
-	private Role userRole;
-	
 	@OneToMany (mappedBy = "user")
 	private List<Project> projects;
 	
+	@ManyToOne
+	private Role userRole;
+		
 	@Override
 	public String toString() {
-		String retString = String.format("id %d userName %s isDeleted %b", id,userName,isDeleted);
+		String retString = String.format("id %d userName %s isDeleted %b firstName %s lastName %s", id,userName,isDeleted,firstName,lastName);
 		retString += associatedTeam != null ? "\n"+associatedTeam.toString() : "";
 		retString += userCompany != null ? "\n"+userCompany.toString() : "";
 		return retString;
