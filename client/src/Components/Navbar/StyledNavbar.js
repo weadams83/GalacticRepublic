@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
 
-const NavbarStyles = styled.nav`
+ export const NavbarStyles = styled.nav`
+display: flex;
+justify-content: space-evenly;
+align-content: center;
 
 
 `
