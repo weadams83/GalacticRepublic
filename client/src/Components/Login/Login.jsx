@@ -42,8 +42,6 @@ export const Login = () => {
     }
   };
 
-  console.log(memberFormValues)
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (e.target.role.value === "company") {
@@ -55,22 +53,20 @@ export const Login = () => {
           (user) => user.password === companyFormValues.password
         )
       ) {
-
         setCurrentUser(companyFormValues.companyUsername);
-        history.push("/company")
-      } else if (e.target.role.value === "member") {
-        if (
-          dummyData.data[0].user.filter(
-            (user) => user.username === memberFormValues.username
-          ) &&
-          dummyData.data[0].user.filter(
-            (user) => user.password === memberFormValues.password
-          )
-        ) {
-
-          setCurrentUser(memberFormValues.username);
-          history.push("/member")
-        }
+        history.push("/company");
+      }
+    } else if (e.target.role.value === "member") {
+      if (
+        dummyData.data[0].user.filter(
+          (user) => user.username === memberFormValues.username
+        ) &&
+        dummyData.data[0].user.filter(
+          (user) => user.password === memberFormValues.password
+        )
+      ) {
+        setCurrentUser(memberFormValues.username);
+        history.push("/member");
       }
     }
   };
