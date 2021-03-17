@@ -15,7 +15,7 @@ public class ProjectResponseDTO {
 
 	private Long id;
 
-	private String projectName;
+	private String name;
 
 	private String description;
 

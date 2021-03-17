@@ -37,7 +37,7 @@ public class Project {
 	@ManyToOne
 	private Team team;
 
-	private String projectName;
+	private String name;
 
 	private String description;
 

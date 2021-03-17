@@ -9,12 +9,12 @@ import com.cooksys.server.entities.Team;
 public interface ProjectService {
 
 	ProjectResponseDTO createProject(ProjectRequestDTO projectRequestDTO);
-	
+
 	List<ProjectResponseDTO> getAllProjects();
 
 	ProjectResponseDTO getProjectById(Long id);
 
-	ProjectResponseDTO getProjectByName(String projectName);
+	ProjectResponseDTO getProjectByName(String name);
 
 	ProjectResponseDTO updateProjectName(Long id, ProjectRequestDTO projectRequestDTO);
 
@@ -25,6 +25,6 @@ public interface ProjectService {
 	ProjectResponseDTO updateProjectDescription(Long id, ProjectRequestDTO projectRequestDTO);
 
 	ProjectResponseDTO updateProjectTeam(Long id, ProjectRequestDTO projectRequestDTO);
-	
+
 	ProjectResponseDTO deleteProject(Long id);
 }

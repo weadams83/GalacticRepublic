@@ -1,3 +1,4 @@
+
 package com.cooksys.server.repositories;
 
 import java.util.List;
@@ -11,12 +12,12 @@ import com.cooksys.server.entities.Team;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-	
+
 	List<Project> findAllByNotDeleted();
-	
-	Optional<Project> findByNameAndNotDeleted(String projectName);
-	
+
+	Optional<Project> findByNameAndNotDeleted(String name);
+
 	Optional<Project> findByIdAndNotDeleted(Long id);
-	
+
 	Optional<Project> findByTeamAndNotDeleted(Team team);
 }

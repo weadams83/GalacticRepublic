@@ -68,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public ProjectResponseDTO updateProjectName(Long id, ProjectRequestDTO projectRequestDTO) {
 		Project projectToUpdate = getProject(id);
-		projectToUpdate.setProjectName(projectRequestDTO.getProjectName());
+		projectToUpdate.setName(projectRequestDTO.getName());
 		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToUpdate));
 	}
 

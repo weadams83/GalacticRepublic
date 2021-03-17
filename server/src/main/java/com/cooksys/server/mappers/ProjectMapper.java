@@ -10,11 +10,11 @@ import com.cooksys.server.entities.Project;
 
 @Mapper(componentModel = "spring")
 public interface ProjectMapper {
-	
+
 	Project requestDtoToEntity(ProjectRequestDTO projectRequestDTO);
-	
+
 	ProjectResponseDTO entityToResponseDTO(Project project);
-	
+
 	List<ProjectResponseDTO> entitiesToResponseDTOs(List<Project> projects);
 
 }

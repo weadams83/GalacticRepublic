@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class ProjectRequestDTO {
 
-	private String projectName;
+	private String name;
 
 	private String description;
 
