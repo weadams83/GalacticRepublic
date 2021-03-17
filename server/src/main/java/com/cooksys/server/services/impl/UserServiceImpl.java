@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
 		if (findUser.isEmpty()) {
 			throw new NotFoundException(String.format("User with user name: '%s' could not be found.", userName));
-
+		}
 		if(findUser.isEmpty() || findUser.get().getIsDeleted()) {
 			throw new NotFoundException(String.format("User with user name: '%s' could not be found or has been deleted.", userName));
 
