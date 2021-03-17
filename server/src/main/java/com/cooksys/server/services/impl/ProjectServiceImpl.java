@@ -23,9 +23,13 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectRepository projectRepository;
 	private ProjectMapper projectMapper;
 
-	@Override
-	public List<ProjectResponseDTO> getProjects() {
-		return projectMapper.entitiesToResponseDTOs(projectRepository.findAll());
+	// Helper method to check that project with the entered Id exists
+	public Project getProject(Long id) {
+		Optional<Project> optionalProject = projectRepository.findByIdAndNotDeleted(id);
+		if (optionalProject.isEmpty()) {
+			throw new BadRequestException("Project not found");
+		}
+		return optionalProject.get();
 	}
 
 	@Override
@@ -35,17 +39,18 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
+	public List<ProjectResponseDTO> getAllProjects() {
+		return projectMapper.entitiesToResponseDTOs(projectRepository.findAllByNotDeleted());
+	}
+
+	@Override
 	public ProjectResponseDTO getProjectById(Long id) {
-		Optional<Project> optionalProject = projectRepository.findById(id);
-		if (optionalProject.isEmpty()) {
-			throw new BadRequestException("No project with id: " + id + " found.");
-		}
-		return projectMapper.entityToResponseDTO(optionalProject.get());
+		return projectMapper.entityToResponseDTO(getProject(id));
 	}
 
 	@Override
 	public ProjectResponseDTO getProjectByName(String projectName) {
-		Optional<Project> optionalProject = projectRepository.findByName(projectName);
+		Optional<Project> optionalProject = projectRepository.findByNameAndNotDeleted(projectName);
 		if (optionalProject.isEmpty()) {
 			throw new BadRequestException("No project with name: " + projectName + " found.");
 		}
@@ -53,7 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	public ProjectResponseDTO getProjectByTeam(Team team) {
-		Optional<Project> optionalProject = projectRepository.findByTeam(team);
+		Optional<Project> optionalProject = projectRepository.findByTeamAndNotDeleted(team);
 		if (optionalProject.isEmpty()) {
 			throw new BadRequestException("No project with name: " + team + " found.");
 		}
@@ -61,17 +66,38 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public ProjectResponseDTO updateProject(Long id, ProjectRequestDTO projectRequestDTO) {
-		Optional<Project> optionalProject = projectRepository.findById(id);
-		if (optionalProject.isEmpty()) {
-			throw new BadRequestException("No project with id: " + id + " found.");
-		}
-		Project projectToUpdate = optionalProject.get();
-		projectToUpdate.setDescription(projectRequestDTO.getDescription());
+	public ProjectResponseDTO updateProjectName(Long id, ProjectRequestDTO projectRequestDTO) {
+		Project projectToUpdate = getProject(id);
 		projectToUpdate.setProjectName(projectRequestDTO.getProjectName());
-		projectToUpdate.setProjectTeam(projectRequestDTO.getTeam());
+		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToUpdate));
+	}
+
+	@Override
+	public ProjectResponseDTO updateProjectDescription(Long id, ProjectRequestDTO projectRequestDTO) {
+		Project projectToUpdate = getProject(id);
+		projectToUpdate.setDescription(projectRequestDTO.getDescription());
+		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToUpdate));
+	}
+
+	@Override
+	public ProjectResponseDTO updateProjectUsers(Long id, ProjectRequestDTO projectRequestDTO) {
+		Project projectToUpdate = getProject(id);
 		projectToUpdate.setProjectUsers(projectRequestDTO.getProjectUsers());
 		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToUpdate));
+	}
+
+	@Override
+	public ProjectResponseDTO updateProjectTeam(Long id, ProjectRequestDTO projectRequestDTO) {
+		Project projectToUpdate = getProject(id);
+		projectToUpdate.setProjectTeam(projectRequestDTO.getProjectTeam());
+		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToUpdate));
+	}
+
+	@Override
+	public ProjectResponseDTO deleteProject(Long id) {
+		Project projectToDelete = getProject(id);
+		projectToDelete.setIsDeleted(true);
+		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToDelete));
 	}
 
 }

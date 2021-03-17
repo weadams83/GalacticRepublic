@@ -11,17 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ProjectRequestDTO {
-	
+
 	private String projectName;
-	
+
 	private String description;
-	
-	private User user;
-	
-	private Team team;
-	
-	private List<Team> projectTeam;
-	
-	private List<User> projectUsers; 
+
+	private Team projectTeam;
+
+	private List<User> projectUsers;
 
 }
