@@ -16,3 +16,13 @@ export const StyledLogin = styled.div`
     display: none;
   }
 `;
+
+
+export const SignUpB = styled.button`
+display: inline-block;
+justify-content: center;
+margin: 50px 0px -10px 0px;
+padding: 5px 5px 5px 5px ;
+border-radius: 5px;
+border: 1px solid #ccc;
+`

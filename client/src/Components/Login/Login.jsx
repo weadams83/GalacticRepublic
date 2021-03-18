@@ -1,8 +1,10 @@
 import $ from "jquery";
 import { useState } from "react";
 import { useHistory } from "react-router";
+import {NavLink} from "react-router-dom"
+import '../SignUp/SignUp'
 
-import { StyledLogin } from "./StyledLogin";
+import { StyledLogin, SignUpB } from "./StyledLogin";
 const dummyData = require("../../DummyData.json");
 
 const initialMemberForm = {
@@ -131,9 +133,14 @@ export const Login = () => {
           </div>
           <div className="button hide">
             <button type="submit">Login</button>
-          </div>
-        </form>
+            </div>
+          </form>
+          
+            <NavLink to='./SignUp'>
+             <SignUpB type="submit">SignUp</SignUpB>
+            </NavLink> 
       </div>
+
     </StyledLogin>
   );
 };
