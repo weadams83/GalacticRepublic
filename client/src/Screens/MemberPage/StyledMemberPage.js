@@ -9,7 +9,7 @@ background: #f8f8f8;
   flex-direction: column;
   align-items: center;
 }
-.member-container {
+.card-container {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
