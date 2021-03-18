@@ -5,6 +5,7 @@ import org.mapstruct.Mappings;
 
 import com.cooksys.server.DTOs.UserCreateRequestDTO;
 import com.cooksys.server.DTOs.UserEditRequestDTO;
+import com.cooksys.server.DTOs.UserRequestAssignProjectDTO;
 import com.cooksys.server.DTOs.UserResponseDTO;
 import com.cooksys.server.DTOs.UserSignInRequestDTO;
 import com.cooksys.server.entities.User;
