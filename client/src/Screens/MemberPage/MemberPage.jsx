@@ -1,20 +1,29 @@
 import StyledMemberPage from './StyledMemberPage';
 import NavBar from '../../Components/Navbar/Navbar';
-import Card from '../../Components/Card/Card'
-import Button from '../../Components/Button/Button'
+import Card from '../../Components/Card/Card';
+import { Fragment } from "react";
+import Button from '../../Components/Button/Button';
+const dummyData = require("../../DummyData.json");
+
 
 //test points!
 const newMember = false;
-//TODO: make function to check if the login is a new member or not
+//TODO: get the 'team' field from the user data
 
-const amountOfCards = [1,2,3,4,5];
-//TODO: find out the amount of projects the user is in
 
+const filterUser =(dummyData.data[0].user.filter((u => u.username==='cooksys')))
+
+
+const groupId = (filterUser[0].group_id)
+console.log(groupId)
+
+const newMemberTag = (groupId ==='undefined')? true : false; 
+console.log(newMemberTag)
 
 
 
 export const MemberPage = () => {
-  if (newMember === true) {
+  if (newMemberTag === true) {
     return (
       <div>
         <h2>MemberPage</h2>
@@ -24,19 +33,47 @@ export const MemberPage = () => {
 
     );
   }
+// const projectUsers = dummyData.data[0].user.filter(
+//   (project) => project.users.length ===1
+// )
+
+// const filterUser= dummyData.data[0].filter(user=> user.username==='gmoney')
+
+
+  const getProjectsArray = () =>{
+ let projectsArray = [];
+ filterUser.forEach((u) =>{
+   u.projects.forEach((project)=> {
+     projectsArray.push(project)
+   })
+ })
+return projectsArray
+}
 
   return (
-<StyledMemberPage>
-  <NavBar></NavBar>
-   <div>
-     {amountOfCards.map((object, i) => {
-     return <Card obj={object} key = {i}/>
-     })}
-
-   </div>
+  <Fragment>
+    <NavBar/>
+<StyledMemberPage className='member-page'>
+  <div className='member-page-container'>
+    <div className='title'>
+      <h2>Member Page</h2>
+    </div>
+    <div className='card-container'>
+      {getProjectsArray().map((project)=>
+      (<Card
+        className='card'
+        name={project}
+        key= {`${project}`}
+        />
+        )
+      )}
+    </div>
+  </div>
+   
    <Button>Create (todo)</Button>
   
    </StyledMemberPage>
+   </Fragment>
   )
 
 
