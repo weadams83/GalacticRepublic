@@ -7,16 +7,21 @@
       "id": 1,
       "firstname": "Galo",
       "lastname": "Sandoval",
-      "role": "member"
+      "role": "member",
+      "projects":["a","projb"]
     },
     {
       "username": "cooksys",
       "password": "password",
-      "group_id": 2,
+      "group_id": "undefined",
       "id": 2,
       "firstname": "cook",
       "lastname": "systems",
-      "role": "company"
+      "role": "company",
+      "projects":[
+        "proja","projb"
+      ]
+      
     }
   ]},
   {"company": [

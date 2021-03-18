@@ -8,7 +8,6 @@ const Navbar = () => {
         <Link to="/users">Users</Link>
         <Link to="/projects">Projects</Link>
         <Link to="/company">Teams</Link>
-        <input type="text" placeholder="Search" />
       </NavbarStyles>
     </div>
   );
