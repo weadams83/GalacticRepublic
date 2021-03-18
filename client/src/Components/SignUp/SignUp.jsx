@@ -7,28 +7,28 @@ import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledSignU
 
 const SignUp = () => {
 
-    const initialFormError={
+    const initialFormError = {
         isError: false,
         message: '',
-        firld:''
+        firld: ''
     }
 
-    const [formError, updateFormError]=useState(initialFormError)
-    const resetError= () => updateFormError(initialFormError)
+    const [formError, updateFormError] = useState(initialFormError)
+    const resetError = () => updateFormError(initialFormError)
 
-    const formIsValid = () =>{
-        if(!form.firstName.value || !form.lastName.value 
-            || !form.username.value || !form.password.value){
-        updateFormError({
-            ...formError, isError: true, message:'All fields are required'
-        })
-        return false
+    const formIsValid = () => {
+        if (!form.firstName.value || !form.lastName.value
+            || !form.username.value || !form.password.value) {
+            updateFormError({
+                ...formError, isError: true, message: 'All fields are required'
+            })
+            return false
         }
         return true
     }
 
-    const handleFormSubmitt= (e) =>{
-        if(formIsValid()){
+    const handleFormSubmitt = (e) => {
+        if (formIsValid()) {
             e.preventDefault();
         }
     }
@@ -60,9 +60,6 @@ const SignUp = () => {
         },
     })
 
-    // const handleFormSubmitt = (e) => {
-    //     e.preventDefault();
-    // }
     const [selectCompanyName, UpdateCompanyName] = useState("Select")
 
     return (
@@ -76,13 +73,14 @@ const SignUp = () => {
                     {Object.entries(form).map(([key, props]) => (
                         <Input key={key}
                             {...props}
-                            onChange={event =>{
+                            onChange={event => {
                                 updateForm({
                                     ...form,
                                     [key]: { ...props, value: event.target.value }
                                 })
-                                resetError() }
-                        }
+                                resetError()
+                            }
+                            }
                         />
                     ))}
 
@@ -99,23 +97,18 @@ const SignUp = () => {
                         <option value="Company C">Company C</option>
                     </Select>
 
-                    <NavLink to='./Login'>
+                    <NavLink to='./Company'>
                         <Button type="submit" onClick={handleFormSubmitt} >Sign Up</Button>
                     </NavLink>
 
-        {formError.isError && !formError.field ? (
-        <p style={{color: 'red', textSizeAdjust:'25'}}>{formError.message}</p>
-        ) : (
-        ''
-        )}
-
+                    {formError.isError && !formError.field ? (
+                        <p style={{ color: 'red', textSizeAdjust: '25' }}>{formError.message}</p>
+                    ) : (
+                        ''
+                    )}
 
                 </Form>
-
-
             </Styledmain>
-
-
         </InspectP>
     )
 }
