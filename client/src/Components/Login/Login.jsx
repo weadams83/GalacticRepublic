@@ -1,8 +1,8 @@
 import $ from "jquery";
 import { useState } from "react";
 import { useHistory } from "react-router";
-import {NavLink} from "react-router-dom"
-import '../SignUp/SignUp'
+import { NavLink } from "react-router-dom";
+import "../SignUp/SignUp";
 
 import { StyledLogin, SignUpB } from "./StyledLogin";
 const dummyData = require("../../DummyData.json");
@@ -44,7 +44,7 @@ export const Login = () => {
     }
   };
   const handleSubmit = (e) => {
-    console.log(e.target.role.value)
+    console.log(e.target.role.value);
     e.preventDefault();
     if (e.target.role.value === "company") {
       if (
@@ -133,14 +133,14 @@ export const Login = () => {
           </div>
           <div className="button hide">
             <button type="submit">Login</button>
-            </div>
-          </form>
-          
-            <NavLink to='./SignUp'>
-             <SignUpB type="submit">SignUp</SignUpB>
-            </NavLink> 
-      </div>
+          </div>
+        </form>
 
+        <NavLink to="./SignUp">
+          <SignUpB type="submit">SignUp</SignUpB>
+        </NavLink>
+
+      </div>
     </StyledLogin>
   );
 };
