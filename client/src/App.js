@@ -4,6 +4,8 @@ import { Route, Switch } from "react-router-dom";
 import { CompanyPage } from "./Screens/CompanyPage/CompanyPage";
 import { MemberPage } from "./Screens/MemberPage/MemberPage";
 import  SignUp  from "./Components/SignUp/SignUp";
+import { Users } from "./Components/Users/Users";
+import { Projects } from "./Components/Projects/Projects";
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Route path="/member" component={MemberPage} />
         <Route path="/company" component={CompanyPage} />
         <Route path="/SignUp" component={SignUp} />
+        <Route path="/users" component={Users} />
+        <Route path="/projects" component={Projects} />
         <Route path="/" component={Login} />
       </Switch>
     </div>

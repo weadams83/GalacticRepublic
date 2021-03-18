@@ -11,7 +11,7 @@ export const CompanyPage = () => {
       <StyledCompanyPage className="company-page">
         <div className="company-page-container">
           <div className="title">
-            <h2>Company Page</h2>
+            <h2>Teams</h2>
           </div>
           <div className="card-container">
             {dummyData.data[2].teams.map((team) => (
