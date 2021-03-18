@@ -51,5 +51,31 @@
       "name": "Team Crossfit",
       "description": "Changing the world one tire lift at a time"
     }
+  ]},
+  {"projects": [
+    {
+      "id": 1,
+      "name": "Maintenance",
+      "description": "Mantance",
+      "users":[
+        1, 2
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Project Swoll Patrol",
+      "description": "Get yoked",
+      "users": [
+        1, 2
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Red Eagle",
+      "description": "Top secret",
+      "users": [
+        1
+      ]
+    }
   ]}
 ]}
