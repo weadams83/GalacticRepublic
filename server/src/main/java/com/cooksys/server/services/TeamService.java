@@ -17,4 +17,6 @@ public interface TeamService {
 
 	ResponseEntity<TeamResponseDTO> updateTeam(String teamName, TeamRequestDTO teamRequestDTO);
 
+	ResponseEntity<TeamResponseDTO> deleteTeam(String teamName);
+
 }
