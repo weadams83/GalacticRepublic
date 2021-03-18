@@ -43,8 +43,8 @@ export const Login = () => {
       setMemberFormValues({ ...memberFormValues, password: e.target.value });
     }
   };
-
   const handleSubmit = (e) => {
+    console.log(e.target.role.value)
     e.preventDefault();
     if (e.target.role.value === "company") {
       if (
@@ -58,7 +58,8 @@ export const Login = () => {
         setCurrentUser(companyFormValues.companyUsername);
         history.push("/company");
       }
-    } else if (e.target.role.value === "member") {
+    }
+    if (e.target.role.value === "member") {
       if (
         dummyData.data[0].user.filter(
           (user) => user.username === memberFormValues.username
