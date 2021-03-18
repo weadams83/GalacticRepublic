@@ -15,16 +15,12 @@ public interface CompanyMapper {
 
 	List<Company> entitiesToResponseDTOs(List<Company> findAll);
 
-	Company EntityToRequestDTO(CompanyRequestDTO companyRequest);
+	Company RequestDTOToEntity(CompanyRequestDTO companyRequest);
 
 	CompanyRequestDTO EntityToDTO(Company createCompany);
-
-	CompanyRequestDTO EntityToDTO(CompanyResponseDTO companyToUpdate);
 	
 	Company CompanyRequestDTOtoEntity(CompanyRequestDTO companyName);
 
-//	CompanyResponseDTO EntityToDTO(Company company);
 
-//	Company EntityToDTO(CompanyRequestDTO companyRequest);
 
 }

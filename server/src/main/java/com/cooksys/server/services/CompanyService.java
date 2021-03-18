@@ -8,8 +8,6 @@ import com.cooksys.server.entities.Company;
 
 public interface CompanyService {
 
-//	CompanyResponseDTO postCompany(CompanyRequestDTO companyRequest);
-
 	List<Company> getAllCompanies();
 
 	CompanyResponseDTO getCompany(String companyName);

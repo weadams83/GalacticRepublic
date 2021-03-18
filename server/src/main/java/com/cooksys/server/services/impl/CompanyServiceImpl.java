@@ -24,12 +24,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
-	private UserRepository userRepo;
-	private TeamRepository teamRepo;
 	private CompanyRepository companyRepo;
-
-	private UserMapper userMap;
-	private TeamMapper teamMap;
 	private CompanyMapper companyMap;
 	
 	/*
@@ -67,7 +62,7 @@ public class CompanyServiceImpl implements CompanyService {
 		if(findCompany.isPresent()) {
 			throw new ImUsedException(String.format("Company with company name: '%s' already exsist.", findCompany.get().getCompanyName()));
 		}
-		Company createCompany = companyMap.EntityToRequestDTO(companyRequest);
+		Company createCompany = companyMap.RequestDTOToEntity(companyRequest);
 		
 		companyRepo.saveAndFlush(createCompany);
 		return companyMap.EntityToDTO(createCompany);
