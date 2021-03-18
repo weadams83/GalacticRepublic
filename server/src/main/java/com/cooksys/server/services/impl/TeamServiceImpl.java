@@ -45,7 +45,7 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public List<TeamResponseDTO> getAllTeams() {
 
-		return teamMapper.entitesToResponseDTO(teamRepository.findAll());
+		return teamMapper.entitesToResponseDTO(teamRepository.findAllByIsDeletedFalse());
 	}
 
 	@Override
@@ -57,9 +57,20 @@ public class TeamServiceImpl implements TeamService {
 		Team teamToUpdate = optionalTeam.get();
 //		teamToUpdate.setTeamName("Harry");
 		teamToUpdate.setTeamDescription(teamRequestDTO.getTeamDescription());
-//		teamToUpdate.setTeamName(teamRequestDTO.getTeamName());
+		teamToUpdate.setTeamName(teamRequestDTO.getTeamName());
 		return new ResponseEntity<>(teamMapper.EntityToDto(teamRepository.saveAndFlush(teamToUpdate)), HttpStatus.OK);
 
+	}
+
+	@Override
+	public ResponseEntity<TeamResponseDTO> deleteTeam(String teamName) {
+		Optional<Team> optionalTeam = teamRepository.findByTeamNameIgnoreCase(teamName);
+		if (optionalTeam.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		Team teamToUpdate = optionalTeam.get();
+		teamToUpdate.setIsDeleted(true);
+		return new ResponseEntity<>(teamMapper.EntityToDto(teamRepository.saveAndFlush(teamToUpdate)), HttpStatus.GONE);
 	}
 
 }

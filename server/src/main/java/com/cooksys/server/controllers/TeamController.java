@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("team")
 @AllArgsConstructor
 public class TeamController {
+
 	private TeamService teamService;
 
 	@GetMapping
@@ -47,5 +49,11 @@ public class TeamController {
 	public ResponseEntity<TeamResponseDTO> updateTeam(@PathVariable String teamName,
 			@RequestBody TeamRequestDTO teamRequestDTO) {
 		return teamService.updateTeam(teamName, teamRequestDTO);
+	}
+
+	@DeleteMapping("/delete/{teamName}")
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<TeamResponseDTO> deleteTeam(@PathVariable String teamName) {
+		return teamService.deleteTeam(teamName);
 	}
 }
