@@ -26,6 +26,5 @@ export const StyledCard = styled.div`
     height: 90%;
     width: 100%;
     padding: 0 25px;
-}
-
+  }
 `;

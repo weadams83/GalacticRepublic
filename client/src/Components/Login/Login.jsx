@@ -2,6 +2,7 @@ import $ from "jquery";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
+import { CompanyPage } from "../../Screens/CompanyPage/CompanyPage";
 import "../SignUp/SignUp";
 
 import { StyledLogin, SignUpB } from "./StyledLogin";
