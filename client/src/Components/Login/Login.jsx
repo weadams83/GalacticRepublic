@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { useState } from "react";
 import { useHistory } from "react-router";
-import {NavLink} from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 import '../SignUp/SignUp'
 import '../SignUp/CompanySignUp'
@@ -9,6 +9,7 @@ import { StyledLogin, SignUpB, CompanySignUpB, SignUpForm } from "./StyledLogin"
 
 import { CompanyPage } from "../../Screens/CompanyPage/CompanyPage";
 import "../SignUp/SignUp";
+
 
 const dummyData = require("../../DummyData.json");
 
@@ -140,12 +141,19 @@ export const Login = () => {
           </div>
           <div className="button hide">
             <button type="submit">Login</button>
+
+
           </div>
         </form>
 
-        <NavLink to="./SignUp">
-          <SignUpB type="submit">SignUp</SignUpB>
-        </NavLink>
+        <SignUpForm >
+          <NavLink to="/SignUp">
+            <SignUpB type="submit">Sign Up as a Team </SignUpB>
+          </NavLink>
+          <NavLink to="/CompanySignUp">
+            <CompanySignUpB type="submit">Sign Up as a Company</CompanySignUpB>
+          </NavLink>
+        </SignUpForm>
 
       </div>
     </StyledLogin>
