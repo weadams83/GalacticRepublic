@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
 
@@ -12,7 +12,6 @@ import {
   SignUpForm,
 } from "./StyledLogin";
 
-import { CompanyPage } from "../../Screens/CompanyPage/CompanyPage";
 import "../SignUp/SignUp";
 
 import axios from "axios";
@@ -73,12 +72,6 @@ export const Login = () => {
     }
   };
 
-  const login = () => {
-    axios
-      .post("http://localhost:8080/user/login", memberFormValues)
-      .then((res) => console.log(res));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (e.target.role.value === "company") {
@@ -91,7 +84,7 @@ export const Login = () => {
         )
       ) {
         axios
-          .post("http://localhost:8080/user/login", memberFormValues)
+          .post("http://localhost:8080/user/login", companyFormValues)
           .then((res) => {
             localStorage.setItem("currentCompany", JSON.stringify(res.data));
             history.push("/company");

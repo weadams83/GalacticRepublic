@@ -1,8 +1,7 @@
 import StyledMemberPage from './StyledMemberPage';
 import NavBar from '../../Components/Navbar/Navbar';
-import Card from '../../Components/Card/Card';
+import TeamCard from '../../Components/Card/TeamCard';
 import { Fragment } from "react";
-import Button from '../../Components/Button/Button';
 import {NavLink} from 'react-router-dom'
 import CreateP from './StyledMemberPage'
 const dummyData = require("../../DummyData.json");
@@ -52,7 +51,7 @@ export const MemberPage = () => {
           </div>
           <div className='card-container'>
             {getProjectsArray().map((project) =>
-            (<Card
+            (<TeamCard
               className='card'
               name={project}
               key={`${project}`}/>
