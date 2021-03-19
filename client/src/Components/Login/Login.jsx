@@ -10,6 +10,7 @@ import { StyledLogin, SignUpB, CompanySignUpB, SignUpForm } from "./StyledLogin"
 import { CompanyPage } from "../../Screens/CompanyPage/CompanyPage";
 import "../SignUp/SignUp";
 
+import axios from "axios"
 
 const dummyData = require("../../DummyData.json");
 
@@ -98,6 +99,12 @@ export const Login = () => {
       $(".button").removeClass("hide");
     }
   };
+
+  console.log(memberFormValues)
+
+  const login = () => {
+    axios.post("http://localhost:8080/user/login").then()
+  }
 
   return (
     <StyledLogin className="login">
