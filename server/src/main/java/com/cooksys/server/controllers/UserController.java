@@ -34,6 +34,12 @@ import lombok.AllArgsConstructor;
 public class UserController {
 	private UserService userServ;
 	
+	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
+	public List<UserResponseDTO> getAllUsers() {
+		return userServ.getAllUsers();
+	}
+	
 	@GetMapping("/{username}")
 	@ResponseStatus(HttpStatus.OK)
 	public UserResponseDTO getUser(@PathVariable("username") String userName) {
