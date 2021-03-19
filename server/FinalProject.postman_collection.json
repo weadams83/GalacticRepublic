@@ -389,7 +389,7 @@
 									"\r",
 									"pm.test(\"userRole is Company\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.userRole.roleTitle).to.eql(\"Company\");\r",
+									"    pm.expect(jsonData.userName).to.eql(\"Breeduss\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -401,7 +401,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"userName\":\"Breeduss\",\r\n\t \"firstName\":\"Nathan\",\r\n\t \"lastName\":\"Breedlove\",\r\n\t \"password\":\"Nada\",\r\n     \"roleTitle\":\"Company\"\r\n}",
+							"raw": "{\r\n     \"userName\":\"Breeduss\",\r\n\t \"firstName\":\"Nathan\",\r\n\t \"lastName\":\"Breedlove\",\r\n\t \"password\":\"Nada\"\r\n     }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -799,6 +799,342 @@
 							"path": [
 								"user",
 								"JP Lobster"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to Role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful assigned User to role\", function(){\r",
+									"    pm.response.to.have.status(202);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Breeduss now has role Member\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.userRole.roleTitle).to.eql(\"Member\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"JP Lobster\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"roleName\":\"Member\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/Breeduss/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"Breeduss",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to Role - user doesn't exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User doesn't exist\", function(){\r",
+									"    pm.response.to.have.status(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"message displayed correctly\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'NoOne' could not be found or has been deleted.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"JP Lobster\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"roleName\":\"Member\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/NoOne/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"NoOne",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to Role - user is deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User is deleted\", function(){\r",
+									"    pm.response.to.have.status(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"message displayed correctly\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'GD' could not be found or has been deleted.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"JP Lobster\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"roleName\":\"Member\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/GD/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"GD",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to Role - boss doesn't exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Boss doesn't exist\", function(){\r",
+									"    pm.response.to.have.status(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"message displayed correctly\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'NoOne' could not be found or has been deleted.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"NoOne\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"roleName\":\"Member\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/Breeduss/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"Breeduss",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to Role - boss has wrong credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Boss has wrong credentials\", function(){\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"message displayed correctly\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"Username/Password do not match.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"JP Lobster\",\r\n         \"password\":\"WrongPassword\"\r\n     },\r\n     \"roleName\":\"Member\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/Breeduss/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"Breeduss",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to Role - boss is deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Boss is deleted\", function(){\r",
+									"    pm.response.to.have.status(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"message displayed correctly\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'GD' could not be found or has been deleted.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"GD\",\r\n         \"password\":\"Sugar\"\r\n     },\r\n     \"roleName\":\"Member\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/Breeduss/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"Breeduss",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to Role - role doesn't exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Role doesn't exist\", function(){\r",
+									"    pm.response.to.have.status(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"message displayed correctly\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"Role with name: 'Doesn't exist' not found.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"JP Lobster\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"roleName\":\"Doesn't exist\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/Breeduss/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"Breeduss",
+								"role"
 							]
 						}
 					},
@@ -1645,7 +1981,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Breeduss\",\r\n         \"password\":\"Nada\"\r\n     },\r\n     \"teamName\":\"Service Staff\"\r\n}",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"JP Lobster\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"teamName\":\"Service Staff\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
