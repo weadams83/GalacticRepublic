@@ -24,7 +24,7 @@
 									"\r",
 									"//Finding the length of the Response Array\r",
 									"    var length = responseJson.length;\r",
-									"    pm.expect(length).to.eq(9);\r",
+									"    pm.expect(length).to.eq(11);\r",
 									"})\r",
 									""
 								],
@@ -401,53 +401,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"userName\":\"Breeduss\",\r\n\t \"firstName\":\"Nathan\",\r\n\t \"lastName\":\"Breedlove\",\r\n\t \"password\":\"Nada\"\r\n     }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create New User with Non-existing role",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Successful Post User\", function(){\r",
-									"    pm.response.to.have.status(201);\r",
-									"})\r",
-									"\r",
-									"pm.test(\"userRole is null\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.userRole).to.eql(null);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n     \"userName\":\"KingSlayer\",\r\n\t \"firstName\":\"Jaime\",\r\n\t \"lastName\":\"Lannister\",\r\n\t \"password\":\"sister\",\r\n     \"roleTitle\":\"Warrior\"\r\n}",
+							"raw": "{\r\n     \"userName\":\"Breeduss\",\r\n\t \"firstName\":\"Nathan\",\r\n\t \"lastName\":\"Breedlove\",\r\n\t \"password\":\"Nada\",\r\n     \"companyName\":\"Krusty Krab\"\r\n     }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -493,7 +447,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"userName\":\"Darth Shrewt\",\r\n\t \"firstName\":\"Nathan\",\r\n\t \"lastName\":\"Breedlove\",\r\n\t \"password\":\"Nada\",\r\n     \"roleTitle\":\"Company\"\r\n}",
+							"raw": "{\r\n     \"userName\":\"Darth Shrewt\",\r\n\t \"firstName\":\"Nathan\",\r\n\t \"lastName\":\"Breedlove\",\r\n\t \"password\":\"Nada\",\r\n     \"companyName\":\"Krusty Krab\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -539,7 +493,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"userName\":\"Wunderkind\",\r\n\t \"firstName\":\"Nathan\",\r\n\t \"lastName\":\"Breedlove\",\r\n\t \"password\":\"Nada\",\r\n     \"roleTitle\":\"Company\"\r\n}",
+							"raw": "{\r\n     \"userName\":\"Wunderkind\",\r\n\t \"firstName\":\"Nathan\",\r\n\t \"lastName\":\"Breedlove\",\r\n\t \"password\":\"Nada\",\r\n     \"companyName\":\"Krusty Krab\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -815,9 +769,57 @@
 									"    pm.response.to.have.status(202);\r",
 									"})\r",
 									"\r",
-									"pm.test(\"Breeduss now has role Member\", function () {\r",
+									"pm.test(\"Kgurl now has role Member\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.userRole.roleTitle).to.eql(\"Member\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Michael Scarn\",\r\n         \"password\":\"Friendship\"\r\n     },\r\n     \"roleName\":\"Member\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/Kgurl/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"Kgurl",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to Role - boss works at diff company than user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Can't assign\", function(){\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"message displayed correctly\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"Boss with user name: 'JP Lobster can not assign user with user name: 'Kgurl' as they work for different companies.\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -837,7 +839,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/Breeduss/role",
+							"raw": "http://localhost:8080/user/Kgurl/role",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -845,7 +847,55 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"Breeduss",
+								"Kgurl",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to Role - boss is new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Boss is new User\", function(){\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Kgurl now has role Member\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'StepBro' has not been assigned a Role.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"StepBro\",\r\n         \"password\":\"Elf\"\r\n     },\r\n     \"roleName\":\"Member\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/Kgurl/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"Kgurl",
 								"role"
 							]
 						}
@@ -1117,7 +1167,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"JP Lobster\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"roleName\":\"Doesn't exist\"\r\n}",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Michael Scarn\",\r\n         \"password\":\"Friendship\"\r\n     },\r\n     \"roleName\":\"Doesn't exist\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1125,7 +1175,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/Breeduss/role",
+							"raw": "http://localhost:8080/user/Kgurl/role",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1133,7 +1183,7 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"Breeduss",
+								"Kgurl",
 								"role"
 							]
 						}
@@ -1182,6 +1232,150 @@
 							"path": [
 								"user",
 								"Darth Shrewt",
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign user to Project - boss is new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful assigned User to project\", function(){\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Darth Schrewt added as user for Project\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'StepBro' has not been assigned a Role.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"StepBro\",\r\n         \"password\":\"Elf\"\r\n     },\r\n     \"projectName\":\"Count Paper\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/Darth Shrewt/project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"Darth Shrewt",
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to Project- boss works at diff company than user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful assigned User to role\", function(){\r",
+									"    pm.response.to.have.status(202);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Kgurl now has role Member\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.userRole.roleTitle).to.eql(\"Member\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Michael Scarn\",\r\n         \"password\":\"Friendship\"\r\n     },\r\n     \"roleName\":\"Member\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/Kgurl/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"Kgurl",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign user to Project - user hasn't been assigned role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful assigned User to project\", function(){\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Darth Schrewt added as user for Project\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'StepBro' has not been assigned a Role.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Michael Scarn\",\r\n         \"password\":\"Friendship\"\r\n     },\r\n     \"projectName\":\"Count Paper\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/StepBro/project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"StepBro",
 								"project"
 							]
 						}
@@ -1621,6 +1815,54 @@
 					"response": []
 				},
 				{
+					"name": "Assign user to Company - boss is new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful assigned User to project\", function(){\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Darth Schrewt added as user for Project\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'StepBro' has not been assigned a Role.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"StepBro\",\r\n         \"password\":\"Elf\"\r\n     },\r\n     \"projectName\":\"Count Paper\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/Darth Shrewt/company",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"Darth Shrewt",
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Assign user to Company - user doesn't exist",
 					"event": [
 						{
@@ -1662,6 +1904,54 @@
 							"path": [
 								"user",
 								"NoOne",
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign user to Company- user hasn't been assigned role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful assigned User to project\", function(){\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Darth Schrewt added as user for Project\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'StepBro' has not been assigned a Role.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Michael Scarn\",\r\n         \"password\":\"Friendship\"\r\n     },\r\n     \"projectName\":\"Count Paper\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/StepBro/company",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"StepBro",
 								"company"
 							]
 						}
@@ -1967,9 +2257,9 @@
 									"    pm.response.to.have.status(202);\r",
 									"})\r",
 									"\r",
-									"pm.test(\"Breeduss added as user for Team\", function () {\r",
+									"pm.test(\"Kgurl added as user for Team\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.associatedTeam.teamName).to.eql(\"Service Staff\");\r",
+									"    pm.expect(jsonData.associatedTeam.teamName).to.eql(\"Accounting\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1981,7 +2271,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"JP Lobster\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"teamName\":\"Service Staff\"\r\n}",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Michael Scarn\",\r\n         \"password\":\"Friendship\"\r\n     },\r\n     \"teamName\":\"Accounting\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1989,7 +2279,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/Breeduss/team",
+							"raw": "http://localhost:8080/user/Loki/team",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1997,7 +2287,103 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"Breeduss",
+								"Loki",
+								"team"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign user to Team - boss is new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful assigned User to project\", function(){\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Darth Schrewt added as user for Project\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'StepBro' has not been assigned a Role.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"StepBro\",\r\n         \"password\":\"Elf\"\r\n     },\r\n     \"projectName\":\"Count Paper\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/Darth Shrewt/project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"Darth Shrewt",
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign user to Project - user hasn't been assigned role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful assigned User to project\", function(){\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Darth Schrewt added as user for Project\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'StepBro' has not been assigned a Role.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Michael Scarn\",\r\n         \"password\":\"Friendship\"\r\n     },\r\n     \"projectName\":\"Count Paper\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/StepBro/team",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"StepBro",
 								"team"
 							]
 						}
@@ -2413,7 +2799,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\r\n    \"userName\":\"Breeduss\",\r\n\t\"password\":\"Nada\"\r\n}",
+							"raw": "{\t\r\n    \"userName\":\"Darth Shrewt\",\r\n\t\"password\":\"Beets\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2421,7 +2807,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/Breeduss",
+							"raw": "http://localhost:8080/user/Darth Shrewt",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2429,7 +2815,7 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"Breeduss"
+								"Darth Shrewt"
 							]
 						}
 					},
@@ -2448,7 +2834,7 @@
 									"\r",
 									"pm.test(\"message displayed correctly\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'Breeduss' could not be found or has been deleted.\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'Stanley0689' could not be found or has been deleted.\");\r",
 									"});\r",
 									""
 								],
@@ -2461,7 +2847,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\r\n    \"userName\":\"Breeduss\",\r\n\t\"password\":\"Nada\"\r\n}",
+							"raw": "{\t\r\n    \"userName\":\"Stanley0689\",\r\n\t\"password\":\"Money\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2469,7 +2855,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/Breeduss",
+							"raw": "http://localhost:8080/user/Stanley0689",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2477,7 +2863,7 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"Breeduss"
+								"Stanley0689"
 							]
 						}
 					},
