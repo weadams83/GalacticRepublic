@@ -19,10 +19,26 @@ export const StyledLogin = styled.div`
 
 
 export const SignUpB = styled.button`
-display: inline-block;
-justify-content: center;
-margin: 50px 0px -10px 0px;
-padding: 5px 5px 5px 5px ;
+display:flex;
+margin:10px 1px 1px 1px;
+text-align: center;
+padding: 5px 25px 5px 25px ;
 border-radius: 5px;
 border: 1px solid #ccc;
+font-size:15px;
 `
+
+export const CompanySignUpB = styled.button`
+display:flex;
+margin:4px 1px 1px 1px;
+text-align: center;
+padding: 5px 0px 5px 0px ;
+border-radius: 5px;
+border: 1px solid #ccc;
+font-size:15px;
+`
+
+export const SignUpForm = styled.div`
+width:150px;
+display: inline-block;
+` 
