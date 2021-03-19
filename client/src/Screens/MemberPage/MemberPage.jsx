@@ -3,6 +3,8 @@ import NavBar from '../../Components/Navbar/Navbar';
 import Card from '../../Components/Card/Card';
 import { Fragment } from "react";
 import Button from '../../Components/Button/Button';
+import {NavLink} from 'react-router-dom'
+import CreateP from './StyledMemberPage'
 const dummyData = require("../../DummyData.json");
 
 
@@ -53,12 +55,12 @@ export const MemberPage = () => {
             (<Card
               className='card'
               name={project}
-              key={`${project}`}
-            />
-            )
-            )}
+              key={`${project}`}/>
+            ))}
           </div>
-          <Button name='Create a Project'></Button>
+          <NavLink to="./createproject">
+          <CreateP type="submit">Create Project</CreateP>
+        </NavLink>
         </div>
 
         

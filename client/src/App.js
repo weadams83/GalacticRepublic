@@ -6,17 +6,20 @@ import { MemberPage } from "./Screens/MemberPage/MemberPage";
 import  SignUp  from "./Components/SignUp/SignUp";
 import { Users } from "./Components/Users/Users";
 import { Projects } from "./Components/Projects/Projects";
+import CreateProject from "./Components/CreateProject/CreateProject";
 
 function App() {
   return (
     <div className="App">
       <Switch>
+        <Route path="/createproject" component={CreateProject}/>
         <Route path="/member" component={MemberPage} />
         <Route path="/company" component={CompanyPage} />
         <Route path="/SignUp" component={SignUp} />
         <Route path="/users" component={Users} />
         <Route path="/projects" component={Projects} />
         <Route path="/" component={Login} />
+        
       </Switch>
     </div>
   );
