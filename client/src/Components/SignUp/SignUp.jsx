@@ -1,16 +1,16 @@
 
 import React from 'react'
-
+// import { useHistory } from "react-router";
 import { useState } from "react";
-import { NavLink } from 'react-router-dom';
 import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledSignUp';
+
 
 const SignUp = () => {
 
     const initialFormError = {
         isError: false,
         message: '',
-        firld: ''
+        field: ''
     }
 
     const [formError, updateFormError] = useState(initialFormError)
@@ -27,10 +27,16 @@ const SignUp = () => {
         return true
     }
 
+    // const history = useHistory();
     const handleFormSubmitt = (e) => {
+        e.preventDefault();
         if (formIsValid()) {
-            e.preventDefault();
+            // history.push("/member");
+            
+
+            
         }
+
     }
 
     const [form, updateForm] = useState({
@@ -68,7 +74,7 @@ const SignUp = () => {
             <Styledmain >
 
                 <Form onSubmit={handleFormSubmitt}>
-                    <h1 style={{ margin: '20px', color: 'blue' }} >Sign Up</h1>
+                    <h1 style={{ margin: '20px', color: 'blue' }} >Team</h1>
 
                     {Object.entries(form).map(([key, props]) => (
                         <Input key={key}
@@ -97,9 +103,7 @@ const SignUp = () => {
                         <option value="Company C">Company C</option>
                     </Select>
 
-                    <NavLink to='./Company'>
-                        <Button type="submit" onClick={handleFormSubmitt} >Sign Up</Button>
-                    </NavLink>
+                    <Button type="submit" onClick={handleFormSubmitt}>Sign Up</Button>
 
                     {formError.isError && !formError.field ? (
                         <p style={{ color: 'red', textSizeAdjust: '25' }}>{formError.message}</p>

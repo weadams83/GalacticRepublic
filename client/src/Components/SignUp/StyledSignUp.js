@@ -1,7 +1,3 @@
-
-
-
-
 import styled from 'styled-components';
 
 export const InspectP = styled.div`

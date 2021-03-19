@@ -9,7 +9,7 @@ background: #f8f8f8;
   flex-direction: column;
   align-items: center;
 }
-.member-container {
+.card-container {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -18,4 +18,14 @@ background: #f8f8f8;
   border: 1px solid red;
 }
 `
+
+export const CreateP = styled.button`
+display: inline-block;
+justify-content: center;
+margin: 50px 0px -10px 0px;
+padding: 5px 5px 5px 5px ;
+border-radius: 5px;
+border: 1px solid #ccc;
+`
+
 export default StyledMemberPage

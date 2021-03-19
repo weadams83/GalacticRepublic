@@ -8,7 +8,7 @@
       "firstname": "Galo",
       "lastname": "Sandoval",
       "role": "member",
-      "projects":["a","projb"]
+      "projects":["Project Bojack","Project AppleJax"]
     },
     {
       "username": "cooksys",
@@ -19,7 +19,7 @@
       "lastname": "systems",
       "role": "company",
       "projects":[
-        "proja","projb"
+        "Project Jerry","Project Seinfeld"
       ]
       
     }
