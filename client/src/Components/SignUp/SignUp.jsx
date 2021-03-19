@@ -7,6 +7,7 @@ import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledSignU
 
 const SignUp = () => {
 
+
     const initialFormError = {
         isError: false,
         message: '',
