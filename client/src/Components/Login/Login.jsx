@@ -46,7 +46,9 @@ export const Login = () => {
     }
     if (e.target.id === "member-password") {
       setMemberFormValues({ ...memberFormValues, password: e.target.value });
+
     }
+    
   };
   const handleSubmit = (e) => {
     console.log(e.target.role.value);

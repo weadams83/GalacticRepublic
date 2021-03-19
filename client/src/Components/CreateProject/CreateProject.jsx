@@ -2,11 +2,12 @@
 import React from 'react'
 
 import { useState } from "react";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledCreateProject';
 import dummyData from '../../DummyData.json'
 
 const CreateProject = () => {
+    const history = useHistory();
 
     const initialFormError = {
         isError: false,
@@ -31,10 +32,16 @@ const CreateProject = () => {
     const handleFormSubmitt = (e) => {
         if (formIsValid()) {
             e.preventDefault();
+            console.log(form.titleofproject)
+            console.log(form.projectdiscription)
+            console.log(selectTeam.selectedTeam)
+            history.push("/member")
         }
     }
 
-    const [selectTeam, UpdateTeam] = useState("Select")
+    const [selectTeam, UpdateTeam] = useState(
+       ''
+    )
 
     const [form, updateForm] = useState({
         titleofproject: {
@@ -48,6 +55,8 @@ const CreateProject = () => {
             placeholder: 'project description',
             type: 'text'
         },
+
+        
 
 
 
@@ -72,20 +81,30 @@ const CreateProject = () => {
                                     ...form,
                                     [key]: { ...props, value: event.target.value }
                                 })
+                                console.log(event.target.value)
                                 resetError()
                             }
+                            
+
                             }
+                            
                         />
                     ))}
 
                     <Select
                         value={selectTeam}
                         onChange={(e) => {
+                            
                             const selectedTeam = e.target.value;
-                            UpdateTeam(selectedTeam);
+                            console.log(selectedTeam)
+                            UpdateTeam({
+                               selectedTeam
+                            });
                         }}>
+                            <option value='' defaultValue disabled >choose a team</option>
                         {dummyData.data[2].teams.map((team) => (
-                            <option key={`${team.name}-${team.id}`} name={team.name} >{team.name}</option>
+                            
+                            <option key={`${team.name}-${team.id}`} name={team.name}  >{team.name}</option>
                         ))}
 
                     </Select>
