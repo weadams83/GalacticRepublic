@@ -1,6 +1,7 @@
 import $ from "jquery";
 import { useState } from "react";
 import { useHistory } from "react-router";
+import axios from "axios"
 
 import { StyledLogin } from "./StyledLogin";
 const dummyData = require("../../DummyData.json");
@@ -91,6 +92,12 @@ export const Login = () => {
       $(".button").removeClass("hide");
     }
   };
+
+  console.log(memberFormValues)
+
+  const login = () => {
+    axios.post("http://localhost:8080/user/login").then()
+  }
 
   return (
     <StyledLogin className="login">
