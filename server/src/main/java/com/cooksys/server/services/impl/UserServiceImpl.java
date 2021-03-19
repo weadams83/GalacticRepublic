@@ -1,6 +1,7 @@
 package com.cooksys.server.services.impl;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -228,7 +229,10 @@ public class UserServiceImpl implements UserService {
 		userRepo.saveAndFlush(findUser.get());
 		return userMap.EntityToDTO(findUser.get());
 	}
-
+/*
+ * if user doesn't exist or is deleted throw exception
+ * validate credentials
+ */
 	@Override
 	public UserResponseDTO login(UserSignInRequestDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userRequest.getUserName());
@@ -236,5 +240,11 @@ public class UserServiceImpl implements UserService {
 		validateCredentials(findUser,userRequest.getUserName(),userRequest.getPassword());
 
 		return userMap.EntityToDTO(findUser.get());
+	}
+
+	//TODO: currently this INCLUDES deleted users
+	@Override
+	public List<UserResponseDTO> getAllUsers() {
+		return userMap.EntitiesToDTO(userRepo.findAll());
 	}
 }

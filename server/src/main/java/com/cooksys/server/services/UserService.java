@@ -29,4 +29,6 @@ public interface UserService {
 	UserResponseDTO assignTeam(String userName, UserRequestAssignTeamDTO userRequest);
 
 	UserResponseDTO login(UserSignInRequestDTO userRequest);
+
+	List<UserResponseDTO> getAllUsers();
 }
