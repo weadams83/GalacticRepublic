@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import { useState } from "react";
 import { InspectP, Styledmain, Form, Input, Button } from './StyledSignUp';
 
@@ -26,11 +26,22 @@ const CompanySignUp = () => {
         return true
     }
 
-    const history = useHistory();
+    // const history = useHistory();
     const handleFormSubmitt = (e) => {
         if (formIsValid()) {
-            history.push("/company")
-            //API Call since form is valid 
+            // history.push("/company")
+            fetch('http://localhost:8080/company', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({
+                "companyName": form.name.value,
+                "companyDescription": form.description.value
+            })
+        }).then(data => data.json())
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
         }
 
     }
