@@ -1,19 +1,24 @@
 package com.cooksys.server.DTOs;
 
-import com.cooksys.server.entities.Project;
-import com.cooksys.server.entities.User;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
 public class ProjectResponseDTO {
-	
+
+//	private Long id;
+
 	private String name;
-	
-	private String description;
-	
-	private UserResponseDTO user;
+
+//	private String description;
+//
+//	private Timestamp created;
+//
+//	private Timestamp updated;
+//
+//	private TeamResponseDTO team;
+//
+//	private Boolean isDeleted;
 
 }

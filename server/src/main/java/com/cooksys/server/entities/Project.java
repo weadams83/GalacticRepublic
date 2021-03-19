@@ -51,8 +51,8 @@ public class Project {
 	@OneToOne
 	private User updatedBy;
 
-	@ManyToOne
-	private Team projectTeam;
+//	@OneToMany(mappedBy = "userProject")
+//	private List<User> projectUsers;
 
 	/*
 	 * equals() compares the database entries by id and the objects in memory in
@@ -82,15 +82,6 @@ public class Project {
 		 * in the database.
 		 */
 		return Objects.hash(this.id);
-	}
-
-	@Override
-	public String toString() {
-		String retString = String.format("id %d projectname %s isDeleted %b description %s", id, name, isDeleted,
-				description);
-		retString += team != null ? "\n" + team.toString() : "";
-		retString += user != null ? "\n" + user.toString() : "";
-		return retString;
 	}
 
 }
