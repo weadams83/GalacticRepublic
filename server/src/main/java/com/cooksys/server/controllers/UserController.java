@@ -40,6 +40,12 @@ public class UserController {
 		return userServ.getUser(userName);
 	}
 
+	@PostMapping("/login")
+	@ResponseStatus(HttpStatus.OK)
+	public UserResponseDTO postUser(@RequestBody UserSignInRequestDTO userRequest) {
+		return userServ.login(userRequest);
+	}
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public UserResponseDTO postUser(@RequestBody UserCreateRequestDTO userRequest) {

@@ -228,4 +228,13 @@ public class UserServiceImpl implements UserService {
 		userRepo.saveAndFlush(findUser.get());
 		return userMap.EntityToDTO(findUser.get());
 	}
+
+	@Override
+	public UserResponseDTO login(UserSignInRequestDTO userRequest) {
+		Optional<User> findUser = userRepo.findByUserName(userRequest.getUserName());
+		validateUserExistsAndNotDeleted(findUser,userRequest.getUserName());
+		validateCredentials(findUser,userRequest.getUserName(),userRequest.getPassword());
+
+		return userMap.EntityToDTO(findUser.get());
+	}
 }
