@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import { useState } from "react";
 import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledSignUp';
 
@@ -27,12 +27,14 @@ const SignUp = () => {
         return true
     }
 
-    const history = useHistory();
+    // const history = useHistory();
     const handleFormSubmitt = (e) => {
         e.preventDefault();
         if (formIsValid()) {
-            history.push("/member");
-            //API Call since form is valid 
+            // history.push("/member");
+            
+
+            
         }
 
     }
