@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
-export const StyledCompanyPage = styled.div`
+export const StyledUsers = styled.div`
   display: flex;
   background: #f8f8f8;
-  .company-page-container {
+  .users-container {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -14,4 +14,5 @@ export const StyledCompanyPage = styled.div`
     flex-wrap: wrap;
     width: 100%;
   }
-`;
+  
+`

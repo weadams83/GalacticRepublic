@@ -1,11 +1,17 @@
 import $ from "jquery";
 import { useState } from "react";
 import { useHistory } from "react-router";
+<<<<<<< HEAD
 import {NavLink} from "react-router-dom"
 
 import '../SignUp/SignUp'
 import '../SignUp/CompanySignUp'
 import { StyledLogin, SignUpB, CompanySignUpB, SignUpForm } from "./StyledLogin";
+=======
+import { NavLink } from "react-router-dom";
+import { CompanyPage } from "../../Screens/CompanyPage/CompanyPage";
+import "../SignUp/SignUp";
+>>>>>>> main
 
 const dummyData = require("../../DummyData.json");
 
@@ -45,8 +51,8 @@ export const Login = () => {
       setMemberFormValues({ ...memberFormValues, password: e.target.value });
     }
   };
-
   const handleSubmit = (e) => {
+    console.log(e.target.role.value);
     e.preventDefault();
     if (e.target.role.value === "company") {
       if (
@@ -60,7 +66,8 @@ export const Login = () => {
         setCurrentUser(companyFormValues.companyUsername);
         history.push("/company");
       }
-    } else if (e.target.role.value === "member") {
+    }
+    if (e.target.role.value === "member") {
       if (
         dummyData.data[0].user.filter(
           (user) => user.username === memberFormValues.username
@@ -134,6 +141,7 @@ export const Login = () => {
           </div>
           <div className="button hide">
             <button type="submit">Login</button>
+<<<<<<< HEAD
             </div>
           </form>
           <SignUpForm > 
@@ -145,7 +153,16 @@ export const Login = () => {
         </NavLink>
           </SignUpForm>
       </div>
+=======
+          </div>
+        </form>
 
+        <NavLink to="./SignUp">
+          <SignUpB type="submit">SignUp</SignUpB>
+        </NavLink>
+>>>>>>> main
+
+      </div>
     </StyledLogin>
   );
 };
