@@ -78,7 +78,7 @@ const CreateProject = () => {
 
                   
 
-                    <NavLink to='./Company'>
+                    <NavLink to='./member'>
                         <Button type="submit" onClick={handleFormSubmitt} >Create</Button>
                     </NavLink>
 
