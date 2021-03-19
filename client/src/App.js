@@ -7,6 +7,8 @@ import { MemberPage } from "./Screens/MemberPage/MemberPage";
 import Navbar from './Components/Navbar/Navbar'; 
 import  SignUp  from "./Components/SignUp/SignUp";
 
+import CompanySignUp from "./Components/SignUp/CompanySignUp";
+
 function App() {
   return (
     <div className="App">
@@ -19,6 +21,7 @@ function App() {
         <Route path="/member" component={MemberPage} />
         <Route path="/company" component={CompanyPage} />
         <Route path="/SignUp" component={SignUp} />
+        <Route path="/CompanySignUp" component={CompanySignUp} />
         <Route path="/" component={Login} />
       </Switch>
 

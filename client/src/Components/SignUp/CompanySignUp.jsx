@@ -1,12 +1,10 @@
-
 import React from 'react'
 
 import { useState } from "react";
-import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledSignUp';
+import { InspectP, Styledmain, Form, Input, Button } from './StyledSignUp';
 
 
-const SignUp = () => {
-
+const CompanySignUp = () => {
     const initialFormError = {
         isError: false,
         message: '',
@@ -17,7 +15,7 @@ const SignUp = () => {
     const resetError = () => updateFormError(initialFormError)
 
     const formIsValid = () => {
-        if (!form.firstName.value || !form.lastName.value
+        if (!form.name.value || !form.description.value
             || !form.username.value || !form.password.value) {
             updateFormError({
                 ...formError, isError: true, message: 'All fields are required'
@@ -37,15 +35,15 @@ const SignUp = () => {
     }
 
     const [form, updateForm] = useState({
-        firstName: {
+        name: {
             value: '',
-            placeholder: 'First Name',
+            placeholder: 'Company Name',
             type: 'text'
         },
 
-        lastName: {
+        description: {
             value: '',
-            placeholder: 'Last Name',
+            placeholder: 'Company Description',
             type: 'text'
         },
 
@@ -63,7 +61,6 @@ const SignUp = () => {
         },
     })
 
-    const [selectCompanyName, UpdateCompanyName] = useState("Select")
 
     return (
         <InspectP>
@@ -71,7 +68,7 @@ const SignUp = () => {
             <Styledmain >
 
                 <Form onSubmit={handleFormSubmitt}>
-                    <h1 style={{ margin: '20px', color: 'blue' }} >Team</h1>
+                    <h1 style={{ margin: '20px', color: 'blue' }} >Company</h1>
 
                     {Object.entries(form).map(([key, props]) => (
                         <Input key={key}
@@ -87,19 +84,6 @@ const SignUp = () => {
                         />
                     ))}
 
-
-                    <Select
-                        value={selectCompanyName}
-                        onChange={(e) => {
-                            const selectedCompany = e.target.value;
-                            UpdateCompanyName(selectedCompany);
-                        }}
-                    >
-                        <option value="Company A">Company A</option>
-                        <option value="Company B">Company B</option>
-                        <option value="Company C">Company C</option>
-                    </Select>
-
                     <Button type="submit" onClick={handleFormSubmitt}>Sign Up</Button>
 
                     {formError.isError && !formError.field ? (
@@ -114,6 +98,6 @@ const SignUp = () => {
     )
 }
 
-export default SignUp
 
 
+export default CompanySignUp
