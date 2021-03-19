@@ -16,5 +16,5 @@ public class UserCreateRequestDTO {
 	
 	private String password;
 	
-//	private String roleTitle;
+	private String companyName;
 }
