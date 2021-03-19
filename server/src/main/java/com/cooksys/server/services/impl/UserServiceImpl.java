@@ -35,7 +35,8 @@ import com.cooksys.server.repositories.UserRepository;
 import com.cooksys.server.services.UserService;
 
 import lombok.AllArgsConstructor;
-
+//TODO: As written there is nothing to prevent a user from being on a Team AND on a company
+// should a user be restricted so that they are either on a team EXLUSIVELY OR on a company?
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -130,7 +131,7 @@ public class UserServiceImpl implements UserService {
 		return userMap.EntityToDTO(userRepo.saveAndFlush(findUser.get()));
 	}
 
-	/*
+	/* TODO: should projects be constrained by company?
 	 * if user not found or deleted throw exception
 	 * if boss not found or deleted throw exception
 	 * if boss is not of company role "user"
@@ -185,7 +186,7 @@ public class UserServiceImpl implements UserService {
 		return userMap.EntityToDTO(userRepo.saveAndFlush(findUser.get()));
 	}
 
-	/*
+	/* TODO: should Teams be constrained by company? (can a user belong to another company, and be on a team with a different company?)
 	 * if user not found or deleted throw exception
 	 * if boss not found or deleted throw exception
 	 * if boss is not of company role "user"
