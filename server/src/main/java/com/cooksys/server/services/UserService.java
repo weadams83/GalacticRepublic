@@ -27,4 +27,8 @@ public interface UserService {
 	UserResponseDTO deleteUser(String userName, UserSignInRequestDTO userRequest);
 
 	UserResponseDTO assignTeam(String userName, UserRequestAssignTeamDTO userRequest);
+
+	UserResponseDTO login(UserSignInRequestDTO userRequest);
+
+	List<UserResponseDTO> getAllUsers();
 }
