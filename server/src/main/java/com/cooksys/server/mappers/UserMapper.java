@@ -16,7 +16,7 @@ public interface UserMapper {
 
 	UserResponseDTO EntityToDTO(User user);
 
-	User DTOtoEntity(UserSignInRequestDTO userSignInRequestDTO);
+//	User DTOtoEntity(UserSignInRequestDTO userSignInRequestDTO);
 	
 	@Mappings({
 		@Mapping(target="userRole.roleTitle", source="userCreateRequestDTO.roleTitle")

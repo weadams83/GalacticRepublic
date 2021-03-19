@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class RoleDTO {
-	private List<User> users;
-	
+public class RoleResponseDTO {	
 	private String roleTitle;
 }

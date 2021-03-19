@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 
 import com.cooksys.server.DTOs.CompanyResponseDTO;
+import com.cooksys.server.DTOs.ProjectResponseDTO;
 import com.cooksys.server.DTOs.UserCreateRequestDTO;
 import com.cooksys.server.DTOs.UserEditRequestDTO;
 import com.cooksys.server.DTOs.UserRequestAssignCompanyDTO;
 import com.cooksys.server.DTOs.UserRequestAssignProjectDTO;
+import com.cooksys.server.DTOs.UserRequestAssignTeamDTO;
 import com.cooksys.server.DTOs.UserResponseDTO;
 import com.cooksys.server.DTOs.UserSignInRequestDTO;
 import com.cooksys.server.services.UserService;
@@ -49,7 +51,7 @@ public class UserController {
 	
 	@PatchMapping("/{username}/project")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public UserResponseDTO assignUserProj(@PathVariable("username") String userName, @RequestBody UserRequestAssignProjectDTO userRequest) {
+	public ProjectResponseDTO assignUserProj(@PathVariable("username") String userName, @RequestBody UserRequestAssignProjectDTO userRequest) {
 		return userServ.assignProject(userName, userRequest);
 	}
 	
@@ -59,11 +61,16 @@ public class UserController {
 		return userServ.assignCompany(userName, userRequest);
 	}
 	
+	@PatchMapping("/{username}/team")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public UserResponseDTO assignUserTeam(@PathVariable("username") String userName, @RequestBody UserRequestAssignTeamDTO userRequest) {
+		return userServ.assignTeam(userName, userRequest);
+	}
+	
 	@DeleteMapping("/{username}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public UserResponseDTO deleteUser(@PathVariable("username") String userName, @RequestBody UserSignInRequestDTO userRequest) {
 		return userServ.deleteUser(userName, userRequest);
 	}
-	
 
 }

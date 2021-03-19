@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.server.DTOs.CompanyResponseDTO;
+import com.cooksys.server.DTOs.ProjectResponseDTO;
 import com.cooksys.server.DTOs.UserCreateRequestDTO;
 import com.cooksys.server.DTOs.UserEditRequestDTO;
 import com.cooksys.server.DTOs.UserRequestAssignCompanyDTO;
 import com.cooksys.server.DTOs.UserRequestAssignProjectDTO;
+import com.cooksys.server.DTOs.UserRequestAssignTeamDTO;
 import com.cooksys.server.DTOs.UserResponseDTO;
 import com.cooksys.server.DTOs.UserSignInRequestDTO;
 import com.cooksys.server.entities.Company;
@@ -48,21 +50,33 @@ public class UserServiceImpl implements UserService {
 	private CompanyMapper companyMap;
 	private ProjectMapper projectMap;
 	private RoleMapper roleMap;
+	
+	private void validateAuthorization(Optional<User> findUser,String userName) {
+		if(!findUser.get().getUserRole().getRoleTitle().equals("Company")) {
+			throw new BadRequestException(String.format("User with user name: '%s' does not have authorization.", userName));
+		}
+	}
 
+	private void validateCredentials(Optional<User> findUser, String userName, String password) {
+		if(!findUser.get().getUserName().equals(userName) || !findUser.get().getPassword().equals(password)) {
+			throw new BadRequestException("Username/Password do not match.");
+		}
+	}
+	
+	private void validateUserExistsAndNotDeleted(Optional<User> findUser, String userName) {
+		if(findUser.isEmpty() || findUser.get().getIsDeleted()) {
+			throw new NotFoundException(String.format("User with user name: '%s' could not be found or has been deleted.", userName));
+
+		}
+	}
 	/*
 	 * GET User if user doesn't exist or is deleted, throw exception
 	 */
 	@Override
 	public UserResponseDTO getUser(String userName) {
 		Optional<User> findUser = userRepo.findByUserName(userName);
+		validateUserExistsAndNotDeleted(findUser,userName);
 
-		if (findUser.isEmpty()) {
-			throw new NotFoundException(String.format("User with user name: '%s' could not be found.", userName));
-		}
-		if(findUser.isEmpty() || findUser.get().getIsDeleted()) {
-			throw new NotFoundException(String.format("User with user name: '%s' could not be found or has been deleted.", userName));
-
-		}
 		return userMap.EntityToDTO(findUser.get());
 	}
 
@@ -78,7 +92,7 @@ public class UserServiceImpl implements UserService {
 		if (findUser.isPresent()) {
 			if (findUser.get().getIsDeleted()) {
 				findUser.get().setIsDeleted(false);
-				return userMap.EntityToDTO(findUser.get());
+				return userMap.EntityToDTO(userRepo.saveAndFlush(findUser.get()));
 			}
 			throw new ImUsedException(String.format("User name: '%s' is taken.", findUser.get().getUserName()));
 		}
@@ -103,13 +117,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserResponseDTO patchUser(String userName, UserEditRequestDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userName);
-		if (findUser.isEmpty() || findUser.get().getIsDeleted()) {
-			throw new NotFoundException(String.format("User name: '%s' not found or is deleted.", userName));
-		}
-
-		if(!findUser.get().getUserName().equals(userRequest.getCredentials().getUserName()) || !findUser.get().getPassword().equals(userRequest.getCredentials().getPassword())) {
-			throw new BadRequestException("Username/Password do not match.");
-		}
+		validateUserExistsAndNotDeleted(findUser,userName);
+		validateCredentials(findUser,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
 
 		findUser.get().setFirstName(userRequest.getFirstName());
 		findUser.get().setLastName(userRequest.getLastName());
@@ -124,38 +133,35 @@ public class UserServiceImpl implements UserService {
 	/*
 	 * if user not found or deleted throw exception
 	 * if boss not found or deleted throw exception
+	 * if boss is not of company role "user"
 	 * verify boss's credentials
 	 * if project exists, set project's user property to this user
 	 * else throw exception
 	 */
 	@Override
-	public UserResponseDTO assignProject(String userName, UserRequestAssignProjectDTO userRequest) {
+	public ProjectResponseDTO assignProject(String userName, UserRequestAssignProjectDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userName);	
 		Optional<User> findBoss = userRepo.findByUserName(userRequest.getCredentials().getUserName());
-		if(findUser.isEmpty() || findUser.get().getIsDeleted()){
-			throw new NotFoundException(String.format("User name: '%s' not found or is deleted.", userName));
-		}
-		if(findBoss.isEmpty() || findBoss.get().getIsDeleted()){
-			throw new NotFoundException(String.format("User name: '%s' not found or is deleted.", userRequest.getCredentials().getUserName()));
-		}
-		
-		if(!findBoss.get().getUserName().equals(userRequest.getCredentials().getUserName()) || 
-				!findUser.get().getPassword().equals(userRequest.getCredentials().getPassword())) {
-			throw new BadRequestException("Username/Password do not match.");
-		}
+		validateUserExistsAndNotDeleted(findUser,userName);
+		validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
+		validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
+
+		validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
+
 		Optional<Project> findProject = projectRepo.findByName(userRequest.getProjectName());
-		if(findProject.isPresent()) {
+		if(findProject.isPresent() && findProject.get().getIsDeleted() != true) {
 			findProject.get().setUser(findUser.get());
 			projectRepo.saveAndFlush(findProject.get());
 		}else {
-			throw new NotFoundException(String.format("Project with name: '%s' not found.", userRequest.getProjectName()));
+			throw new NotFoundException(String.format("Project with name: '%s' not found or deleted.", userRequest.getProjectName()));
 		}
-		return userMap.EntityToDTO(userRepo.saveAndFlush(findUser.get()));//TODO return project DTO ?
+		return projectMap.EntityToProjectResponseDTO(projectRepo.saveAndFlush(findProject.get()));
 	}
 
 	/*
 	 * if user not found or deleted throw exception
 	 * if boss not found or deleted throw exception
+	 * if boss is not of company role "user"
 	 * verify boss's credentials
 	 * if company exists, add user to company's list of users
 	 * else throw exception
@@ -164,17 +170,11 @@ public class UserServiceImpl implements UserService {
 	public UserResponseDTO assignCompany(String userName, UserRequestAssignCompanyDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userName);	
 		Optional<User> findBoss = userRepo.findByUserName(userRequest.getCredentials().getUserName());
-		if(findUser.isEmpty() || findUser.get().getIsDeleted()){
-			throw new NotFoundException(String.format("User name: '%s' not found or is deleted.", userName));
-		}
-		if(findBoss.isEmpty() || findBoss.get().getIsDeleted()){
-			throw new NotFoundException(String.format("User name: '%s' not found or is deleted.", userRequest.getCredentials().getUserName()));
-		}
-		
-		if(!findBoss.get().getUserName().equals(userRequest.getCredentials().getUserName()) || 
-				!findUser.get().getPassword().equals(userRequest.getCredentials().getPassword())) {
-			throw new BadRequestException("Username/Password do not match.");
-		}
+		validateUserExistsAndNotDeleted(findUser,userName);
+		validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
+		validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
+		validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
+
 		Optional<Company> findCompany = companyRepo.findByCompanyName(userRequest.getCompanyName());
 		if(findCompany.isPresent()) {
 			findUser.get().setUserCompany(findCompany.get());
@@ -182,21 +182,47 @@ public class UserServiceImpl implements UserService {
 		}else {
 			throw new NotFoundException(String.format("Company with name: '%s' not found.", userRequest.getCompanyName()));
 		}
-		return userMap.EntityToDTO(userRepo.saveAndFlush(findUser.get()));//TODO return company DTO?
+		return userMap.EntityToDTO(userRepo.saveAndFlush(findUser.get()));
 	}
 
 	/*
+	 * if user not found or deleted throw exception
+	 * if boss not found or deleted throw exception
+	 * if boss is not of company role "user"
+	 * verify boss's credentials
+	 * if team exists, set user's team to this team
+	 * else throw exception
+	 */
+	@Override
+	public UserResponseDTO assignTeam(String userName, UserRequestAssignTeamDTO userRequest) {
+		Optional<User> findUser = userRepo.findByUserName(userName);	
+		Optional<User> findBoss = userRepo.findByUserName(userRequest.getCredentials().getUserName());
+		validateUserExistsAndNotDeleted(findUser,userName);
+		validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
+		validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
+		validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
+
+		Optional<Team> findTeam = teamRepo.findByTeamNameIgnoreCase(userRequest.getTeamName());
+		if(findTeam.isPresent() && findTeam.get().getIsDeleted() != true) {
+			findUser.get().setAssociatedTeam(findTeam.get());
+			userRepo.saveAndFlush(findUser.get());
+		}else {
+			throw new NotFoundException(String.format("Team with name: '%s' not found or deleted.", userRequest.getTeamName()));
+		}
+		return userMap.EntityToDTO(userRepo.saveAndFlush(findUser.get()));
+	}
+	
+	/*
+	 * if user doesn't exist or is deleted throw exception
+	 * validate credentials
 	 * delete user (only a user can delete himself)
 	 */
 	@Override
 	public UserResponseDTO deleteUser(String userName, UserSignInRequestDTO userRequest) {
-		Optional<User> findUser = userRepo.findByUserName(userName);	
-		if(findUser.isEmpty() || findUser.get().getIsDeleted()){
-			throw new NotFoundException(String.format("User name: '%s' not found or is deleted.", userName));
-		}
-		if(!findUser.get().getUserName().equals(userRequest.getUserName()) || !findUser.get().getPassword().equals(userRequest.getPassword())) {
-			throw new BadRequestException("Username/Password do not match.");
-		}
+		Optional<User> findUser = userRepo.findByUserName(userName);
+		validateUserExistsAndNotDeleted(findUser,userName);
+		validateCredentials(findUser,userRequest.getUserName(),userRequest.getPassword());
+
 		findUser.get().setIsDeleted(true);
 		userRepo.saveAndFlush(findUser.get());
 		return userMap.EntityToDTO(findUser.get());

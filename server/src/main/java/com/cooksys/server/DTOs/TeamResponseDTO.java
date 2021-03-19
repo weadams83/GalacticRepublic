@@ -17,7 +17,7 @@ public class TeamResponseDTO {
 
 	private String teamDescription;
 
-	private Company parentCompany;
-	private List<User> teamMembers;
-	private List<Project> projects;
+	private CompanyResponseDTO parentCompany;
+//	private List<User> teamMembers;
+//	private List<Project> projects;
 }
