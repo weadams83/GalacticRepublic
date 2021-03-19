@@ -2,23 +2,23 @@
 import React from 'react'
 
 import { useState } from "react";
-import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledSignUp';
+import { NavLink } from 'react-router-dom';
+import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledCreateProject';
 
-
-const SignUp = () => {
+const CreateProject = () => {
 
     const initialFormError = {
         isError: false,
         message: '',
-        field: ''
+        firld: ''
     }
 
     const [formError, updateFormError] = useState(initialFormError)
     const resetError = () => updateFormError(initialFormError)
 
     const formIsValid = () => {
-        if (!form.firstName.value || !form.lastName.value
-            || !form.username.value || !form.password.value) {
+        if (!form.titleofproject.value || !form.projectdiscription.value
+           ) {
             updateFormError({
                 ...formError, isError: true, message: 'All fields are required'
             })
@@ -27,43 +27,31 @@ const SignUp = () => {
         return true
     }
 
-    // const history = useHistory();
     const handleFormSubmitt = (e) => {
         if (formIsValid()) {
-            // history.push("/mypage")
-            //API Call since form is valid 
+            e.preventDefault();
         }
-
     }
 
     const [form, updateForm] = useState({
-        firstName: {
+        titleofproject: {
             value: '',
-            placeholder: 'First Name',
+            placeholder: 'project name',
             type: 'text'
         },
 
-        lastName: {
+        projectdiscription: {
             value: '',
-            placeholder: 'Last Name',
+            placeholder: 'project description',
             type: 'text'
         },
 
-        username: {
-            value: '',
-            placeholder: 'Username',
-            type: 'text',
-            name: 'username'
-        },
+       
 
-        password: {
-            value: '',
-            placeholder: 'Password',
-            type: 'password'
-        },
+       
     })
 
-    const [selectCompanyName, UpdateCompanyName] = useState("Select")
+  
 
     return (
         <InspectP>
@@ -71,7 +59,7 @@ const SignUp = () => {
             <Styledmain >
 
                 <Form onSubmit={handleFormSubmitt}>
-                    <h1 style={{ margin: '20px', color: 'blue' }} >Team</h1>
+                    <h1 style={{ margin: '20px', color: 'blue' }} >Create Project</h1>
 
                     {Object.entries(form).map(([key, props]) => (
                         <Input key={key}
@@ -88,19 +76,11 @@ const SignUp = () => {
                     ))}
 
 
-                    <Select
-                        value={selectCompanyName}
-                        onChange={(e) => {
-                            const selectedCompany = e.target.value;
-                            UpdateCompanyName(selectedCompany);
-                        }}
-                    >
-                        <option value="Company A">Company A</option>
-                        <option value="Company B">Company B</option>
-                        <option value="Company C">Company C</option>
-                    </Select>
+                  
 
-                    <Button type="submit" onClick={handleFormSubmitt}>Sign Up</Button>
+                    <NavLink to='./member'>
+                        <Button type="submit" onClick={handleFormSubmitt} >Create</Button>
+                    </NavLink>
 
                     {formError.isError && !formError.field ? (
                         <p style={{ color: 'red', textSizeAdjust: '25' }}>{formError.message}</p>
@@ -114,6 +94,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp
-
-
+export default CreateProject

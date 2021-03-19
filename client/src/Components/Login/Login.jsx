@@ -1,11 +1,18 @@
 import $ from "jquery";
 import { useState } from "react";
 import { useHistory } from "react-router";
+<<<<<<< HEAD
+import {NavLink} from "react-router-dom"
+
+import '../SignUp/SignUp'
+import '../SignUp/CompanySignUp'
+import { StyledLogin, SignUpB, CompanySignUpB, SignUpForm } from "./StyledLogin";
+=======
 import { NavLink } from "react-router-dom";
 import { CompanyPage } from "../../Screens/CompanyPage/CompanyPage";
 import "../SignUp/SignUp";
+>>>>>>> main
 
-import { StyledLogin, SignUpB } from "./StyledLogin";
 const dummyData = require("../../DummyData.json");
 
 const initialMemberForm = {
@@ -134,12 +141,26 @@ export const Login = () => {
           </div>
           <div className="button hide">
             <button type="submit">Login</button>
+<<<<<<< HEAD
+            </div>
+          </form>
+          <SignUpForm > 
+        <NavLink to="/SignUp">
+           <SignUpB type="submit">Sign Up as a Team </SignUpB> 
+        </NavLink>
+        <NavLink to="/CompanySignUp">
+           <CompanySignUpB type="submit">Sign Up as a Company</CompanySignUpB> 
+        </NavLink>
+          </SignUpForm>
+      </div>
+=======
           </div>
         </form>
 
         <NavLink to="./SignUp">
           <SignUpB type="submit">SignUp</SignUpB>
         </NavLink>
+>>>>>>> main
 
       </div>
     </StyledLogin>

@@ -1,3 +1,7 @@
+
+
+
+
 import styled from 'styled-components';
 
 export const InspectP = styled.div`
@@ -59,3 +63,4 @@ padding: 5px 25px 5px 25px ;
 border-radius: 5px;
 border: 1px solid #ccc;
 `
+
