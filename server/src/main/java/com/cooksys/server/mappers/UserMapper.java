@@ -22,9 +22,9 @@ public interface UserMapper {
 
 //	User DTOtoEntity(UserSignInRequestDTO userSignInRequestDTO);
 	
-	@Mappings({
-		@Mapping(target="userRole.roleTitle", source="userCreateRequestDTO.roleTitle")
-		})
+//	@Mappings({
+//		@Mapping(target="userRole.roleTitle", source="userCreateRequestDTO.roleTitle")
+//		})
 	User CreateDTOtoEntity(UserCreateRequestDTO userCreateRequestDTO);
 	
 	User EditDTOtoEntity(UserEditRequestDTO userEditRequestDTO);

@@ -3,6 +3,7 @@ package com.cooksys.server.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import com.cooksys.server.DTOs.UserCreateRequestDTO;
 import com.cooksys.server.DTOs.UserEditRequestDTO;
 import com.cooksys.server.DTOs.UserRequestAssignCompanyDTO;
 import com.cooksys.server.DTOs.UserRequestAssignProjectDTO;
+import com.cooksys.server.DTOs.UserRequestAssignRoleDTO;
 import com.cooksys.server.DTOs.UserRequestAssignTeamDTO;
 import com.cooksys.server.DTOs.UserResponseDTO;
 import com.cooksys.server.DTOs.UserSignInRequestDTO;
@@ -29,6 +31,7 @@ import com.cooksys.server.services.UserService;
 import lombok.AllArgsConstructor;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("user")
 @AllArgsConstructor
 public class UserController {
@@ -62,6 +65,12 @@ public class UserController {
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public UserResponseDTO patchUser(@PathVariable("username") String userName, @RequestBody UserEditRequestDTO userRequest) {
 		return userServ.patchUser(userName,userRequest);
+	}
+	
+	@PatchMapping("/{username}/role")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public UserResponseDTO patchUserRole(@PathVariable("username") String userName, @RequestBody UserRequestAssignRoleDTO userRequest) {
+		return userServ.assignUserRole(userName,userRequest);
 	}
 	
 	@PatchMapping("/{username}/project")
