@@ -4,6 +4,7 @@ import React from 'react'
 import { useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledCreateProject';
+import dummyData from '../../DummyData.json'
 
 const CreateProject = () => {
 
@@ -18,7 +19,7 @@ const CreateProject = () => {
 
     const formIsValid = () => {
         if (!form.titleofproject.value || !form.projectdiscription.value
-           ) {
+        ) {
             updateFormError({
                 ...formError, isError: true, message: 'All fields are required'
             })
@@ -33,6 +34,8 @@ const CreateProject = () => {
         }
     }
 
+    const [selectTeam, UpdateTeam] = useState("Select")
+
     const [form, updateForm] = useState({
         titleofproject: {
             value: '',
@@ -46,12 +49,12 @@ const CreateProject = () => {
             type: 'text'
         },
 
-       
 
-       
+
+
     })
 
-  
+
 
     return (
         <InspectP>
@@ -75,8 +78,20 @@ const CreateProject = () => {
                         />
                     ))}
 
+                    <Select
+                        value={selectTeam}
+                        onChange={(e) => {
+                            const selectedTeam = e.target.value;
+                            UpdateTeam(selectedTeam);
+                        }}>
+                        {dummyData.data[2].teams.map((team) => (
+                            <option key={`${team.name}-${team.id}`} name={team.name} >{team.name}</option>
+                        ))}
 
-                  
+                    </Select>
+
+
+
 
                     <NavLink to='./member'>
                         <Button type="submit" onClick={handleFormSubmitt} >Create</Button>
@@ -85,8 +100,8 @@ const CreateProject = () => {
                     {formError.isError && !formError.field ? (
                         <p style={{ color: 'red', textSizeAdjust: '25' }}>{formError.message}</p>
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
 
                 </Form>
             </Styledmain>
