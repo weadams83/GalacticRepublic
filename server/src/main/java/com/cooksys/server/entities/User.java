@@ -39,6 +39,8 @@ public class User {
 	private String lastName;
 
 	private String password;
+	
+	private boolean newUser = true;
 
 	@CreationTimestamp
 

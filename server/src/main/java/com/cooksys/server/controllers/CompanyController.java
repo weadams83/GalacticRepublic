@@ -1,6 +1,7 @@
 package com.cooksys.server.controllers;
 
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ import com.cooksys.server.services.CompanyService;
 import lombok.AllArgsConstructor;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("company")
 @AllArgsConstructor
 

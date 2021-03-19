@@ -91,6 +91,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		Jim.setAssociatedTeam(salesTeam);
 		Jim.setUserRole(worker);
 		Jim.setUserName("Loki");
+		Jim.setNewUser(false);
 
 		User Dwight = new User();
 		Dwight.setFirstName("Dwight");
@@ -99,6 +100,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		Dwight.setAssociatedTeam(salesTeam);
 		Dwight.setUserRole(worker);
 		Dwight.setUserName("Darth Shrewt");
+		Dwight.setNewUser(false);
 
 		User Stanley = new User();
 		Stanley.setFirstName("Stanley");
@@ -108,6 +110,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		Stanley.setUserRole(worker);
 		Stanley.setUserName("Stanley0689");
 		Stanley.setIsDeleted(true);
+		Stanley.setNewUser(false);
 
 		User Ryan = new User();
 		Ryan.setFirstName("Ryan");
@@ -117,6 +120,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		Ryan.setUserRole(worker);
 		Ryan.setUserName("Wunderkind");
 		Ryan.setIsDeleted(true);
+		Ryan.setNewUser(false);
 
 		User spongeBob = new User();
 		spongeBob.setFirstName("Spongebob");
@@ -125,6 +129,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		spongeBob.setAssociatedTeam(kitchen);
 		spongeBob.setUserRole(worker);
 		spongeBob.setUserName("The Quickster");
+		spongeBob.setNewUser(false);
 
 		User squidWard = new User();
 		squidWard.setFirstName("Squidward");
@@ -133,6 +138,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		squidWard.setAssociatedTeam(cashier);
 		squidWard.setUserRole(worker);
 		squidWard.setUserName("Captain Magma");
+		squidWard.setNewUser(false);
 		
 		User Pearl = new User();
 		Pearl.setFirstName("Pearl");
@@ -142,6 +148,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		Pearl.setUserRole(comp);
 		Pearl.setUserName("GD");
 		Pearl.setIsDeleted(true);
+		Pearl.setNewUser(false);
 
 		User mrKrabbs = new User();
 		mrKrabbs.setFirstName("Mr.");
@@ -150,6 +157,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		mrKrabbs.setUserRole(comp);
 		mrKrabbs.setUserCompany(krustyKrab);
 		mrKrabbs.setUserName("JP Lobster");
+		mrKrabbs.setNewUser(false);
 
 		User michael = new User();
 		michael.setFirstName("Michael");
@@ -158,6 +166,16 @@ public class DatabaseSeeder implements CommandLineRunner {
 		michael.setUserRole(comp);
 		michael.setUserCompany(dunderMifflin);
 		michael.setUserName("Michael Scarn");
+		michael.setNewUser(false);
+		
+//		User kelly = new User();
+//		kelly.setFirstName("kelly");
+//		kelly.setLastName("Whoof");
+//		kelly.setPassword("OMG");
+////		kelly.setUserRole(worker);
+////		kelly.setUserCompany(dunderMifflin);
+//		kelly.setUserName("Kgurl");
+//		kelly.setNewUser(true);
 
 		userRepo.saveAndFlush(mrKrabbs);
 		userRepo.saveAndFlush(michael);
@@ -168,6 +186,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		userRepo.saveAndFlush(spongeBob);
 		userRepo.saveAndFlush(squidWard);
 		userRepo.saveAndFlush(Pearl);
+//		userRepo.saveAndFlush(kelly);
 
 		Project manageKrustyKrab = new Project();
 		manageKrustyKrab.setUser(mrKrabbs);
