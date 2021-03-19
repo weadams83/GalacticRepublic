@@ -19,11 +19,12 @@ public class UserResponseDTO {
 
 	private String lastName;
 	
-//	private TeamDTO associatedTeam; //TODO- use dto's to pretty these up and filter what's returned?
+	private TeamResponseDTO associatedTeam; 
 //	
-//	private Company userCompany;
+	private Boolean isDeleted;
+	private CompanyResponseDTO userCompany;
 //	
 //	private List<Project> projects;
 //	
-//	private Role userRole;
+	private RoleResponseDTO userRole;
 }

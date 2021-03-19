@@ -59,11 +59,19 @@ public class DatabaseSeeder implements CommandLineRunner {
 		cashier.setParentCompany(krustyKrab);
 		cashier.setTeamName("Service Staff");
 		cashier.setTeamDescription("Customer Service");
+		
+		Team deletedTeam = new Team();
+		
+		deletedTeam.setParentCompany(dunderMifflin);
+		deletedTeam.setTeamName("Crossfit");
+		deletedTeam.setTeamDescription("Pain.");
+		deletedTeam.setIsDeleted(true);
 
 		teamRepo.saveAndFlush(salesTeam);
 		teamRepo.saveAndFlush(accountingTeam);
 		teamRepo.saveAndFlush(kitchen);
 		teamRepo.saveAndFlush(cashier);
+		teamRepo.saveAndFlush(deletedTeam);
 
 		Role worker = new Role();
 		worker.setRoleTitle("Member");
@@ -99,6 +107,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		Stanley.setAssociatedTeam(accountingTeam);
 		Stanley.setUserRole(worker);
 		Stanley.setUserName("Stanley0689");
+		Stanley.setIsDeleted(true);
 
 		User Ryan = new User();
 		Ryan.setFirstName("Ryan");
@@ -107,6 +116,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		Ryan.setAssociatedTeam(accountingTeam);
 		Ryan.setUserRole(worker);
 		Ryan.setUserName("Wunderkind");
+		Ryan.setIsDeleted(true);
 
 		User spongeBob = new User();
 		spongeBob.setFirstName("Spongebob");
@@ -123,6 +133,15 @@ public class DatabaseSeeder implements CommandLineRunner {
 		squidWard.setAssociatedTeam(cashier);
 		squidWard.setUserRole(worker);
 		squidWard.setUserName("Captain Magma");
+		
+		User Pearl = new User();
+		Pearl.setFirstName("Pearl");
+		Pearl.setLastName("Whale");
+		Pearl.setPassword("Sugar");
+		Pearl.setUserCompany(krustyKrab);
+		Pearl.setUserRole(comp);
+		Pearl.setUserName("GD");
+		Pearl.setIsDeleted(true);
 
 		User mrKrabbs = new User();
 		mrKrabbs.setFirstName("Mr.");
@@ -148,6 +167,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		userRepo.saveAndFlush(Ryan);
 		userRepo.saveAndFlush(spongeBob);
 		userRepo.saveAndFlush(squidWard);
+		userRepo.saveAndFlush(Pearl);
 
 		Project manageKrustyKrab = new Project();
 		manageKrustyKrab.setUser(mrKrabbs);
@@ -188,6 +208,11 @@ public class DatabaseSeeder implements CommandLineRunner {
 		yolo.setUser(spongeBob);
 		yolo.setName("Living life like GOAT.");
 		yolo.setDescription("Bring it around town!");
+		
+		Project testDelete = new Project();
+		testDelete.setName("Have fun at the office.");
+		testDelete.setDescription("Michael likes to have fun.");
+		testDelete.setIsDeleted(true);
 
 		projectRepo.saveAndFlush(manageKrustyKrab);
 		projectRepo.saveAndFlush(managedunderMifflin);
@@ -197,6 +222,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		projectRepo.saveAndFlush(flipBurgers);
 		projectRepo.saveAndFlush(serviceCust);
 		projectRepo.saveAndFlush(yolo);
+		projectRepo.saveAndFlush(testDelete);
 
 	}
 
