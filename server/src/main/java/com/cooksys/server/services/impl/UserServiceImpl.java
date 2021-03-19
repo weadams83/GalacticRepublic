@@ -37,8 +37,6 @@ import com.cooksys.server.repositories.UserRepository;
 import com.cooksys.server.services.UserService;
 
 import lombok.AllArgsConstructor;
-//TODO: As written there is nothing to prevent a user from being on a Team AND on a company
-// should a user be restricted so that they are either on a team EXLUSIVELY OR on a company?
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -54,10 +52,17 @@ public class UserServiceImpl implements UserService {
 	private ProjectMapper projectMap;
 	private RoleMapper roleMap;
 	
-	//TODO: what actions should be restricted?
+
+	private void validateBossIsSameCompanyAsUser(Optional<User> findUser, Optional<User> findBoss) {
+		if(!findUser.get().getUserCompany().equals(findBoss.get().getUserCompany())){
+			throw new BadRequestException(String.format("Boss with user name: '%s can not assign user with user name: '%s' "
+					+ "as they work for different companies." , findUser.get().getUserName(),findBoss.get().getUserName()));
+		}
+	}
+	
 	private void validateNewUser(Optional<User> findUser) {
 		if(findUser.get().isNewUser()) {
-			throw new BadRequestException(String.format("User with user name: '%s' has not been assigned to a Company/Team.", findUser.get().getUserName()));
+			throw new BadRequestException(String.format("User with user name: '%s' has not been assigned a Role.", findUser.get().getUserName()));
 		}
 	}
 	
@@ -107,12 +112,12 @@ public class UserServiceImpl implements UserService {
 			throw new ImUsedException(String.format("User name: '%s' is taken.", findUser.get().getUserName()));
 		}
 		User createUser = userMap.CreateDTOtoEntity(userRequest);
-//		Optional<Role> findRole = roleRepo.findByroleTitle(createUser.getUserRole().getRoleTitle());
-//		if (findRole.isPresent()) {
-//			createUser.setUserRole(findRole.get());
-//		} else {
-//			createUser.setUserRole(null);
-//		}
+		Optional<Company> findCompany = companyRepo.findByCompanyName(userRequest.getCompanyName());
+		if (findCompany.isPresent()) {
+			createUser.setUserCompany(findCompany.get());
+		} else {
+			throw new NotFoundException(String.format("Company name: '%s' does not exist.", findUser.get().getUserName()));
+		}
 		createUser = userRepo.saveAndFlush(createUser);
 		return userMap.EntityToDTO(createUser);
 	}
@@ -157,10 +162,11 @@ public class UserServiceImpl implements UserService {
 		validateUserExistsAndNotDeleted(findUser,userName);
 		validateNewUser(findUser);
 		validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
+		validateNewUser(findBoss);
 		validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
-
 		validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
-
+		validateBossIsSameCompanyAsUser(findBoss,findUser);
+		
 		Optional<Project> findProject = projectRepo.findByName(userRequest.getProjectName());
 		if(findProject.isPresent() && findProject.get().getIsDeleted() != true) {
 			findProject.get().setUser(findUser.get());
@@ -171,7 +177,9 @@ public class UserServiceImpl implements UserService {
 		return projectMap.EntityToProjectResponseDTO(projectRepo.saveAndFlush(findProject.get()));
 	}
 
-	/*
+	/*//TODO: so we can't just allow anyone to grab a user and drag them to their company. However if we want to be able to allow users to 
+	 * switch companies, then we need to add logic here.
+	 * 
 	 * if user not found or deleted throw exception
 	 * if user is a new user throw exception
 	 * if boss not found or deleted throw exception
@@ -222,6 +230,7 @@ public class UserServiceImpl implements UserService {
 		validateNewUser(findBoss);
 		validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
 		validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
+		validateBossIsSameCompanyAsUser(findBoss,findUser);
 
 		Optional<Team> findTeam = teamRepo.findByTeamNameIgnoreCase(userRequest.getTeamName());
 		if(findTeam.isPresent() && findTeam.get().getIsDeleted() != true) {
@@ -267,6 +276,14 @@ public class UserServiceImpl implements UserService {
 		return userMap.EntitiesToDTO(userRepo.findAll());
 	}
 
+	/*
+	 * if user doesn't exist or is deleted throw exception
+	 * if boss doesn't exist or is deleted throw exception
+	 * if boss is a new user throw exception
+	 * if boss doesn't have authorization throw exception
+	 * if boss's credentials are incorrect throw exception
+	 * if user role doesn't exist throw exception
+	 */
 	@Override
 	public UserResponseDTO assignUserRole(String userName, UserRequestAssignRoleDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userName);	
@@ -276,6 +293,7 @@ public class UserServiceImpl implements UserService {
 		validateNewUser(findBoss);
 		validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
 		validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
+		validateBossIsSameCompanyAsUser(findBoss,findUser);
 
 		Optional<Role> findRole = roleRepo.findByroleTitle(userRequest.getRoleName());
 		if(findRole.isPresent()) {
