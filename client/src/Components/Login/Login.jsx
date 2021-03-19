@@ -7,6 +7,10 @@ import '../SignUp/SignUp'
 import '../SignUp/CompanySignUp'
 import { StyledLogin, SignUpB, CompanySignUpB, SignUpForm } from "./StyledLogin";
 
+import { CompanyPage } from "../../Screens/CompanyPage/CompanyPage";
+import "../SignUp/SignUp";
+
+
 const dummyData = require("../../DummyData.json");
 
 const initialMemberForm = {
@@ -43,7 +47,9 @@ export const Login = () => {
     }
     if (e.target.id === "member-password") {
       setMemberFormValues({ ...memberFormValues, password: e.target.value });
+
     }
+    
   };
   const handleSubmit = (e) => {
     console.log(e.target.role.value);
@@ -135,6 +141,7 @@ export const Login = () => {
           </div>
           <div className="button hide">
             <button type="submit">Login</button>
+
 
           </div>
         </form>

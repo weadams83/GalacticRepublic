@@ -2,10 +2,12 @@
 import React from 'react'
 
 import { useState } from "react";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledCreateProject';
+import dummyData from '../../DummyData.json'
 
 const CreateProject = () => {
+    const history = useHistory();
 
     const initialFormError = {
         isError: false,
@@ -18,7 +20,7 @@ const CreateProject = () => {
 
     const formIsValid = () => {
         if (!form.titleofproject.value || !form.projectdiscription.value
-           ) {
+        ) {
             updateFormError({
                 ...formError, isError: true, message: 'All fields are required'
             })
@@ -30,8 +32,16 @@ const CreateProject = () => {
     const handleFormSubmitt = (e) => {
         if (formIsValid()) {
             e.preventDefault();
+            console.log(form.titleofproject)
+            console.log(form.projectdiscription)
+            console.log(selectTeam.selectedTeam)
+            history.push("/member")
         }
     }
+
+    const [selectTeam, UpdateTeam] = useState(
+       ''
+    )
 
     const [form, updateForm] = useState({
         titleofproject: {
@@ -46,12 +56,14 @@ const CreateProject = () => {
             type: 'text'
         },
 
-       
+        
 
-       
+
+
+
     })
 
-  
+
 
     return (
         <InspectP>
@@ -69,14 +81,36 @@ const CreateProject = () => {
                                     ...form,
                                     [key]: { ...props, value: event.target.value }
                                 })
+                                console.log(event.target.value)
                                 resetError()
                             }
+                            
+
                             }
+                            
                         />
                     ))}
 
+                    <Select
+                        value={selectTeam}
+                        onChange={(e) => {
+                            
+                            const selectedTeam = e.target.value;
+                            console.log(selectedTeam)
+                            UpdateTeam({
+                               selectedTeam
+                            });
+                        }}>
+                            <option value='' defaultValue disabled >choose a team</option>
+                        {dummyData.data[2].teams.map((team) => (
+                            
+                            <option key={`${team.name}-${team.id}`} name={team.name}  >{team.name}</option>
+                        ))}
 
-                  
+                    </Select>
+
+
+
 
                     <NavLink to='./member'>
                         <Button type="submit" onClick={handleFormSubmitt} >Create</Button>
@@ -85,8 +119,8 @@ const CreateProject = () => {
                     {formError.isError && !formError.field ? (
                         <p style={{ color: 'red', textSizeAdjust: '25' }}>{formError.message}</p>
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
 
                 </Form>
             </Styledmain>

@@ -18,9 +18,7 @@ function App() {
         <Route path="/member" component={MemberPage} />
         <Route path="/company" component={CompanyPage} />
         <Route path="/SignUp" component={SignUp} />
-
         <Route path="/CompanySignUp" component={CompanySignUp} />
-
         <Route path="/users" component={Users} />
         <Route path="/projects" component={Projects} />
 
