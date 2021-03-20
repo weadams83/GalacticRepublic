@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserEditRequestDTO {
 	
-	private UserSignInRequestDTO credentials;//holds the username/password of user that is editing 
+	private UserSignInRequestDTO credentials; 
 	
 	private UserDTO newData;
 }

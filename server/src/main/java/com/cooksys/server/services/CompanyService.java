@@ -9,7 +9,7 @@ import com.cooksys.server.entities.Company;
 
 public interface CompanyService {
 
-	List<Company> getAllCompanies();
+	List<CompanyResponseDTO> getAllCompanies();
 
 	CompanyResponseDTO getCompany(String companyName);
 
