@@ -136,6 +136,7 @@ public class UserServiceImpl implements UserService {
 		validateCredentials(findUser,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
 		User user = findUser.get();
 		user = userMap.DTOtoEntity(userRequest.getNewData());
+		user.setNewUser(findUser.get().isNewUser());
 		user.setUpdated(new Timestamp(System.currentTimeMillis()));
 		user.setUpdatedBy(user);
 
@@ -264,10 +265,13 @@ public class UserServiceImpl implements UserService {
 		return userMap.EntityToDTO(findUser.get());
 	}
 
-	//TODO: currently this INCLUDES deleted users
+	/*
+	 * return all non deleted users
+	 */
 	@Override
 	public List<UserResponseDTO> getAllUsers() {
-		return userMap.EntitiesToDTO(userRepo.findAll());
+		return userMap.EntitiesToDTO(userRepo.findByisDeletedFalse());
+//		return userMap.EntitiesToDTO(userRepo.findAll());
 	}
 
 	/*

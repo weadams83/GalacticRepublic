@@ -51,19 +51,19 @@ public class UserController {
 
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.OK)
-	public UserResponseDTO postUser(@RequestBody UserSignInRequestDTO userRequest) {
+	public UserResponseDTO loginUser(@RequestBody UserSignInRequestDTO userRequest) {
 		return userServ.login(userRequest);
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public UserResponseDTO postUser(@RequestBody UserCreateRequestDTO userRequest) {
+	public UserResponseDTO createUser(@RequestBody UserCreateRequestDTO userRequest) {
 		return userServ.postUser(userRequest);
 	}
 	
 	@PatchMapping("/{username}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public UserResponseDTO patchUser(@PathVariable("username") String userName, @RequestBody UserEditRequestDTO userRequest) {
+	public UserResponseDTO updateUser(@PathVariable("username") String userName, @RequestBody UserEditRequestDTO userRequest) {
 		return userServ.patchUser(userName,userRequest);
 	}
 	

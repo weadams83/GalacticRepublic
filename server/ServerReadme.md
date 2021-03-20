@@ -82,10 +82,6 @@ Get Project By Team | GET </br> ``` /project/{projectTeam} ```
 Create Project | POST </br>``` /project ```</br> Json code required </br>```{"name": "project name", ``` </br> ```"description": "project description"}```
 Update Project Name | PUT </br>``` /project ```</br> Json code required </br>```{"name": "updated project name",}  ```
 Update Project Description | PUT </br>``` /project ```</br> Json code required </br>```{"description": "update project description"}  ```
-Update Project Users | PUT </br>``` /project ```</br> Json code required </br>``` {"projectUsers": "updated project users"}  ```
+Update Project Users | PUT </br>``` /project ```</br> Json code required </br>```{"projectUsers": "updated project users"}  ```
 Update Project Team | PUT </br>``` /project ```</br> Json code required </br>```{"projectTeam": "updated project team"}  ```
-Delete Project | DELETE </br> ``` /project/{id} ```</br> example</br> ```  /project/12 ```
-
-
-
-
+Delete Project | DELETE </br> ``` /team/{id} ```</br> example</br> ```  /team/12 ```
