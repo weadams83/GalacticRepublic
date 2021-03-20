@@ -5,9 +5,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-
-public class CompanyDTO {
-	private String companyName;
+public class CompanyCreateRequestDTO {
+	private CompanyDTO seedCompany;
 	
-	private String companyDescription;
+	private UserSignInRequestDTO seedUser;
 }

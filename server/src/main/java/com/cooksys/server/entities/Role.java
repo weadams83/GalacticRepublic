@@ -27,7 +27,7 @@ public class Role {
 	@OneToMany(mappedBy = "userRole")
 	private List<User> users;
 
-	private String roleTitle;
+	private String roleTitle = "Company";
 
 	@Override
 	public String toString() {

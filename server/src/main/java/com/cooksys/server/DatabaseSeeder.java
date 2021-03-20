@@ -27,6 +27,17 @@ public class DatabaseSeeder implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		Role worker = new Role();
+		worker.setRoleTitle("Member");
+		Role comp = new Role();
+
+		comp.setRoleTitle("Manager");
+
+		comp.setRoleTitle("Company");
+
+		roleRepo.saveAndFlush(worker);
+		roleRepo.saveAndFlush(comp);
+		
 		Company dunderMifflin = new Company();
 		dunderMifflin.setCompanyName("Dunder Mifflin");
 		dunderMifflin.setCompanyDescription("Paper and paper accessories.");
@@ -72,17 +83,6 @@ public class DatabaseSeeder implements CommandLineRunner {
 		teamRepo.saveAndFlush(kitchen);
 		teamRepo.saveAndFlush(cashier);
 		teamRepo.saveAndFlush(deletedTeam);
-
-		Role worker = new Role();
-		worker.setRoleTitle("Member");
-		Role comp = new Role();
-
-		comp.setRoleTitle("Manager");
-
-		comp.setRoleTitle("Company");
-
-		roleRepo.saveAndFlush(worker);
-		roleRepo.saveAndFlush(comp);
 
 		User Jim = new User();
 		Jim.setFirstName("Jim");

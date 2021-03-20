@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-
-
 public class CompanyRequestDTO {
 	
 	private String companyName;

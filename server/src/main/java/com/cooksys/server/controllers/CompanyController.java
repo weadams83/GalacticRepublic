@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
+import com.cooksys.server.DTOs.CompanyCreateRequestDTO;
 import com.cooksys.server.DTOs.CompanyRequestDTO;
 import com.cooksys.server.DTOs.CompanyResponseDTO;
 import com.cooksys.server.entities.Company;
@@ -44,7 +45,7 @@ public class CompanyController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CompanyRequestDTO postCompany(@RequestBody CompanyRequestDTO companyRequest) {
+	public CompanyRequestDTO postCompany(@RequestBody CompanyCreateRequestDTO companyRequest) {
 		return compServ.postCompany(companyRequest);
 	}
 	@PutMapping("/{companyName}")
