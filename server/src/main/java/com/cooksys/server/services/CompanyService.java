@@ -16,10 +16,4 @@ public interface CompanyService {
 	CompanyRequestDTO postCompany(CompanyCreateRequestDTO companyRequest);
 
 	CompanyRequestDTO updateCompanyDescription(String companyName, CompanyRequestDTO companyUpdate);
-
-
-
-
-	
-	
 }

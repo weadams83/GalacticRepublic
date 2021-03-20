@@ -22,9 +22,8 @@ public class UserResponseDTO {
 	private TeamResponseDTO associatedTeam; 
 
 	private Boolean isDeleted;
-	private CompanyResponseDTO userCompany;
 	
-//	private List<Project> projects;
+	private CompanyResponseDTO userCompany;
 
 	private RoleResponseDTO userRole;
 }

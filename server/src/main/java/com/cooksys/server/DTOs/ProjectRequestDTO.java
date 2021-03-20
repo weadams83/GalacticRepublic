@@ -19,9 +19,4 @@ public class ProjectRequestDTO {
 	private Project team;
 	
 	private Project projectTeam;
-	
-
-	
-	
-
 }

@@ -15,5 +15,4 @@ public class ProjectResponseDTO {
 	private String description;
 	
 	private UserResponseDTO user;
-
 }

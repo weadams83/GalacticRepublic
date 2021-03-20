@@ -7,6 +7,7 @@ import org.mapstruct.Mappings;
 
 import com.cooksys.server.DTOs.CompanyCreateRequestDTO;
 import com.cooksys.server.DTOs.UserCreateRequestDTO;
+import com.cooksys.server.DTOs.UserDTO;
 import com.cooksys.server.DTOs.UserEditRequestDTO;
 import com.cooksys.server.DTOs.UserRequestAssignProjectDTO;
 import com.cooksys.server.DTOs.UserResponseDTO;
@@ -16,19 +17,11 @@ import com.cooksys.server.entities.User;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-
+	User DTOtoEntity(UserDTO userDTO);
+	
 	UserResponseDTO EntityToDTO(User user);
 	
 	List<UserResponseDTO> EntitiesToDTO(List<User> users);
 
-//	User DTOtoEntity(UserSignInRequestDTO userSignInRequestDTO);
-	
-//	@Mappings({
-//		@Mapping(target="userRole.roleTitle", source="userCreateRequestDTO.roleTitle")
-//		})
-	User CreateDTOtoEntity(UserCreateRequestDTO userCreateRequestDTO);
-	
-	User EditDTOtoEntity(UserEditRequestDTO userEditRequestDTO);
-	
 	User UserSignInDTOtoEntity(UserSignInRequestDTO userSignInRequestDTO);
 }

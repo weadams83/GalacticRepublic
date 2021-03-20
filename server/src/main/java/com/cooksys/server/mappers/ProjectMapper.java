@@ -8,5 +8,4 @@ import com.cooksys.server.entities.Project;
 @Mapper(componentModel = "spring")
 public interface ProjectMapper {
 	ProjectResponseDTO EntityToProjectResponseDTO(Project project);
-
 }
