@@ -33,7 +33,7 @@ public class CompanyController {
 	private CompanyService compServ;
 	
 	@GetMapping
-	public List<Company> getAllCompanies(){
+	public List<CompanyResponseDTO> getAllCompanies(){
 		return compServ.getAllCompanies();
 	}
 	

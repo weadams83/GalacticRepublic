@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 
 import com.cooksys.server.DTOs.TeamRequestDTO;
 import com.cooksys.server.DTOs.TeamResponseDTO;
+import com.cooksys.server.DTOs.UserResponseTeamDTO;
 import com.cooksys.server.entities.Team;
 
 @Mapper(componentModel = "spring")

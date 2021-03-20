@@ -138,7 +138,7 @@ Returns Json:
 }
 ```
 
-### **PATCH Path: '/{username}'**
+### **PATCH Path: '/user/{username}'**
 PATCH edit user
 </br>
 Request Json:
@@ -173,7 +173,7 @@ Returns Json:
 }
 ```
 
-### **PATCH Path: '/{username}/role'**
+### **PATCH Path: '/user/{username}/role'**
 PATCH assign user a role
 </br>
 Request Json:
@@ -205,7 +205,7 @@ Returns Json:
 }
 ```
 
-### **PATCH Path: '/{username}/project'**
+### **PATCH Path: '/user/{username}/project'**
 PATCH assign user a project
 </br>
 Request Json:
@@ -248,7 +248,7 @@ Returns Json:
 }
 ```
 
-### **PATCH Path: '/{username}/company'**
+### **PATCH Path: '/user/{username}/company'**
 PATCH assign user a company
 </br>
 Request Json:
@@ -287,7 +287,7 @@ Returns Json:
 }
 ```
 
-### **PATCH Path: '/{username}/team'**
+### **PATCH Path: '/user/{username}/team'**
 PATCH assign user a team
 </br>
 Request Json:
@@ -326,7 +326,7 @@ Returns Json:
 }
 ```
 
-### **DELETE Path: '/{username}'**
+### **DELETE Path: '/user/{username}'**
 DELETE a user
 </br>
 Request Json:
