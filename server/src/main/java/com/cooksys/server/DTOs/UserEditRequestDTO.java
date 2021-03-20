@@ -13,11 +13,6 @@ public class UserEditRequestDTO {
 	
 	private UserSignInRequestDTO credentials;//holds the username/password of user that is editing 
 	
-	private String userName;
-
-	private String firstName;
-
-	private String lastName;
+	private UserDTO newData;
 	
-	private String password;	
 }

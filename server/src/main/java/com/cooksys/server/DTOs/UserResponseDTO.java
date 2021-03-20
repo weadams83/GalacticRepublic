@@ -20,11 +20,11 @@ public class UserResponseDTO {
 	private String lastName;
 	
 	private TeamResponseDTO associatedTeam; 
-//	
+
 	private Boolean isDeleted;
 	private CompanyResponseDTO userCompany;
-//	
+	
 //	private List<Project> projects;
-//	
+
 	private RoleResponseDTO userRole;
 }
