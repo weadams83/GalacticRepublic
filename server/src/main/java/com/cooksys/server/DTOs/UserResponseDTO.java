@@ -26,4 +26,6 @@ public class UserResponseDTO {
 	private CompanyResponseDTO userCompany;
 
 	private RoleResponseDTO userRole;
+	
+	private boolean newUser;
 }

@@ -24,7 +24,7 @@
 									"\r",
 									"//Finding the length of the Response Array\r",
 									"    var length = responseJson.length;\r",
-									"    pm.expect(length).to.eq(11);\r",
+									"    pm.expect(length).to.eq(8);\r",
 									"})\r",
 									""
 								],
@@ -401,7 +401,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"userName\":\"Breeduss\",\r\n\t \"firstName\":\"Nathan\",\r\n\t \"lastName\":\"Breedlove\",\r\n\t \"password\":\"Nada\",\r\n     \"companyName\":\"Krusty Krab\"\r\n     }",
+							"raw": "{\r\n    \"createUser\":{\r\n        \"userName\":\"Breeduss\",\r\n        \"firstName\":\"Nathan\",\r\n        \"lastName\":\"Breedlove\",\r\n        \"password\":\"Nada\"\r\n    },\r\n     \"companyName\":\"Krusty Krab\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -447,7 +447,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"userName\":\"Darth Shrewt\",\r\n\t \"firstName\":\"Nathan\",\r\n\t \"lastName\":\"Breedlove\",\r\n\t \"password\":\"Nada\",\r\n     \"companyName\":\"Krusty Krab\"\r\n}",
+							"raw": "{\r\n    \"createUser\":{\r\n        \"userName\":\"Darth Shrewt\",\r\n        \"firstName\":\"Nathan\",\r\n        \"lastName\":\"Breedlove\",\r\n        \"password\":\"Nada\"\r\n    },\r\n     \"companyName\":\"Krusty Krab\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -493,7 +493,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"userName\":\"Wunderkind\",\r\n\t \"firstName\":\"Nathan\",\r\n\t \"lastName\":\"Breedlove\",\r\n\t \"password\":\"Nada\",\r\n     \"companyName\":\"Krusty Krab\"\r\n}",
+							"raw": "{\r\n    \"createUser\":{\r\n        \"userName\":\"Wunderkind\",\r\n        \"firstName\":\"Nathan\",\r\n        \"lastName\":\"Breedlove\",\r\n        \"password\":\"Nada\"\r\n    },\r\n     \"companyName\":\"Krusty Krab\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -547,7 +547,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Captain Magma\",\r\n         \"password\":\"Clarinet\"\r\n     },\r\n     \"userName\" : \"Squiddy\",\r\n\r\n\t \"firstName\" : \"Kraken\",\r\n\r\n\t \"lastName\" : \"Unleashed\",\r\n\r\n\t \"password\" : \"SoldierBoy\"\r\n}",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Captain Magma\",\r\n         \"password\":\"Clarinet\"\r\n     },\r\n     \"newData\":{\r\n        \"userName\" : \"Squiddy\",\r\n\r\n        \"firstName\" : \"Kraken\",\r\n\r\n        \"lastName\" : \"Unleashed\",\r\n\r\n        \"password\" : \"SoldierBoy\"\r\n     }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -595,7 +595,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Captain Magma\",\r\n         \"password\":\"Clarinet\"\r\n     },\r\n     \"userName\" : \"Squiddy\",\r\n\r\n\t \"firstName\" : \"Kraken\",\r\n\r\n\t \"lastName\" : \"Unleashed\",\r\n\r\n\t \"password\" : \"SoldierBoy\"\r\n}",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Captain Magma\",\r\n         \"password\":\"Clarinet\"\r\n     },\r\n     \"newData\":{\r\n        \"userName\" : \"Squiddy\",\r\n\r\n        \"firstName\" : \"Kraken\",\r\n\r\n        \"lastName\" : \"Unleashed\",\r\n\r\n        \"password\" : \"SoldierBoy\"\r\n     }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -642,7 +642,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Stanley0689\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"userName\" : \"StanTheMan\",\r\n\r\n\t \"firstName\" : \"Boss.\",\r\n\r\n\t \"lastName\" : \"Stan\",\r\n\r\n\t \"password\" : \"MakeItRain\"\r\n}",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Stanley0689\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"newData\":{\r\n        \"userName\" : \"StanTheMan\",\r\n\r\n        \"firstName\" : \"Boss.\",\r\n\r\n        \"lastName\" : \"Stan\",\r\n\r\n        \"password\" : \"MakeItRain\"\r\n     }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -689,7 +689,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"IncorrectUsername\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"userName\" : \"Lobster\",\r\n\r\n\t \"firstName\" : \"Mrs.\",\r\n\r\n\t \"lastName\" : \"Krabby\",\r\n\r\n\t \"password\" : \"SoldierBoy\"\r\n}",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"IncorrectUsername\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"newData\":{\r\n        \"userName\" : \"Lobster\",\r\n\r\n        \"firstName\" : \"Mrs.\",\r\n\r\n        \"lastName\" : \"Krabby\",\r\n\r\n        \"password\" : \"SoldierBoy\"\r\n     }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -736,7 +736,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"JP Lobster\",\r\n         \"password\":\"IncorrectPassword\"\r\n     },\r\n     \"userName\" : \"Lobster\",\r\n\r\n\t \"firstName\" : \"Mrs.\",\r\n\r\n\t \"lastName\" : \"Krabby\",\r\n\r\n\t \"password\" : \"SoldierBoy\"\r\n}",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"JP Lobster\",\r\n         \"password\":\"IncorrectPassword\"\r\n     },\r\n     \"newData\":{\r\n        \"userName\" : \"Lobster\",\r\n\r\n        \"firstName\" : \"Mrs.\",\r\n\r\n        \"lastName\" : \"Krabby\",\r\n\r\n        \"password\" : \"SoldierBoy\"\r\n     }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1031,7 +1031,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/Breeduss/role",
+							"raw": "http://localhost:8080/user/The Quickster/role",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1039,7 +1039,7 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"Breeduss",
+								"The Quickster",
 								"role"
 							]
 						}
@@ -1079,7 +1079,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/Breeduss/role",
+							"raw": "http://localhost:8080/user/The Quickster/role",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1087,7 +1087,7 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"Breeduss",
+								"The Quickster",
 								"role"
 							]
 						}
@@ -1127,7 +1127,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/Breeduss/role",
+							"raw": "http://localhost:8080/user/The Quickster/role",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1135,7 +1135,7 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"Breeduss",
+								"The Quickster",
 								"role"
 							]
 						}
@@ -1293,13 +1293,13 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Successful assigned User to role\", function(){\r",
-									"    pm.response.to.have.status(202);\r",
+									"pm.test(\"Can't assign\", function(){\r",
+									"    pm.response.to.have.status(400);\r",
 									"})\r",
 									"\r",
-									"pm.test(\"Kgurl now has role Member\", function () {\r",
+									"pm.test(\"message displayed correctly\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.userRole.roleTitle).to.eql(\"Member\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"Boss with user name: 'JP Lobster can not assign user with user name: 'Kgurl' as they work for different companies.\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1311,7 +1311,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"Michael Scarn\",\r\n         \"password\":\"Friendship\"\r\n     },\r\n     \"roleName\":\"Member\"\r\n}",
+							"raw": "{\r\n     \"credentials\":{\r\n         \"userName\":\"JP Lobster\",\r\n         \"password\":\"Money\"\r\n     },\r\n     \"roleName\":\"Member\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3006,6 +3006,103 @@
 							"path": [
 								"user",
 								"JP Lobster"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Company Endpoints",
+			"item": [
+				{
+					"name": "Create new Company",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.companyName).to.eql(\"Umbrella Corp\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"seedCompany\":{\r\n        \"companyName\":\"Umbrella Corp\",\r\n        \"companyDescription\":\"Zombies\"\r\n    },\r\n    \"seedUser\":{\r\n        \"userName\":\"Head Guy\",\r\n        \"password\":\"Scientist\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/company",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Company - name already taken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 226\", function () {\r",
+									"    pm.response.to.have.status(226);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"Company with company name: 'Dunder Mifflin' already exsist.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"seedCompany\":{\r\n        \"companyName\":\"Dunder Mifflin\",\r\n        \"companyDescription\":\"Zombies\"\r\n    },\r\n    \"seedUser\":{\r\n        \"userName\":\"Head Guy\",\r\n        \"password\":\"Scientist\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/company",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company"
 							]
 						}
 					},
