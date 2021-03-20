@@ -97,10 +97,4 @@ public class CompanyServiceImpl implements CompanyService {
 		companyRepo.saveAndFlush(findCompany.get());
 		return companyMap.EntityToDTO(findCompany.get());
 	}
-
-
-
-
-	
-
 }

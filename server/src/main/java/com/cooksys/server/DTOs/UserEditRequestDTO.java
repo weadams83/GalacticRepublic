@@ -14,5 +14,4 @@ public class UserEditRequestDTO {
 	private UserSignInRequestDTO credentials;//holds the username/password of user that is editing 
 	
 	private UserDTO newData;
-	
 }

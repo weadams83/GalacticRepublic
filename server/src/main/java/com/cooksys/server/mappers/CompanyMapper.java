@@ -24,9 +24,4 @@ public interface CompanyMapper {
 	CompanyRequestDTO EntityToDTO(Company createCompany);
 	
 	Company CompanyRequestDTOtoEntity(CompanyRequestDTO companyName);
-	
-//	Company CompanyCreateRequestDTOtoEntity(CompanyCreateRequestDTO companyRequestDTO);
-
-
-
 }

@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public UserResponseDTO postUser(UserCreateRequestDTO userRequest) {
-		Optional<User> findUser = userRepo.findByUserName(userRequest.getUserName());
+		Optional<User> findUser = userRepo.findByUserName(userRequest.getCreateUser().getUserName());
 		if (findUser.isPresent()) {
 			if (findUser.get().getIsDeleted()) {
 				findUser.get().setIsDeleted(false);
@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
 			}
 			throw new ImUsedException(String.format("User name: '%s' is taken.", findUser.get().getUserName()));
 		}
-		User createUser = userMap.CreateDTOtoEntity(userRequest);
+		User createUser = userMap.DTOtoEntity(userRequest.getCreateUser());
 		Optional<Company> findCompany = companyRepo.findByCompanyName(userRequest.getCompanyName());
 		if (findCompany.isPresent()) {
 			createUser.setUserCompany(findCompany.get());
@@ -134,18 +134,15 @@ public class UserServiceImpl implements UserService {
 		Optional<User> findUser = userRepo.findByUserName(userName);
 		validateUserExistsAndNotDeleted(findUser,userName);
 		validateCredentials(findUser,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
+		User user = findUser.get();
+		user = userMap.DTOtoEntity(userRequest.getNewData());
+		user.setUpdated(new Timestamp(System.currentTimeMillis()));
+		user.setUpdatedBy(user);
 
-		findUser.get().setFirstName(userRequest.getNewData().getFirstName());
-		findUser.get().setLastName(userRequest.getNewData().getLastName());
-		findUser.get().setUserName(userRequest.getNewData().getUserName());
-		findUser.get().setPassword(userRequest.getNewData().getPassword());
-		findUser.get().setUpdated(new Timestamp(System.currentTimeMillis()));
-		findUser.get().setUpdatedBy(findUser.get());
-
-		return userMap.EntityToDTO(userRepo.saveAndFlush(findUser.get()));
+		return userMap.EntityToDTO(userRepo.saveAndFlush(user));
 	}
 
-	/* TODO: should projects be constrained by company?
+	/* 
 	 * if user not found or deleted throw exception
 	 * if user is a new user throw exception
 	 * if boss not found or deleted throw exception
@@ -177,9 +174,7 @@ public class UserServiceImpl implements UserService {
 		return projectMap.EntityToProjectResponseDTO(projectRepo.saveAndFlush(findProject.get()));
 	}
 
-	/*//TODO: so we can't just allow anyone to grab a user and drag them to their company. However if we want to be able to allow users to 
-	 * switch companies, then we need to add logic here.
-	 * 
+	/*
 	 * if user not found or deleted throw exception
 	 * if user is a new user throw exception
 	 * if boss not found or deleted throw exception
@@ -210,8 +205,7 @@ public class UserServiceImpl implements UserService {
 		return userMap.EntityToDTO(userRepo.saveAndFlush(findUser.get()));
 	}
 
-	/* TODO: should Teams be constrained by company? (can a user belong to another company, and be on a team with a different company?)
-	 * if user not found or deleted throw exception
+	/* if user not found or deleted throw exception
 	 * if user is a new user throw exception
 	 * if boss not found or deleted throw exception
 	 * if boss is a new user throw exception

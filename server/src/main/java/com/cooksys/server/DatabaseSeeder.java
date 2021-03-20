@@ -27,6 +27,8 @@ public class DatabaseSeeder implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		//-------------TODO: These Roles MUST be seeded (not only in testing).-------------------------//
+		//I'm curious to know how permissions are generally, algorithmically dealt with
 		Role worker = new Role();
 		worker.setRoleTitle("Member");
 		Role comp = new Role();
@@ -34,7 +36,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		comp.setRoleTitle("Manager");
 
 		comp.setRoleTitle("Company");
-
+		//---------------------------------------------------------------------------------------------//
 		roleRepo.saveAndFlush(worker);
 		roleRepo.saveAndFlush(comp);
 		

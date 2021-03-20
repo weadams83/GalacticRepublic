@@ -18,6 +18,4 @@ public class TeamResponseDTO {
 	private String teamDescription;
 
 	private CompanyResponseDTO parentCompany;
-//	private List<User> teamMembers;
-//	private List<Project> projects;
 }
