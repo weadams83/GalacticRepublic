@@ -19,7 +19,7 @@ const CreateProject = () => {
     const resetError = () => updateFormError(initialFormError)
 
     const formIsValid = () => {
-        if (!form.titleofproject.value || !form.projectdiscription.value
+        if (!form.name.value || !form.discription.value
         ) {
             updateFormError({
                 ...formError, isError: true, message: 'All fields are required'
@@ -32,10 +32,20 @@ const CreateProject = () => {
     const handleFormSubmitt = (e) => {
         if (formIsValid()) {
             e.preventDefault();
-            console.log(form.titleofproject)
-            console.log(form.projectdiscription)
-            console.log(selectTeam.selectedTeam)
-            history.push("/member")
+            console.log(form.name)
+            console.log(form.discription)
+            console.log(selectTeam.team)
+            history.push("/createprojectsuccess")
+            //{
+              //  axios
+                //  .post("http://localhost:8080/project", form)
+                 // .then((res) => {
+                  //  localStorage.setItem("currentProject", JSON.stringify(res.data));
+                   // history.push("/createprojectsuccess");
+                 // })
+                 // .catch((err) => console.log(err));
+             // }
+            
         }
     }
 
@@ -44,13 +54,13 @@ const CreateProject = () => {
     )
 
     const [form, updateForm] = useState({
-        titleofproject: {
+        name: {
             value: '',
             placeholder: 'project name',
             type: 'text'
         },
 
-        projectdiscription: {
+        discription: {
             value: '',
             placeholder: 'project description',
             type: 'text'
@@ -95,10 +105,10 @@ const CreateProject = () => {
                         value={selectTeam}
                         onChange={(e) => {
                             
-                            const selectedTeam = e.target.value;
-                            console.log(selectedTeam)
+                            const team = e.target.value;
+                            console.log(team)
                             UpdateTeam({
-                               selectedTeam
+                               team
                             });
                         }}>
                             <option value='' defaultValue disabled >choose a team</option>
@@ -112,9 +122,9 @@ const CreateProject = () => {
 
 
 
-                    <NavLink to='./member'>
+                    
                         <Button type="submit" onClick={handleFormSubmitt} >Create</Button>
-                    </NavLink>
+                   
 
                     {formError.isError && !formError.field ? (
                         <p style={{ color: 'red', textSizeAdjust: '25' }}>{formError.message}</p>
