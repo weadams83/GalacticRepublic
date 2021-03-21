@@ -1,6 +1,7 @@
 package com.cooksys.server.entities;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,7 +63,7 @@ public class User {
 	private Company userCompany;
 
 	@OneToMany(mappedBy = "user")
-	private List<Project> projects;
+	private List<Project> projects = new ArrayList<>();
 
 	@ManyToOne
 	private Role userRole;

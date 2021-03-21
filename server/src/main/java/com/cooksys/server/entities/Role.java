@@ -1,5 +1,6 @@
 package com.cooksys.server.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public class Role {
 	private Long id;
 
 	@OneToMany(mappedBy = "userRole")
-	private List<User> users;
+	private List<User> users = new ArrayList<>();
 
 	private String roleTitle = "Company";
 

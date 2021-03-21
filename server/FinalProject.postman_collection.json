@@ -1203,7 +1203,7 @@
 									"\r",
 									"pm.test(\"Darth Schrewt added as user for Project\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.user.userName).to.eql(\"Darth Shrewt\");\r",
+									"    pm.expect(jsonData.userName).to.eql(\"Darth Shrewt\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -3255,6 +3255,289 @@
 							"port": "8080",
 							"path": [
 								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit company",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Umbrella Corp edited\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.companyName).to.eql(\"Red Lobster\");\r",
+									"    pm.expect(jsonData.companyDescription).to.eql(\"Seafood\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"JP Lobster\",\r\n        \"password\":\"Money\"\r\n    },\r\n    \"newCompany\":{\r\n        \"companyName\":\"Red Lobster\",\r\n        \"companyDescription\":\"Seafood\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/company/Krusty Krab",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"Krusty Krab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit company - user doesn't exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Umbrella Corp edited\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"Company with company name: 'NoOne' could not be found.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Head Guy\",\r\n        \"password\":\"Scientist\"\r\n    },\r\n    \"newCompany\":{\r\n        \"companyName\":\"Umbrella Red and Yellow Corp\",\r\n        \"companyDescription\":\"ZombiesPlusUltra\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/company/NoOne",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"NoOne"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit company - user is new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Umbrella Corp edited\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'StepBro' has not been assigned a Role.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"StepBro\",\r\n        \"password\":\"Elf\"\r\n    },\r\n    \"origCompany\":{\r\n        \"companyName\":\"Dunder Mifflin\"\r\n    },\r\n    \"newCompany\":{\r\n        \"companyName\":\"The new guys\",\r\n        \"companyDescription\":\"Stay classy San Diego\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/company/Dunder Mifflin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"Dunder Mifflin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit company - wrong password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Umbrella Corp edited\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"Username/Password do not match.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Head Guy\",\r\n        \"password\":\"IncorrectPassword\"\r\n    },\r\n    \"newCompany\":{\r\n        \"companyName\":\"Umbrella Red and Yellow Corp\",\r\n        \"companyDescription\":\"ZombiesPlusUltra\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/company/Umbrella Corp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"Umbrella Corp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit company - wrong role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Umbrella Corp edited\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"User with user name: 'Loki' does not have authorization.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Loki\",\r\n        \"password\":\"Pranks\"\r\n    },\r\n    \"newCompany\":{\r\n        \"companyName\":\"Paper Co.\",\r\n        \"companyDescription\":\"Huh\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/company/Dunder Mifflin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"Dunder Mifflin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit company - boss is different company",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Umbrella Corp edited\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql( \"Boss with user name: 'JP Lobster can not edit company: 'Dunder Mifflin' as they do not work at that company.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"JP Lobster\",\r\n        \"password\":\"Money\"\r\n    },\r\n    \"newCompany\":{\r\n        \"companyName\":\"Umbrella Red and Yellow Corp\",\r\n        \"companyDescription\":\"ZombiesPlusUltra\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/company/Dunder Mifflin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"company",
+								"Dunder Mifflin"
 							]
 						}
 					},

@@ -23,9 +23,11 @@ public class UserResponseDTO {
 
 	private Boolean isDeleted;
 	
-	private CompanyResponseDTO userCompany;
+	private UserResponseCompanyDTO userCompany;
 
-	private RoleResponseDTO userRole;
+	private UserResponseRoleDTO userRole;
+	
+	private List<UserResponseProjectDTO> projects;
 	
 	private boolean newUser;
 }

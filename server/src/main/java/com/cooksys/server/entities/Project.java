@@ -35,6 +35,7 @@ public class Project {
 	@ManyToOne
 	private Team team;
 
+	@Column(unique = true)
 	private String name;
 
 	private String description;
@@ -50,9 +51,6 @@ public class Project {
 
 	@OneToOne
 	private User updatedBy;
-
-	@ManyToOne
-	private Team projectTeam;
 
 	/*
 	 * equals() compares the database entries by id and the objects in memory in
