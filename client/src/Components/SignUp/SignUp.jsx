@@ -31,14 +31,20 @@ const SignUp = () => {
     const handleFormSubmitt = (e) => {
         e.preventDefault();
         if (formIsValid()) {
-            // history.push("/member");
-            
 
-            
+        fetch('', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body:{
+                
+            }
+        })
         }
-
     }
 
+ // history.push("/member");
     const [form, updateForm] = useState({
         firstName: {
             value: '',

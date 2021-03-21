@@ -26,18 +26,31 @@ const CompanySignUp = () => {
         return true
     }
 
+    // const userRole = {
+    //     roleTitle: "company",
+    //   }
+
     // const history = useHistory();
     const handleFormSubmitt = (e) => {
         if (formIsValid()) {
             // history.push("/company")
-            fetch('http://localhost:8080/company', {
+            fetch('http://localhost:8080/user', {
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
             },
             body:JSON.stringify({
-                "companyName": form.name.value,
-                "companyDescription": form.description.value
+            "userName": form.username.value,
+            "password": form.password.value,
+            
+            // "userCompany": {
+            //     "companyName": form.name.value,
+            //     "companyDescription": form.description.value
+            // },
+            // "userRole": {
+            //      "roleTitle": "company"
+            // }
+            
             })
         }).then(data => data.json())
         .then(response => console.log(response))
