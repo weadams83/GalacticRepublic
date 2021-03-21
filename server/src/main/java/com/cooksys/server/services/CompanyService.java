@@ -13,7 +13,7 @@ public interface CompanyService {
 
 	CompanyResponseDTO getCompany(String companyName);
 
-	CompanyRequestDTO postCompany(CompanyCreateRequestDTO companyRequest);
+	CompanyResponseDTO postCompany(CompanyCreateRequestDTO companyRequest);
 
-	CompanyRequestDTO updateCompanyDescription(String companyName, CompanyRequestDTO companyUpdate);
+	CompanyResponseDTO updateCompanyDescription(String companyName, CompanyRequestDTO companyUpdate);
 }

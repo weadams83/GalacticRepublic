@@ -45,12 +45,12 @@ public class CompanyController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CompanyRequestDTO postCompany(@RequestBody CompanyCreateRequestDTO companyRequest) {
+	public CompanyResponseDTO postCompany(@RequestBody CompanyCreateRequestDTO companyRequest) {
 		return compServ.postCompany(companyRequest);
 	}
 	@PutMapping("/{companyName}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CompanyRequestDTO updateCompanyDescription(@PathVariable("companyName") String companyName, @RequestBody CompanyRequestDTO companyUpdate) {
+	public CompanyResponseDTO updateCompanyDescription(@PathVariable("companyName") String companyName, @RequestBody CompanyRequestDTO companyUpdate) {
 		return compServ.updateCompanyDescription(companyName, companyUpdate);
 	}
 	

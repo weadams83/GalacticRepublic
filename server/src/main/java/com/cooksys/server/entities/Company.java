@@ -1,5 +1,6 @@
 package com.cooksys.server.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,8 +32,10 @@ public class Company {
 	@OneToMany(mappedBy = "parentCompany")
 	private List<Team> teams;
 
+	//TODO: Is it good practice to default an empty list? I noticed this list defaults
+	//to null otherwise, breaking some functionality
 	@OneToMany(mappedBy = "userCompany")
-	private List<User> users;
+	private List<User> users = new ArrayList<>();
 
 	@Override
 	public String toString() {

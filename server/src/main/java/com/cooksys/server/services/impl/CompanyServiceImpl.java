@@ -64,7 +64,7 @@ public class CompanyServiceImpl implements CompanyService {
 	 */
 
 	@Override
-	public CompanyRequestDTO postCompany(CompanyCreateRequestDTO companyRequest) {
+	public CompanyResponseDTO postCompany(CompanyCreateRequestDTO companyRequest) {
 		Optional<Company> findCompany = companyRepo.findByCompanyName(companyRequest.getSeedCompany().getCompanyName());
 		if(findCompany.isPresent()) {
 			throw new ImUsedException(String.format("Company with company name: '%s' already exsist.", findCompany.get().getCompanyName()));
@@ -84,17 +84,17 @@ public class CompanyServiceImpl implements CompanyService {
 			throw new NotFoundException(String.format("Can't find Role with name: '%s'", "Company"));
 		}
 		userRepo.saveAndFlush(createUser);
-		return companyMap.EntityToDTO(createCompany);
+		return companyMap.entityToResponseDTO(createCompany);
 	}
 
 	@Override
-	public CompanyRequestDTO updateCompanyDescription(String companyName, CompanyRequestDTO companyUpdate) {
+	public CompanyResponseDTO updateCompanyDescription(String companyName, CompanyRequestDTO companyUpdate) {
 		Optional<Company> findCompany = companyRepo.findByCompanyName(companyName);
 		if (findCompany.isEmpty()) {
 			throw new NotFoundException(String.format("Company with company name: '%s' could not be found.", companyName));
 		}
 		findCompany.get().setCompanyDescription(companyUpdate.getCompanyDescription());
 		companyRepo.saveAndFlush(findCompany.get());
-		return companyMap.EntityToDTO(findCompany.get());
+		return companyMap.entityToResponseDTO(findCompany.get());
 	}
 }
