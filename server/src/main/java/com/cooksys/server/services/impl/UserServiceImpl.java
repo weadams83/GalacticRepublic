@@ -6,8 +6,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.cooksys.server.DTOs.CompanyResponseDTO;
-import com.cooksys.server.DTOs.ProjectResponseDTO;
 import com.cooksys.server.DTOs.UserCreateRequestDTO;
 import com.cooksys.server.DTOs.UserEditRequestDTO;
 import com.cooksys.server.DTOs.UserRequestAssignCompanyDTO;
@@ -24,10 +22,7 @@ import com.cooksys.server.entities.User;
 import com.cooksys.server.exceptions.BadRequestException;
 import com.cooksys.server.exceptions.ImUsedException;
 import com.cooksys.server.exceptions.NotFoundException;
-import com.cooksys.server.mappers.CompanyMapper;
 import com.cooksys.server.mappers.ProjectMapper;
-import com.cooksys.server.mappers.RoleMapper;
-import com.cooksys.server.mappers.TeamMapper;
 import com.cooksys.server.mappers.UserMapper;
 import com.cooksys.server.repositories.CompanyRepository;
 import com.cooksys.server.repositories.ProjectRepository;
@@ -35,6 +30,7 @@ import com.cooksys.server.repositories.RoleRepository;
 import com.cooksys.server.repositories.TeamRepository;
 import com.cooksys.server.repositories.UserRepository;
 import com.cooksys.server.services.UserService;
+import com.cooksys.server.services.impl.Utils;
 
 import lombok.AllArgsConstructor;
 @Service
@@ -47,50 +43,15 @@ public class UserServiceImpl implements UserService {
 	private RoleRepository roleRepo;
 
 	private UserMapper userMap;
-	private TeamMapper teamMap;
-	private CompanyMapper companyMap;
 	private ProjectMapper projectMap;
-	private RoleMapper roleMap;
-	
 
-	private void validateBossIsSameCompanyAsUser(Optional<User> findUser, Optional<User> findBoss) {
-		if(!findUser.get().getUserCompany().equals(findBoss.get().getUserCompany())){
-			throw new BadRequestException(String.format("Boss with user name: '%s can not assign user with user name: '%s' "
-					+ "as they work for different companies." , findUser.get().getUserName(),findBoss.get().getUserName()));
-		}
-	}
-	
-	private void validateNewUser(Optional<User> findUser) {
-		if(findUser.get().isNewUser()) {
-			throw new BadRequestException(String.format("User with user name: '%s' has not been assigned a Role.", findUser.get().getUserName()));
-		}
-	}
-	
-	private void validateAuthorization(Optional<User> findUser,String userName) {
-		if(!findUser.get().getUserRole().getRoleTitle().equals("Company")) {
-			throw new BadRequestException(String.format("User with user name: '%s' does not have authorization.", userName));
-		}
-	}
-
-	private void validateCredentials(Optional<User> findUser, String userName, String password) {
-		if(!findUser.get().getUserName().equals(userName) || !findUser.get().getPassword().equals(password)) {
-			throw new BadRequestException("Username/Password do not match.");
-		}
-	}
-	
-	private void validateUserExistsAndNotDeleted(Optional<User> findUser, String userName) {
-		if(findUser.isEmpty() || findUser.get().getIsDeleted()) {
-			throw new NotFoundException(String.format("User with user name: '%s' could not be found or has been deleted.", userName));
-
-		}
-	}
 	/*
 	 * GET User if user doesn't exist or is deleted, throw exception
 	 */
 	@Override
 	public UserResponseDTO getUser(String userName) {
 		Optional<User> findUser = userRepo.findByUserName(userName);
-		validateUserExistsAndNotDeleted(findUser,userName);
+		Utils.validateUserExistsAndNotDeleted(findUser,userName);
 
 		return userMap.EntityToDTO(findUser.get());
 	}
@@ -132,8 +93,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserResponseDTO patchUser(String userName, UserEditRequestDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userName);
-		validateUserExistsAndNotDeleted(findUser,userName);
-		validateCredentials(findUser,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
+		Utils.validateUserExistsAndNotDeleted(findUser,userName);
+		Utils.validateCredentials(findUser,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
 		User user = findUser.get();
 		user = userMap.DTOtoEntity(userRequest.getNewData());
 		user.setNewUser(findUser.get().isNewUser());
@@ -154,16 +115,16 @@ public class UserServiceImpl implements UserService {
 	 * else throw exception
 	 */
 	@Override
-	public ProjectResponseDTO assignProject(String userName, UserRequestAssignProjectDTO userRequest) {
+	public UserResponseDTO assignProject(String userName, UserRequestAssignProjectDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userName);	
 		Optional<User> findBoss = userRepo.findByUserName(userRequest.getCredentials().getUserName());
-		validateUserExistsAndNotDeleted(findUser,userName);
-		validateNewUser(findUser);
-		validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
-		validateNewUser(findBoss);
-		validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
-		validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
-		validateBossIsSameCompanyAsUser(findBoss,findUser);
+		Utils.validateUserExistsAndNotDeleted(findUser,userName);
+		Utils.validateNewUser(findUser);
+		Utils.validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
+		Utils.validateNewUser(findBoss);
+		Utils.validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
+		Utils.validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
+		Utils.validateBossIsSameCompanyAsUser(findBoss,findUser);
 		
 		Optional<Project> findProject = projectRepo.findByName(userRequest.getProjectName());
 		if(findProject.isPresent() && findProject.get().getIsDeleted() != true) {
@@ -172,7 +133,8 @@ public class UserServiceImpl implements UserService {
 		}else {
 			throw new NotFoundException(String.format("Project with name: '%s' not found or deleted.", userRequest.getProjectName()));
 		}
-		return projectMap.EntityToProjectResponseDTO(projectRepo.saveAndFlush(findProject.get()));
+		findUser = userRepo.findByUserName(userName);
+		return userMap.EntityToDTO(findUser.get());
 	}
 
 	/*
@@ -189,12 +151,12 @@ public class UserServiceImpl implements UserService {
 	public UserResponseDTO assignCompany(String userName, UserRequestAssignCompanyDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userName);	
 		Optional<User> findBoss = userRepo.findByUserName(userRequest.getCredentials().getUserName());
-		validateUserExistsAndNotDeleted(findUser,userName);
-		validateNewUser(findUser);
-		validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
-		validateNewUser(findBoss);
-		validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
-		validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
+		Utils.validateUserExistsAndNotDeleted(findUser,userName);
+		Utils.validateNewUser(findUser);
+		Utils.validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
+		Utils.validateNewUser(findBoss);
+		Utils.validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
+		Utils.validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
 
 		Optional<Company> findCompany = companyRepo.findByCompanyName(userRequest.getCompanyName());
 		if(findCompany.isPresent()) {
@@ -219,13 +181,13 @@ public class UserServiceImpl implements UserService {
 	public UserResponseDTO assignTeam(String userName, UserRequestAssignTeamDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userName);	
 		Optional<User> findBoss = userRepo.findByUserName(userRequest.getCredentials().getUserName());
-		validateUserExistsAndNotDeleted(findUser,userName);
-		validateNewUser(findUser);
-		validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
-		validateNewUser(findBoss);
-		validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
-		validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
-		validateBossIsSameCompanyAsUser(findBoss,findUser);
+		Utils.validateUserExistsAndNotDeleted(findUser,userName);
+		Utils.validateNewUser(findUser);
+		Utils.validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
+		Utils.validateNewUser(findBoss);
+		Utils.validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
+		Utils.validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
+		Utils.validateBossIsSameCompanyAsUser(findBoss,findUser);
 
 		Optional<Team> findTeam = teamRepo.findByTeamNameIgnoreCase(userRequest.getTeamName());
 		if(findTeam.isPresent() && findTeam.get().getIsDeleted() != true) {
@@ -245,8 +207,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserResponseDTO deleteUser(String userName, UserSignInRequestDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userName);
-		validateUserExistsAndNotDeleted(findUser,userName);
-		validateCredentials(findUser,userRequest.getUserName(),userRequest.getPassword());
+		Utils.validateUserExistsAndNotDeleted(findUser,userName);
+		Utils.validateCredentials(findUser,userRequest.getUserName(),userRequest.getPassword());
 
 		findUser.get().setIsDeleted(true);
 		userRepo.saveAndFlush(findUser.get());
@@ -259,8 +221,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserResponseDTO login(UserSignInRequestDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userRequest.getUserName());
-		validateUserExistsAndNotDeleted(findUser,userRequest.getUserName());
-		validateCredentials(findUser,userRequest.getUserName(),userRequest.getPassword());
+		Utils.validateUserExistsAndNotDeleted(findUser,userRequest.getUserName());
+		Utils.validateCredentials(findUser,userRequest.getUserName(),userRequest.getPassword());
 
 		return userMap.EntityToDTO(findUser.get());
 	}
@@ -271,7 +233,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserResponseDTO> getAllUsers() {
 		return userMap.EntitiesToDTO(userRepo.findByisDeletedFalse());
-//		return userMap.EntitiesToDTO(userRepo.findAll());
 	}
 
 	/*
@@ -286,12 +247,12 @@ public class UserServiceImpl implements UserService {
 	public UserResponseDTO assignUserRole(String userName, UserRequestAssignRoleDTO userRequest) {
 		Optional<User> findUser = userRepo.findByUserName(userName);	
 		Optional<User> findBoss = userRepo.findByUserName(userRequest.getCredentials().getUserName());
-		validateUserExistsAndNotDeleted(findUser,userName);
-		validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
-		validateNewUser(findBoss);
-		validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
-		validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
-		validateBossIsSameCompanyAsUser(findBoss,findUser);
+		Utils.validateUserExistsAndNotDeleted(findUser,userName);
+		Utils.validateUserExistsAndNotDeleted(findBoss,userRequest.getCredentials().getUserName());
+		Utils.validateNewUser(findBoss);
+		Utils.validateAuthorization(findBoss, userRequest.getCredentials().getUserName());
+		Utils.validateCredentials(findBoss,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
+		Utils.validateBossIsSameCompanyAsUser(findBoss,findUser);
 
 		Optional<Role> findRole = roleRepo.findByroleTitle(userRequest.getRoleName());
 		if(findRole.isPresent()) {

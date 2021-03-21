@@ -24,25 +24,24 @@ Returns Json:
 ```json
 [
     {
-        "userName": "Loki",
-        "firstName": "Jim",
-        "lastName": "Halpert",
-        "associatedTeam": {
-            "teamName": "Sales",
-            "teamDescription": "Sell products to Clients.",
-            "parentCompany": {
-                "companyName": "Dunder Mifflin",
-                "companyDescription": "Paper and paper accessories."
-            }
-        },
+        "userName": "JP Lobster",
+        "firstName": "Mr.",
+        "lastName": "Krabbs",
+        "associatedTeam": null,
         "isDeleted": false,
         "userCompany": {
-            "companyName": "Dunder Mifflin",
-            "companyDescription": "Paper and paper accessories."
+            "companyName": "Krusty Krab",
+            "companyDescription": "The squeaking of the horrible boots!"
         },
         "userRole": {
-            "roleTitle": "Member"
+            "roleTitle": "Company"
         },
+        "projects": [
+            {
+                "name": "Count ma money!",
+                "description": "Stop the squeaking of horrible boots!"
+            }
+        ],
         "newUser": false
     },...
 ]
@@ -53,26 +52,26 @@ GET user with userName = {username}
 </br>
 Returns Json:
 ```json
+
 {
-    "userName": "Loki",
-    "firstName": "Jim",
-    "lastName": "Halpert",
-    "associatedTeam": {
-        "teamName": "Sales",
-        "teamDescription": "Sell products to Clients.",
-        "parentCompany": {
-            "companyName": "Dunder Mifflin",
-            "companyDescription": "Paper and paper accessories."
-        }
-    },
+    "userName": "JP Lobster",
+    "firstName": "Mr.",
+    "lastName": "Krabbs",
+    "associatedTeam": null,
     "isDeleted": false,
     "userCompany": {
-        "companyName": "Dunder Mifflin",
-        "companyDescription": "Paper and paper accessories."
+        "companyName": "Krusty Krab",
+        "companyDescription": "The squeaking of the horrible boots!"
     },
     "userRole": {
-        "roleTitle": "Member"
+        "roleTitle": "Company"
     },
+    "projects": [
+        {
+            "name": "Count ma money!",
+            "description": "Stop the squeaking of horrible boots!"
+        }
+    ],
     "newUser": false
 }
 ```
@@ -102,6 +101,12 @@ Returns Json:
     "userRole": {
         "roleTitle": "Company"
     },
+    "projects": [
+        {
+            "name": "Count ma money!",
+            "description": "Stop the squeaking of horrible boots!"
+        }
+    ],
     "newUser": false
 }
 ```
@@ -134,6 +139,7 @@ Returns Json:
         "companyDescription": "The squeaking of the horrible boots!"
     },
     "userRole": null,
+    "projects": [],
     "newUser": true
 }
 ```
@@ -169,6 +175,7 @@ Returns Json:
     "isDeleted": false,
     "userCompany": null,
     "userRole": null,
+    "projects": [],
     "newUser": false
 }
 ```
@@ -201,6 +208,7 @@ Returns Json:
     "userRole": {
         "roleTitle": "Member"
     },
+    "projects": [],
     "newUser": false
 }
 ```
@@ -221,30 +229,28 @@ Request Json:
 Returns Json:
 ```json
 {
-    "name": "Count Paper",
-    "description": "At least the sales team can get away from Michael.",
-    "user": {
-        "userName": "Darth Shrewt",
-        "firstName": "Dwight",
-        "lastName": "Schrute",
-        "associatedTeam": {
-            "teamName": "Sales",
-            "teamDescription": "Sell products to Clients.",
-            "parentCompany": {
-                "companyName": "Dunder Mifflin",
-                "companyDescription": "Paper and paper accessories."
-            }
-        },
-        "isDeleted": false,
-        "userCompany": {
-            "companyName": "Dunder Mifflin",
-            "companyDescription": "Paper and paper accessories."
-        },
-        "userRole": {
-            "roleTitle": "Member"
-        },
-        "newUser": false
-    }
+    "userName": "Darth Shrewt",
+    "firstName": "Dwight",
+    "lastName": "Schrute",
+    "associatedTeam": {
+        "teamName": "Sales",
+        "teamDescription": "Sell products to Clients."
+    },
+    "isDeleted": false,
+    "userCompany": {
+        "companyName": "Dunder Mifflin",
+        "companyDescription": "Paper and paper accessories."
+    },
+    "userRole": {
+        "roleTitle": "Member"
+    },
+    "projects": [
+        {
+            "name": "Count Paper",
+            "description": "At least the sales team can get away from Michael."
+        }
+    ],
+    "newUser": false
 }
 ```
 
@@ -269,11 +275,7 @@ Returns Json:
     "lastName": "Squarepants",
     "associatedTeam": {
         "teamName": "Kitchen Staff",
-        "teamDescription": "How the Sausage is made.",
-        "parentCompany": {
-            "companyName": "Krusty Krab",
-            "companyDescription": "The squeaking of the horrible boots!"
-        }
+        "teamDescription": "How the Sausage is made."
     },
     "isDeleted": false,
     "userCompany": {
@@ -283,6 +285,12 @@ Returns Json:
     "userRole": {
         "roleTitle": "Member"
     },
+    "projects": [
+        {
+            "name": "Living life like GOAT.",
+            "description": "Bring it around town!"
+        }
+    ],
     "newUser": false
 }
 ```
@@ -308,11 +316,7 @@ Returns Json:
     "lastName": "Halpert",
     "associatedTeam": {
         "teamName": "Accounting",
-        "teamDescription": "Crunch the numbers.",
-        "parentCompany": {
-            "companyName": "Dunder Mifflin",
-            "companyDescription": "Paper and paper accessories."
-        }
+        "teamDescription": "Crunch the numbers."
     },
     "isDeleted": false,
     "userCompany": {
@@ -322,6 +326,12 @@ Returns Json:
     "userRole": {
         "roleTitle": "Member"
     },
+    "projects": [
+        {
+            "name": "Prank Dwight.",
+            "description": "Bears, Beets, BattleStar Galactica."
+        }
+    ],
     "newUser": false
 }
 ```
@@ -344,11 +354,7 @@ Returns Json:
     "lastName": "Schrute",
     "associatedTeam": {
         "teamName": "Sales",
-        "teamDescription": "Sell products to Clients.",
-        "parentCompany": {
-            "companyName": "Dunder Mifflin",
-            "companyDescription": "Paper and paper accessories."
-        }
+        "teamDescription": "Sell products to Clients."
     },
     "isDeleted": true,
     "userCompany": {
@@ -358,6 +364,12 @@ Returns Json:
     "userRole": {
         "roleTitle": "Member"
     },
+    "projects": [
+        {
+            "name": "Count Paper",
+            "description": "At least the sales team can get away from Michael."
+        }
+    ],
     "newUser": false
 }
 ```

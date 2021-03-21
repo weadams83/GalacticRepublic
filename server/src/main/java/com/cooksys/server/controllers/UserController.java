@@ -75,7 +75,7 @@ public class UserController {
 	
 	@PatchMapping("/{username}/project")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public ProjectResponseDTO assignUserProj(@PathVariable("username") String userName, @RequestBody UserRequestAssignProjectDTO userRequest) {
+	public UserResponseDTO assignUserProj(@PathVariable("username") String userName, @RequestBody UserRequestAssignProjectDTO userRequest) {
 		return userServ.assignProject(userName, userRequest);
 	}
 	

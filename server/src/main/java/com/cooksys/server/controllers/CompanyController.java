@@ -16,9 +16,8 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 
 import com.cooksys.server.DTOs.CompanyCreateRequestDTO;
-import com.cooksys.server.DTOs.CompanyRequestDTO;
+import com.cooksys.server.DTOs.CompanyEditRequestDTO;
 import com.cooksys.server.DTOs.CompanyResponseDTO;
-import com.cooksys.server.entities.Company;
 import com.cooksys.server.services.CompanyService;
 
 
@@ -48,9 +47,10 @@ public class CompanyController {
 	public CompanyResponseDTO postCompany(@RequestBody CompanyCreateRequestDTO companyRequest) {
 		return compServ.postCompany(companyRequest);
 	}
+	
 	@PutMapping("/{companyName}")
-	@ResponseStatus(HttpStatus.CREATED)
-	public CompanyResponseDTO updateCompanyDescription(@PathVariable("companyName") String companyName, @RequestBody CompanyRequestDTO companyUpdate) {
+	@ResponseStatus(HttpStatus.OK)
+	public CompanyResponseDTO updateCompanyDescription(@PathVariable("companyName") String companyName, @RequestBody CompanyEditRequestDTO companyUpdate) {
 		return compServ.updateCompanyDescription(companyName, companyUpdate);
 	}
 	

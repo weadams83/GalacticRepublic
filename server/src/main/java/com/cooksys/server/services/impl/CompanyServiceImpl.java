@@ -1,11 +1,12 @@
 package com.cooksys.server.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.server.DTOs.CompanyCreateRequestDTO;
-import com.cooksys.server.DTOs.CompanyRequestDTO;
+import com.cooksys.server.DTOs.CompanyEditRequestDTO;
 import com.cooksys.server.DTOs.CompanyResponseDTO;
 import com.cooksys.server.DTOs.UserResponseDTO;
 import com.cooksys.server.entities.Company;
@@ -71,7 +72,6 @@ public class CompanyServiceImpl implements CompanyService {
 		}
 		Company createCompany = companyMap.CompanyDTOtoEntity(companyRequest.getSeedCompany());
 		User createUser = userMap.UserSignInDTOtoEntity(companyRequest.getSeedUser());
-		
 		companyRepo.saveAndFlush(createCompany);
 		createUser.setUserCompany(createCompany);
 		createUser.setNewUser(false);
@@ -84,16 +84,28 @@ public class CompanyServiceImpl implements CompanyService {
 			throw new NotFoundException(String.format("Can't find Role with name: '%s'", "Company"));
 		}
 		userRepo.saveAndFlush(createUser);
+		List<User> users = new ArrayList<>();
+		users.add(createUser);
+		createCompany.setUsers(users);
 		return companyMap.entityToResponseDTO(createCompany);
 	}
 
 	@Override
-	public CompanyResponseDTO updateCompanyDescription(String companyName, CompanyRequestDTO companyUpdate) {
+	public CompanyResponseDTO updateCompanyDescription(String companyName, CompanyEditRequestDTO companyUpdate) {
+		Optional<User> findUser = userRepo.findByUserName(companyUpdate.getCredentials().getUserName());
 		Optional<Company> findCompany = companyRepo.findByCompanyName(companyName);
 		if (findCompany.isEmpty()) {
 			throw new NotFoundException(String.format("Company with company name: '%s' could not be found.", companyName));
 		}
-		findCompany.get().setCompanyDescription(companyUpdate.getCompanyDescription());
+		
+		Utils.validateUserExistsAndNotDeleted(findUser,companyUpdate.getCredentials().getUserName());
+		Utils.validateNewUser(findUser);
+		Utils.validateAuthorization(findUser, companyUpdate.getCredentials().getUserName());
+		Utils.validateCredentials(findUser,companyUpdate.getCredentials().getUserName(),companyUpdate.getCredentials().getPassword());
+		Utils.validateBossWorksForCompany(findUser,findCompany);
+
+		findCompany.get().setCompanyName(companyUpdate.getNewCompany().getCompanyName());
+		findCompany.get().setCompanyDescription(companyUpdate.getNewCompany().getCompanyDescription());
 		companyRepo.saveAndFlush(findCompany.get());
 		return companyMap.entityToResponseDTO(findCompany.get());
 	}

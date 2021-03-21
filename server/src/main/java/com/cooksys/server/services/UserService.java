@@ -21,7 +21,7 @@ public interface UserService {
 
 	UserResponseDTO patchUser(String userName, UserEditRequestDTO userRequest);
 	
-	ProjectResponseDTO assignProject(String userName, UserRequestAssignProjectDTO userRequest);
+	UserResponseDTO assignProject(String userName, UserRequestAssignProjectDTO userRequest);
 
 	UserResponseDTO assignCompany(String userName, UserRequestAssignCompanyDTO userRequest);
 

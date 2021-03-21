@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cooksys.server.DTOs.CompanyDTO;
-import com.cooksys.server.DTOs.CompanyRequestDTO;
 import com.cooksys.server.DTOs.CompanyResponseDTO;
 import com.cooksys.server.DTOs.CompanyResponseFilterUsersDTO;
 import com.cooksys.server.entities.Company;
@@ -37,10 +36,4 @@ public interface CompanyMapper {
 	Company CompanyDTOtoEntity(CompanyDTO companyDTO);
 	
 	List<CompanyResponseDTO> entitiesToResponseDTOs(List<Company> companies);
-
-	Company RequestDTOToEntity(CompanyRequestDTO companyRequest);
-
-	CompanyRequestDTO EntityToDTO(Company createCompany);
-	
-	Company CompanyRequestDTOtoEntity(CompanyRequestDTO companyName);
 }
