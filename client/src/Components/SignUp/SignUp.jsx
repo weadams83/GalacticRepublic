@@ -7,6 +7,8 @@ import { useState } from "react";
 import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledSignUp';
 
 
+
+
 const SignUp = () => {
 
     const initialFormError = {
@@ -29,30 +31,33 @@ const SignUp = () => {
         return true
     }
     
-  
+ 
     // const history = useHistory();
     const handleFormSubmitt = (e) => {
         e.preventDefault();
         // if (formIsValid()) {
 
             axios.get('http://localhost:8080/company')
-            .then((res) => {
+            .then((res) => {       
+            console.log(res.data[0]["companyName"]);
 
-                //  localStorage.getItem("companyName", JSON.stringify(res.data));
-            console.log(res.data);
-          
             //   history.push("/company");
             })
-     
+                
         //     .then(data => data.json())
         // .then(response => console.log(response))
         // .catch(error => console.log(error))
         //     .catch((err) => console.log(err));
-       
-
         // }
-    }
+        axios.post('http://localhost:8080/company', form)
+        .then((res) => {       
+        console.log(res.data)
 
+        //   history.push("/company");
+        })
+
+    }
+  
  // history.push("/member");
     const [form, updateForm] = useState({
         firstName: {
@@ -84,8 +89,9 @@ const SignUp = () => {
     const [selectCompanyName, UpdateCompanyName] = useState("Select")
 
     return (
-        <InspectP>
 
+        <InspectP>
+ 
             <Styledmain >
 
                 <Form onSubmit={handleFormSubmitt}>

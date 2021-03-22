@@ -40,10 +40,10 @@ const CompanySignUp = () => {
             console.log(res.data);
             //   history.push("/company");
             })
-            .then(data => data.json())
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
-            .catch((err) => console.log(err));
+        //     .then(data => data.json())
+        // .then(response => console.log(response))
+        // .catch(error => console.log(error))
+        //     .catch((err) => console.log(err));
         // }  
     }
 
