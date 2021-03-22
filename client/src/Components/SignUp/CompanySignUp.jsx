@@ -35,7 +35,9 @@ const CompanySignUp = () => {
     const handleFormSubmitt = (e) => {
         if (formIsValid()) {
             // @CrossOrigin(origins = "http://localhost:4200", 
-          axios.get('http://localhost:8080/company')
+          axios.get('http://localhost:8080/company',{
+            mode: 'no-cors' // 'cors' by default
+          })
             .then((res) => {
             console.log(res.data);
             //   history.push("/company");
@@ -46,6 +48,8 @@ const CompanySignUp = () => {
             // .catch((err) => console.log(err));
         }  
     }
+
+    
 
     const [form, updateForm] = useState({
         companyname: {
