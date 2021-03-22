@@ -28,21 +28,26 @@ const SignUp = () => {
         }
         return true
     }
-
+    
+  
     // const history = useHistory();
     const handleFormSubmitt = (e) => {
         e.preventDefault();
         // if (formIsValid()) {
 
-            axios.post('http://localhost:8080/user', form)
+            axios.get('http://localhost:8080/company')
             .then((res) => {
+
+                //  localStorage.getItem("companyName", JSON.stringify(res.data));
             console.log(res.data);
+          
             //   history.push("/company");
             })
-            .then(data => data.json())
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
-            .catch((err) => console.log(err));
+     
+        //     .then(data => data.json())
+        // .then(response => console.log(response))
+        // .catch(error => console.log(error))
+        //     .catch((err) => console.log(err));
        
 
         // }
@@ -108,7 +113,7 @@ const SignUp = () => {
                             UpdateCompanyName(selectedCompany);
                         }}
                     >
-                        <option value="Company A">Company A</option>
+                        <option value="Company A" >Company A</option>
                         <option value="Company B">Company B</option>
                         <option value="Company C">Company C</option>
                     </Select>
