@@ -55,7 +55,14 @@ font-size:15px;
 export const Select = styled.select`
 display:block;
 margin: 8px 0% 0px 5%;
-padding: 5px 25px 5px 25px ;
+padding: 5px 169px 5px 25px ;
 border-radius: 5px;
 border: 1px solid #ccc;
 `
+
+
+// display:block;
+// margin: 8px 0% 0px 5%;
+// padding: 5px 25px 5px 25px ;
+// border-radius: 5px;
+// border: 1px solid #ccc;
