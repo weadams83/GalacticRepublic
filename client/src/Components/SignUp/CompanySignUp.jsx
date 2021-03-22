@@ -1,5 +1,5 @@
-import axios from "axios";
 import React from 'react'
+import axios from "axios";
 
 // import { useHistory } from "react-router";
 import { useState } from "react";
@@ -17,7 +17,7 @@ const CompanySignUp = () => {
     const resetError = () => updateFormError(initialFormError)
 
     const formIsValid = () => {
-        if (!form.name.value || !form.description.value
+        if (!form.companyname.value || !form.description.value
             || !form.username.value || !form.password.value) {
             updateFormError({
                 ...formError, isError: true, message: 'All fields are required'
@@ -34,19 +34,21 @@ const CompanySignUp = () => {
     // const history = useHistory();
     const handleFormSubmitt = (e) => {
         if (formIsValid()) {
-
-            
-          axios.post("http://localhost:8080/user", form)
+            // @CrossOrigin(origins = "http://localhost:4200", 
+          axios.get('http://localhost:8080/company')
             .then((res) => {
-              localStorage.setItem("currentCompany", JSON.stringify(res.data));
+            console.log(res.data);
             //   history.push("/company");
             })
-            .catch((err) => console.log(err));
+        //     .then(data => data.json())
+        // .then(response => console.log(response))
+        // .catch(error => console.log(error))
+            // .catch((err) => console.log(err));
         }  
     }
 
     const [form, updateForm] = useState({
-        name: {
+        companyname: {
             value: '',
             placeholder: 'Company Name',
             type: 'text'
