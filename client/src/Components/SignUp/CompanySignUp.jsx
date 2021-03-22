@@ -33,8 +33,8 @@ const CompanySignUp = () => {
 
     // const history = useHistory();
     const handleFormSubmitt = (e) => {
-        if (formIsValid()) {
-            // @CrossOrigin(origins = "http://localhost:4200", 
+        // if (formIsValid()) {
+           
           axios.post('http://localhost:8080/company', form)
             .then((res) => {
             console.log(res.data);
@@ -44,7 +44,7 @@ const CompanySignUp = () => {
         .then(response => console.log(response))
         .catch(error => console.log(error))
             .catch((err) => console.log(err));
-        }  
+        // }  
     }
 
     
@@ -74,6 +74,8 @@ const CompanySignUp = () => {
             placeholder: 'Password',
             type: 'password'
         },
+
+
     })
 
 

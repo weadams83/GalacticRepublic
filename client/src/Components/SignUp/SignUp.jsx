@@ -1,5 +1,7 @@
 
 import React from 'react'
+import axios from "axios";
+
 // import { useHistory } from "react-router";
 import { useState } from "react";
 import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledSignUp';
@@ -30,18 +32,20 @@ const SignUp = () => {
     // const history = useHistory();
     const handleFormSubmitt = (e) => {
         e.preventDefault();
-        if (formIsValid()) {
+        // if (formIsValid()) {
 
-        fetch('', {
-            method: 'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body:{
-                
-            }
-        })
-        }
+            axios.post('http://localhost:8080/user', form)
+            .then((res) => {
+            console.log(res.data);
+            //   history.push("/company");
+            })
+            .then(data => data.json())
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
+            .catch((err) => console.log(err));
+       
+
+        // }
     }
 
  // history.push("/member");
