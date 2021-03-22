@@ -79,12 +79,20 @@ public class DatabaseSeeder implements CommandLineRunner {
 		deletedTeam.setTeamName("Crossfit");
 		deletedTeam.setTeamDescription("Pain.");
 		deletedTeam.setIsDeleted(true);
+		
+		Team deletedTeam2 = new Team();
+		
+		deletedTeam2.setParentCompany(dunderMifflin);
+		deletedTeam2.setTeamName("TeamA");
+		deletedTeam2.setTeamDescription("TeamA description");
+		deletedTeam2.setIsDeleted(true);
 
 		teamRepo.saveAndFlush(salesTeam);
 		teamRepo.saveAndFlush(accountingTeam);
 		teamRepo.saveAndFlush(kitchen);
 		teamRepo.saveAndFlush(cashier);
 		teamRepo.saveAndFlush(deletedTeam);
+		teamRepo.saveAndFlush(deletedTeam2);
 
 		User Jim = new User();
 		Jim.setFirstName("Jim");

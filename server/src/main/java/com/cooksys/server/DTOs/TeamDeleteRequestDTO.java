@@ -5,6 +5,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class RoleResponseDTO {	
-	private String roleTitle;
+public class TeamDeleteRequestDTO {
+	private UserSignInRequestDTO credentials;
 }

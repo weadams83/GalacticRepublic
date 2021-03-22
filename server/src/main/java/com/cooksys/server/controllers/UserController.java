@@ -16,8 +16,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
-import com.cooksys.server.DTOs.CompanyResponseDTO;
-import com.cooksys.server.DTOs.ProjectResponseDTO;
 import com.cooksys.server.DTOs.UserCreateRequestDTO;
 import com.cooksys.server.DTOs.UserEditRequestDTO;
 import com.cooksys.server.DTOs.UserRequestAssignCompanyDTO;

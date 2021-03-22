@@ -3,7 +3,6 @@ package com.cooksys.server.controllers;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cooksys.server.DTOs.TeamEditRequestDTO;
 import com.cooksys.server.DTOs.TeamRequestDTO;
 import com.cooksys.server.DTOs.TeamResponseDTO;
+import com.cooksys.server.DTOs.UserSignInRequestDTO;
 import com.cooksys.server.services.TeamService;
 
 import lombok.AllArgsConstructor;
@@ -36,7 +37,7 @@ public class TeamController {
 
 	@GetMapping("/{teamName}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<TeamResponseDTO> getTeam(@PathVariable("teamName") String teamName) {
+	public TeamResponseDTO getTeam(@PathVariable("teamName") String teamName) {
 		return teamService.getTeam(teamName);
 	}
 
@@ -48,14 +49,14 @@ public class TeamController {
 
 	@PatchMapping("/update/{teamName}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<TeamResponseDTO> updateTeam(@PathVariable String teamName,
-			@RequestBody TeamRequestDTO teamRequestDTO) {
+	public TeamResponseDTO updateTeam(@PathVariable String teamName,
+			@RequestBody TeamEditRequestDTO teamRequestDTO) {
 		return teamService.updateTeam(teamName, teamRequestDTO);
 	}
 
 	@DeleteMapping("/delete/{teamName}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<TeamResponseDTO> deleteTeam(@PathVariable String teamName) {
-		return teamService.deleteTeam(teamName);
+	public TeamResponseDTO deleteTeam(@PathVariable String teamName, @RequestBody UserSignInRequestDTO teamRequestDTO) {
+		return teamService.deleteTeam(teamName, teamRequestDTO);
 	}
 }

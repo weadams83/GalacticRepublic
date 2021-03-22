@@ -3,15 +3,29 @@ package com.cooksys.server.services.impl;
 import java.util.Optional;
 
 import com.cooksys.server.entities.Company;
+import com.cooksys.server.entities.Team;
 import com.cooksys.server.entities.User;
 import com.cooksys.server.exceptions.BadRequestException;
 import com.cooksys.server.exceptions.NotFoundException;
 
 public class Utils {
+	static void validateTeamExistsAndNotDeleted(Optional<Team> findTeam,String teamName) {
+		if (findTeam.isEmpty() || findTeam.get().getIsDeleted()) {
+			throw new NotFoundException(String.format("Team with name: '%s' not found or deleted.", teamName));
+		}
+	}
+	
 	static void validateBossIsSameCompanyAsUser(Optional<User> findUser, Optional<User> findBoss) {
 		if(!findUser.get().getUserCompany().equals(findBoss.get().getUserCompany())){
 			throw new BadRequestException(String.format("Boss with user name: '%s can not assign user with user name: '%s' "
 					+ "as they work for different companies." , findUser.get().getUserName(),findBoss.get().getUserName()));
+		}
+	}
+	
+	static void validateBossIsSameCompanyAsTeam(Optional<Team> findTeam, Optional<User> findBoss) {
+		if(!findTeam.get().getParentCompany().equals(findBoss.get().getUserCompany())){
+			throw new BadRequestException(String.format("Boss with user name: '%s can not modify team with name: '%s' "
+					+ "as they work for different companies." , findBoss.get().getUserName(),findTeam.get().getTeamName()));
 		}
 	}
 	

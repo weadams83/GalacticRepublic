@@ -5,7 +5,6 @@ import java.util.List;
 import com.cooksys.server.DTOs.CompanyCreateRequestDTO;
 import com.cooksys.server.DTOs.CompanyEditRequestDTO;
 import com.cooksys.server.DTOs.CompanyResponseDTO;
-import com.cooksys.server.entities.Company;
 
 public interface CompanyService {
 

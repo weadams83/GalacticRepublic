@@ -19,10 +19,8 @@ import com.cooksys.server.entities.Project;
 import com.cooksys.server.entities.Role;
 import com.cooksys.server.entities.Team;
 import com.cooksys.server.entities.User;
-import com.cooksys.server.exceptions.BadRequestException;
 import com.cooksys.server.exceptions.ImUsedException;
 import com.cooksys.server.exceptions.NotFoundException;
-import com.cooksys.server.mappers.ProjectMapper;
 import com.cooksys.server.mappers.UserMapper;
 import com.cooksys.server.repositories.CompanyRepository;
 import com.cooksys.server.repositories.ProjectRepository;
@@ -30,8 +28,6 @@ import com.cooksys.server.repositories.RoleRepository;
 import com.cooksys.server.repositories.TeamRepository;
 import com.cooksys.server.repositories.UserRepository;
 import com.cooksys.server.services.UserService;
-import com.cooksys.server.services.impl.Utils;
-
 import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
@@ -43,7 +39,6 @@ public class UserServiceImpl implements UserService {
 	private RoleRepository roleRepo;
 
 	private UserMapper userMap;
-	private ProjectMapper projectMap;
 
 	/*
 	 * GET User if user doesn't exist or is deleted, throw exception

@@ -5,11 +5,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class ProjectResponseDTO {
-	
+public class TeamResponseProjectsDTO {
 	private String name;
 	
 	private String description;
-	
-	private UserResponseDTO user;
 }

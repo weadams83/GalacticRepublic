@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-
 public class TeamRequestDTO {
 
 	private String teamName;

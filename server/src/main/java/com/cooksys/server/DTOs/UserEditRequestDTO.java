@@ -1,7 +1,5 @@
 package com.cooksys.server.DTOs;
 
-import com.cooksys.server.entities.Project;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

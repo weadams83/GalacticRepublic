@@ -1,5 +1,5 @@
 
-# **User Endpoints**
+# **Company Endpoints**
 ___
 
 1. Companies
@@ -9,8 +9,6 @@ ___
     * Update Company Description
 
 ___
-
-## **Company Endpoints**
 ### **GET Path: '/company'**
 GET All companies (returns all companies)
 </br>
