@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const StyledUsers = styled.div`
   display: flex;
@@ -25,5 +25,4 @@ export const StyledUsers = styled.div`
     flex-wrap: wrap;
     width: 100%;
   }
-  
-`
+`;

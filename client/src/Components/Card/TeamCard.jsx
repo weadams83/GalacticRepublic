@@ -14,9 +14,12 @@ const TeamCard = (props) => {
   };
 
   const getTeams = () => {
-    axios.get("http://localhost:8080/team").then((res) => {
-      setTeams(res.data);
-    });
+    axios
+      .get("http://localhost:8080/team")
+      .then((res) => {
+        setTeams(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleClick = (e) => {
@@ -27,7 +30,8 @@ const TeamCard = (props) => {
       .then((res) => {
         props.getUsers();
         setTeamName("");
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -40,7 +44,7 @@ const TeamCard = (props) => {
         <select onChange={(e) => setTeamName(e.target.value)}>
           <option>Assign a team...</option>
           {teams.map((team) => (
-            <option key={`${team.teamName}`} >{team.teamName}</option>
+            <option key={`${team.teamName}`}>{team.teamName}</option>
           ))}
         </select>
         <button name={`${props.userName}`}>+</button>
@@ -49,8 +53,16 @@ const TeamCard = (props) => {
   );
   return (
     <StyledCard>
-      <h3>{props.name}</h3>
-      {props.team !== undefined ? <p>{props.team}</p> : teamForm}
+      <h3>{props.name.includes("null") ? null : props.name}</h3>
+      {props.name.includes("null") ? (
+        <h3>{props.userName}</h3>
+      ) : props.team !== undefined ||
+        JSON.parse(localStorage.getItem("currentUser"))?.userRole.roleTitle ===
+          "Member" ? (
+        <p>{props.team}</p>
+      ) : (
+        teamForm
+      )}
       <div className="buttons">
         <div className="button">
           <Button name="Edit"></Button>
