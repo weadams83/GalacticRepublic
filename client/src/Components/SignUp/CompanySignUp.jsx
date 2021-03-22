@@ -17,8 +17,8 @@ const CompanySignUp = () => {
     const resetError = () => updateFormError(initialFormError)
 
     const formIsValid = () => {
-        if (!form.companyname.value || !form.description.value
-            || !form.username.value || !form.password.value) {
+        if (!form.companyName.value || !form.companyDescription.value
+            || !form.userName.value || !form.password.value) { 
             updateFormError({
                 ...formError, isError: true, message: 'All fields are required'
             })
@@ -35,36 +35,34 @@ const CompanySignUp = () => {
     const handleFormSubmitt = (e) => {
         if (formIsValid()) {
             // @CrossOrigin(origins = "http://localhost:4200", 
-          axios.get('http://localhost:8080/company',{
-            mode: 'no-cors' // 'cors' by default
-          })
+          axios.post('http://localhost:8080/company', form)
             .then((res) => {
             console.log(res.data);
             //   history.push("/company");
             })
-        //     .then(data => data.json())
-        // .then(response => console.log(response))
-        // .catch(error => console.log(error))
-            // .catch((err) => console.log(err));
+            .then(data => data.json())
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
+            .catch((err) => console.log(err));
         }  
     }
 
     
 
     const [form, updateForm] = useState({
-        companyname: {
+        companyName: {
             value: '',
             placeholder: 'Company Name',
             type: 'text'
         },
 
-        description: {
+        companyDescription: {
             value: '',
             placeholder: 'Company Description',
             type: 'text'
         },
 
-        username: {
+        userName: {
             value: '',
             placeholder: 'Username',
             type: 'text',
