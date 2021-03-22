@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cooksys.server.DTOs.TeamEditRequestDTO;
 import com.cooksys.server.DTOs.TeamRequestDTO;
 import com.cooksys.server.DTOs.TeamResponseDTO;
 import com.cooksys.server.DTOs.UserSignInRequestDTO;
@@ -50,7 +49,7 @@ public class TeamController {
 	@PatchMapping("/update/{teamName}")
 	@ResponseStatus(HttpStatus.OK)
 	public TeamResponseDTO updateTeam(@PathVariable String teamName,
-			@RequestBody TeamEditRequestDTO teamRequestDTO) {
+			@RequestBody TeamRequestDTO teamRequestDTO) {
 		return teamService.updateTeam(teamName, teamRequestDTO);
 	}
 

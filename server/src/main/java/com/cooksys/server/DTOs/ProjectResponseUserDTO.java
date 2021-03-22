@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class TeamResponseUsersDTO {
+public class ProjectResponseUserDTO {
 	private String userName;
 
 	private String firstName;

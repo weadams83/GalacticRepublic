@@ -1,10 +1,10 @@
 package com.cooksys.server.services.impl;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import com.cooksys.server.DTOs.TeamEditRequestDTO;
 import com.cooksys.server.DTOs.TeamRequestDTO;
 import com.cooksys.server.DTOs.TeamResponseDTO;
 import com.cooksys.server.DTOs.UserSignInRequestDTO;
@@ -34,21 +34,31 @@ public class TeamServiceImpl implements TeamService {
 		return teamMapper.EntityToDto(teamToGet.get());
 	}
 
-	//TODO: Might be desirable to include the Company information (i.e. when a team is created we automatically tie it to a company)
-	// just like when a user signs up (mimic the post user)
 	@Override
 	public TeamResponseDTO createTeam(TeamRequestDTO teamRequestDTO) {
-		Optional<Team> findTeam = teamRepository.findByTeamName(teamRequestDTO.getTeamName());
+		Optional<Team> findTeam = teamRepository.findByTeamName(teamRequestDTO.getTeam().getTeamName());
 		if(findTeam.isPresent()) {
 			if(findTeam.get().getIsDeleted()) {
 				findTeam.get().setIsDeleted(false);
 				return teamMapper.EntityToDto(teamRepository.saveAndFlush(findTeam.get()));
 			}else {
-				throw new ImUsedException(String.format("Team with name: '%s' is already taken.", teamRequestDTO.getTeamName()));
+				throw new ImUsedException(String.format("Team with name: '%s' is already taken.", teamRequestDTO.getTeam().getTeamName()));
 			}
 		}
-		Team teamToSave = teamMapper.DTOtoEntity(teamRequestDTO);
-		return teamMapper.EntityToDto(teamRepository.saveAndFlush(teamToSave));
+		Optional<User> findUser = userRepo.findByUserName(teamRequestDTO.getCredentials().getUserName());
+		Utils.validateUserExistsAndNotDeleted(findUser, teamRequestDTO.getCredentials().getUserName());
+		Utils.validateNewUser(findUser);
+		Utils.validateCredentials(findUser,teamRequestDTO.getCredentials().getUserName(),teamRequestDTO.getCredentials().getPassword());
+		Utils.validateAuthorization(findUser, teamRequestDTO.getCredentials().getUserName());
+
+		Team teamToSave = teamMapper.DTOtoEntity(teamRequestDTO.getTeam());
+		teamToSave.setParentCompany(findUser.get().getUserCompany());
+		teamToSave = teamRepository.saveAndFlush(teamToSave);
+		findUser.get().setAssociatedTeam(teamToSave);
+		findUser.get().setUpdated(new Timestamp(System.currentTimeMillis()));
+		findUser.get().setUpdatedBy(findUser.get());
+		userRepo.saveAndFlush(findUser.get());
+		return teamMapper.EntityToDto(teamToSave);
 	}
 
 	@Override
@@ -57,7 +67,7 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public TeamResponseDTO updateTeam(String teamName, TeamEditRequestDTO teamRequestDTO) {
+	public TeamResponseDTO updateTeam(String teamName, TeamRequestDTO teamRequestDTO) {
 		Optional<Team> optionalTeam = teamRepository.findByTeamNameIgnoreCase(teamName);
 		Optional<User> findUser = userRepo.findByUserName(teamRequestDTO.getCredentials().getUserName());
 		Utils.validateTeamExistsAndNotDeleted(optionalTeam,teamName);
@@ -68,10 +78,9 @@ public class TeamServiceImpl implements TeamService {
 		Utils.validateBossIsSameCompanyAsTeam(optionalTeam, findUser);
 		
 		Team teamToUpdate = optionalTeam.get();
-		teamToUpdate.setTeamDescription(teamRequestDTO.getChanges().getTeamDescription());
-		teamToUpdate.setTeamName(teamRequestDTO.getChanges().getTeamName());
+		teamToUpdate.setTeamDescription(teamRequestDTO.getTeam().getTeamDescription());
+		teamToUpdate.setTeamName(teamRequestDTO.getTeam().getTeamName());
 		return teamMapper.EntityToDto(teamRepository.saveAndFlush(teamToUpdate));
-
 	}
 
 	@Override

@@ -33,8 +33,6 @@ public class DatabaseSeeder implements CommandLineRunner {
 		worker.setRoleTitle("Member");
 		Role comp = new Role();
 
-		comp.setRoleTitle("Manager");
-
 		comp.setRoleTitle("Company");
 		//---------------------------------------------------------------------------------------------//
 		roleRepo.saveAndFlush(worker);
@@ -227,26 +225,31 @@ public class DatabaseSeeder implements CommandLineRunner {
 		managedunderMifflin.setDescription("Make more 'thats what she said' jokes.");
 
 		Project sellPaper = new Project();
+		sellPaper.setUser(michael);
 		sellPaper.setTeam(salesTeam);
 		sellPaper.setName("Sell Paper");
 		sellPaper.setDescription("Without watermarks.");
 
 		Project crunchNumbers = new Project();
+		crunchNumbers.setUser(michael);
 		crunchNumbers.setTeam(accountingTeam);
 		crunchNumbers.setName("Count Paper");
 		crunchNumbers.setDescription("At least the sales team can get away from Michael.");
 
 		Project prankDwight = new Project();
 		prankDwight.setUser(Jim);
+		prankDwight.setUser(Jim);
 		prankDwight.setName("Prank Dwight.");
 		prankDwight.setDescription("Bears, Beets, BattleStar Galactica.");
 
 		Project flipBurgers = new Project();
+		flipBurgers.setUser(mrKrabbs);
 		flipBurgers.setTeam(kitchen);
 		flipBurgers.setName("The perfect burger.");
 		flipBurgers.setDescription("Imagination!");
 
 		Project serviceCust = new Project();
+		serviceCust.setUser(mrKrabbs);;
 		serviceCust.setTeam(cashier);
 		serviceCust.setName("Endure.");
 		serviceCust.setDescription("Envy SpongeBob.");
@@ -257,6 +260,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 		yolo.setDescription("Bring it around town!");
 		
 		Project testDelete = new Project();
+		testDelete.setUser(michael);
 		testDelete.setName("Have fun at the office.");
 		testDelete.setDescription("Michael likes to have fun.");
 		testDelete.setIsDeleted(true);

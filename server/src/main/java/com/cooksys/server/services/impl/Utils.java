@@ -3,12 +3,19 @@ package com.cooksys.server.services.impl;
 import java.util.Optional;
 
 import com.cooksys.server.entities.Company;
+import com.cooksys.server.entities.Project;
 import com.cooksys.server.entities.Team;
 import com.cooksys.server.entities.User;
 import com.cooksys.server.exceptions.BadRequestException;
 import com.cooksys.server.exceptions.NotFoundException;
 
 public class Utils {
+	static void validateProjectExistsAndNotDeleted(Optional<Project> findProject,String projectName) {
+		if (findProject.isEmpty() || findProject.get().getIsDeleted()) {
+			throw new NotFoundException(String.format("Project with name: '%s' not found or deleted.", projectName));
+		}
+	}
+	
 	static void validateTeamExistsAndNotDeleted(Optional<Team> findTeam,String teamName) {
 		if (findTeam.isEmpty() || findTeam.get().getIsDeleted()) {
 			throw new NotFoundException(String.format("Team with name: '%s' not found or deleted.", teamName));
@@ -58,6 +65,13 @@ public class Utils {
 		if(!findUser.get().getUserCompany().equals(findCompany.get())){
 			throw new BadRequestException(String.format("Boss with user name: '%s can not edit company: '%s' "
 					+ "as they do not work at that company." , findUser.get().getUserName(),findCompany.get().getCompanyName()));
+		}
+	}
+
+	public static void validateUserIsAssignedProject(Optional<User> findUser, Optional<Project> findProject) {
+		if(!findProject.get().getUser().equals(findUser.get())) {
+			throw new BadRequestException(String.format("User with user name: '%s' can not edit team: '%s'"
+					+ "as they are not assigned to that team.",findUser.get().getUserName(),findProject.get().getName()));
 		}
 	}
 }

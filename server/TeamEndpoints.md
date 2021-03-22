@@ -100,10 +100,16 @@ Returns Json:
 POST team
 </br>
 Request Json:
-```
+```json
 {
-    "teamName":"Party Planning Committee",
-    "teamDescription":"Plans Parties."
+    "credentials":{
+        "userName":"Michael Scarn",
+        "password":"Friendship"
+    },
+    "team":{
+        "teamName":"Party Planning Committee",
+        "teamDescription":"Plans Parties."
+    }
 }
 ```
 Returns Json:
@@ -111,7 +117,10 @@ Returns Json:
 {
     "teamName": "Party Planning Committee",
     "teamDescription": "Plans Parties.",
-    "parentCompany": null,
+    "parentCompany": {
+        "companyName": "Dunder Mifflin",
+        "companyDescription": "Paper and paper accessories."
+    },
     "teamMembers": [],
     "projects": [],
     "isDeleted": false
@@ -122,14 +131,14 @@ Returns Json:
 PATCH team (update team info)
 </br>
 Request Json:
-```
+```json
 {
     "credentials":{
         "userName":"Michael Scarn",
         "password": "Friendship"
 
     },
-    "changes":{
+    "team":{
         "teamName":"Sales Team Fun Parade",
         "teamDescription":"Selling Smiles"
     }
@@ -179,7 +188,7 @@ Returns Json:
 DELETE team 
 </br>
 Request Json:
-```
+```json
 {
     "userName":"Michael Scarn",
     "password": "Friendship"

@@ -47,7 +47,6 @@ public class UserServiceImpl implements UserService {
 	public UserResponseDTO getUser(String userName) {
 		Optional<User> findUser = userRepo.findByUserName(userName);
 		Utils.validateUserExistsAndNotDeleted(findUser,userName);
-
 		return userMap.EntityToDTO(findUser.get());
 	}
 
@@ -67,6 +66,7 @@ public class UserServiceImpl implements UserService {
 			}
 			throw new ImUsedException(String.format("User name: '%s' is taken.", findUser.get().getUserName()));
 		}
+
 		User createUser = userMap.DTOtoEntity(userRequest.getCreateUser());
 		Optional<Company> findCompany = companyRepo.findByCompanyName(userRequest.getCompanyName());
 		if (findCompany.isPresent()) {
@@ -74,6 +74,9 @@ public class UserServiceImpl implements UserService {
 		} else {
 			throw new NotFoundException(String.format("Company name: '%s' does not exist.", findUser.get().getUserName()));
 		}
+		createUser.setUpdated(new Timestamp(System.currentTimeMillis()));
+		createUser = userRepo.saveAndFlush(createUser);
+		createUser.setUpdatedBy(createUser);
 		createUser = userRepo.saveAndFlush(createUser);
 		return userMap.EntityToDTO(createUser);
 	}
@@ -124,6 +127,8 @@ public class UserServiceImpl implements UserService {
 		Optional<Project> findProject = projectRepo.findByName(userRequest.getProjectName());
 		if(findProject.isPresent() && findProject.get().getIsDeleted() != true) {
 			findProject.get().setUser(findUser.get());
+			findProject.get().setUpdated(new Timestamp(System.currentTimeMillis()));
+			findProject.get().setUpdatedBy(findBoss.get());
 			projectRepo.saveAndFlush(findProject.get());
 		}else {
 			throw new NotFoundException(String.format("Project with name: '%s' not found or deleted.", userRequest.getProjectName()));
@@ -156,6 +161,8 @@ public class UserServiceImpl implements UserService {
 		Optional<Company> findCompany = companyRepo.findByCompanyName(userRequest.getCompanyName());
 		if(findCompany.isPresent()) {
 			findUser.get().setUserCompany(findCompany.get());
+			findUser.get().setUpdated(new Timestamp(System.currentTimeMillis()));
+			findUser.get().setUpdatedBy(findBoss.get());
 			userRepo.saveAndFlush(findUser.get());
 		}else {
 			throw new NotFoundException(String.format("Company with name: '%s' not found.", userRequest.getCompanyName()));
@@ -187,6 +194,8 @@ public class UserServiceImpl implements UserService {
 		Optional<Team> findTeam = teamRepo.findByTeamNameIgnoreCase(userRequest.getTeamName());
 		if(findTeam.isPresent() && findTeam.get().getIsDeleted() != true) {
 			findUser.get().setAssociatedTeam(findTeam.get());
+			findUser.get().setUpdated(new Timestamp(System.currentTimeMillis()));
+			findUser.get().setUpdatedBy(findBoss.get());
 			userRepo.saveAndFlush(findUser.get());
 		}else {
 			throw new NotFoundException(String.format("Team with name: '%s' not found or deleted.", userRequest.getTeamName()));
@@ -206,6 +215,8 @@ public class UserServiceImpl implements UserService {
 		Utils.validateCredentials(findUser,userRequest.getUserName(),userRequest.getPassword());
 
 		findUser.get().setIsDeleted(true);
+		findUser.get().setUpdated(new Timestamp(System.currentTimeMillis()));
+		findUser.get().setUpdatedBy(findUser.get());
 		userRepo.saveAndFlush(findUser.get());
 		return userMap.EntityToDTO(findUser.get());
 	}
@@ -253,6 +264,8 @@ public class UserServiceImpl implements UserService {
 		if(findRole.isPresent()) {
 			findUser.get().setUserRole(findRole.get());
 			findUser.get().setNewUser(false);
+			findUser.get().setUpdated(new Timestamp(System.currentTimeMillis()));
+			findUser.get().setUpdatedBy(findBoss.get());
 			userRepo.saveAndFlush(findUser.get());
 		}else {
 			throw new NotFoundException(String.format("Role with name: '%s' not found.", userRequest.getRoleName()));

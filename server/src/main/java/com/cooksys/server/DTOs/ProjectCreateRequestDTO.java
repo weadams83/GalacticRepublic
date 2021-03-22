@@ -5,10 +5,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class TeamEditRequestDTO {
-	
+public class ProjectCreateRequestDTO {
 	private UserSignInRequestDTO credentials;
-	
-	private TeamRequestDTO changes;
 
+	private ProjectDTO project;
 }
