@@ -49,12 +49,14 @@ const SignUp = () => {
         // .catch(error => console.log(error))
         //     .catch((err) => console.log(err));
         // }
-        axios.post('http://localhost:8080/company', form)
-        .then((res) => {       
-        console.log(res.data)
 
-        //   history.push("/company");
-        })
+
+        // axios.post('http://localhost:8080/company', form)
+        // .then((res) => {       
+        // console.log(res.data)
+
+        // //   history.push("/company");
+        // })
 
     }
   
