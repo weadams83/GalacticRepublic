@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ProjectRequestDTO {
-
 	private String name;
 
 	private String description;
@@ -21,3 +20,4 @@ public class ProjectRequestDTO {
 	private List<User> projectUsers;
 
 }
+

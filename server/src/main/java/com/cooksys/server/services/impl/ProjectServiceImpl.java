@@ -1,17 +1,21 @@
 package com.cooksys.server.services.impl;
 
+import java.sql.Timestamp;
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.cooksys.server.DTOs.ProjectRequestDTO;
+import com.cooksys.server.DTOs.ProjectCreateRequestDTO;
 import com.cooksys.server.DTOs.ProjectResponseDTO;
+import com.cooksys.server.DTOs.UserSignInRequestDTO;
 import com.cooksys.server.entities.Project;
-import com.cooksys.server.entities.Team;
-import com.cooksys.server.exceptions.BadRequestException;
+import com.cooksys.server.entities.User;
+import com.cooksys.server.exceptions.ImUsedException;
 import com.cooksys.server.mappers.ProjectMapper;
 import com.cooksys.server.repositories.ProjectRepository;
+import com.cooksys.server.repositories.UserRepository;
 import com.cooksys.server.services.ProjectService;
 
 import lombok.AllArgsConstructor;
@@ -21,83 +25,72 @@ import lombok.AllArgsConstructor;
 public class ProjectServiceImpl implements ProjectService {
 
 	private ProjectRepository projectRepository;
+	private UserRepository userRepo;
 	private ProjectMapper projectMapper;
 
-	// Helper method to check that project with the entered Id exists
-	public Project getProject(Long id) {
-		Optional<Project> optionalProject = projectRepository.findByIdAndNotDeleted(id);
-		if (optionalProject.isEmpty()) {
-			throw new BadRequestException("Project not found");
-		}
-		return optionalProject.get();
+	@Override
+	public List<ProjectResponseDTO> getAllProjects() {
+		return projectMapper.entitiesToResponseDTOs(projectRepository.findAllByIsDeletedFalse());
 	}
 
 	@Override
-	public ProjectResponseDTO createProject(ProjectRequestDTO projectRequestDTO) {
-		Project projectToSave = projectMapper.requestDtoToEntity(projectRequestDTO);
+	public ProjectResponseDTO getProjectByName(String name) {
+		Optional<Project> findProject = projectRepository.findByName(name);
+		Utils.validateProjectExistsAndNotDeleted(findProject, name);
+		return projectMapper.entityToResponseDTO(findProject.get());
+	}
+	
+	//TODO: should only users with role "Company" be able to create projects?
+	@Override
+	public ProjectResponseDTO createProject(ProjectCreateRequestDTO projectRequestDTO) {
+		Optional<Project> findProject = projectRepository.findByName(projectRequestDTO.getProject().getName());
+		Optional<User> findUser = userRepo.findByUserName(projectRequestDTO.getCredentials().getUserName());
+		if(findProject.isPresent()) {
+			throw new ImUsedException(String.format("Project with name: '%s' already taken", projectRequestDTO.getProject().getName()));
+		}
+		Utils.validateUserExistsAndNotDeleted(findUser, projectRequestDTO.getCredentials().getUserName());
+		Utils.validateNewUser(findUser);
+		
+		Project projectToSave = projectMapper.DTOtoEntity(projectRequestDTO.getProject());
+		projectToSave.setUser(findUser.get());
+		projectToSave.setUpdated(new Timestamp(System.currentTimeMillis()));
+		projectToSave.setUpdatedBy(findUser.get());
 		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToSave));
 	}
 
 	@Override
-	public List<ProjectResponseDTO> getAllProjects() {
-		return projectMapper.entitiesToResponseDTOs(projectRepository.findAllByNotDeleted());
+	public ProjectResponseDTO updateProject(String projectName, ProjectCreateRequestDTO projectRequestDTO) {
+		Optional<Project> findProject = projectRepository.findByName(projectName);
+		Optional<User> findUser = userRepo.findByUserName(projectRequestDTO.getCredentials().getUserName());
+		Utils.validateProjectExistsAndNotDeleted(findProject, projectName);
+		Utils.validateUserExistsAndNotDeleted(findUser, projectRequestDTO.getCredentials().getUserName());
+		Utils.validateCredentials(findUser, projectRequestDTO.getCredentials().getUserName(), projectRequestDTO.getCredentials().getPassword());
+		Utils.validateNewUser(findUser);
+		Utils.validateUserIsAssignedProject(findUser,findProject);
+		
+		findProject.get().setName(projectRequestDTO.getProject().getName());
+		findProject.get().setDescription(projectRequestDTO.getProject().getDescription());
+		findProject.get().setUpdated(new Timestamp(System.currentTimeMillis()));
+		findProject.get().setUpdatedBy(findUser.get());
+		
+		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(findProject.get()));
 	}
 
 	@Override
-	public ProjectResponseDTO getProjectById(Long id) {
-		return projectMapper.entityToResponseDTO(getProject(id));
-	}
+	public ProjectResponseDTO deleteProject(String projectName, UserSignInRequestDTO credentials) {
+		Optional<Project> findProject = projectRepository.findByName(projectName);
+		Optional<User> findUser = userRepo.findByUserName(credentials.getUserName());
+		Utils.validateProjectExistsAndNotDeleted(findProject, projectName);
+		Utils.validateUserExistsAndNotDeleted(findUser, credentials.getUserName());
+		Utils.validateCredentials(findUser, credentials.getUserName(), credentials.getPassword());
+		Utils.validateNewUser(findUser);
+		Utils.validateUserIsAssignedProject(findUser,findProject);
 
-	@Override
-	public ProjectResponseDTO getProjectByName(String projectName) {
-		Optional<Project> optionalProject = projectRepository.findByNameAndNotDeleted(projectName);
-		if (optionalProject.isEmpty()) {
-			throw new BadRequestException("No project with name: " + projectName + " found.");
-		}
-		return projectMapper.entityToResponseDTO(optionalProject.get());
+		findProject.get().setIsDeleted(true);
+		findProject.get().setUpdated(new Timestamp(System.currentTimeMillis()));
+		findProject.get().setUpdatedBy(findUser.get());
+		
+		projectRepository.saveAndFlush(findProject.get());
+		return projectMapper.entityToResponseDTO(findProject.get());
 	}
-
-	public ProjectResponseDTO getProjectByTeam(Team team) {
-		Optional<Project> optionalProject = projectRepository.findByTeamAndNotDeleted(team);
-		if (optionalProject.isEmpty()) {
-			throw new BadRequestException("No project with name: " + team + " found.");
-		}
-		return projectMapper.entityToResponseDTO(optionalProject.get());
-	}
-
-	@Override
-	public ProjectResponseDTO updateProjectName(Long id, ProjectRequestDTO projectRequestDTO) {
-		Project projectToUpdate = getProject(id);
-		projectToUpdate.setName(projectRequestDTO.getName());
-		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToUpdate));
-	}
-
-	@Override
-	public ProjectResponseDTO updateProjectDescription(Long id, ProjectRequestDTO projectRequestDTO) {
-		Project projectToUpdate = getProject(id);
-		projectToUpdate.setDescription(projectRequestDTO.getDescription());
-		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToUpdate));
-	}
-
-	@Override
-	public ProjectResponseDTO updateProjectUsers(Long id, ProjectRequestDTO projectRequestDTO) {
-		Project projectToUpdate = getProject(id);
-		projectToUpdate.setProjectUsers(projectRequestDTO.getProjectUsers());
-		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToUpdate));
-	}
-
-	@Override
-	public ProjectResponseDTO updateProjectTeam(Long id, ProjectRequestDTO projectRequestDTO) {
-		Project projectToUpdate = getProject(id);
-		projectToUpdate.setProjectTeam(projectRequestDTO.getProjectTeam());
-		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToUpdate));
-	}
-
-	@Override
-	public ProjectResponseDTO deleteProject(Long id) {
-		Project projectToDelete = getProject(id);
-		projectToDelete.setIsDeleted(true);
-		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToDelete));
-	}
-
 }

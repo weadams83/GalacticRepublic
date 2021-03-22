@@ -1,15 +1,21 @@
 package com.cooksys.server.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.cooksys.server.entities.Team;
-import com.cooksys.server.entities.User;
 
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
-	Optional<Team> findByteamName(String teamName);
 
+	List<Team> findAllByIsDeletedFalse();
+	
+	Optional<Team> findByTeamNameAndIsDeletedFalse(String teamName);
+
+	Optional<Team> findByTeamNameIgnoreCase(String teamName);
+
+	Optional<Team> findByTeamName(String teamName);
 }

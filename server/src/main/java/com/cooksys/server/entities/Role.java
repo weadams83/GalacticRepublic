@@ -1,6 +1,6 @@
 package com.cooksys.server.entities;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,9 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
@@ -28,40 +26,41 @@ public class Role {
 	private Long id;
 
 	@OneToMany(mappedBy = "userRole")
-	private List<User> users;
-	
-	private String roleTitle;
-	
+	private List<User> users = new ArrayList<>();
+
+	private String roleTitle = "Company";
+
 	@Override
 	public String toString() {
-		return(String.format("id %d roleTitle %s", id,roleTitle));
+		return (String.format("id %d roleTitle %s", id, roleTitle));
 	}
-	
+
 	/*
-	 * equals() compares the database entries by id and the objects 
-	 * in memory in Java
+	 * equals() compares the database entries by id and the objects in memory in
+	 * Java
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		
-		//check null and class
+
+		// check null and class
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		}
-		
-		//compare pointers
+
+		// compare pointers
 		if (obj == this) {
 			return true;
 		}
-		
-		//compare id's
+
+		// compare id's
 		return ((Role) obj).getId() == this.getId();
 	}
 
 	@Override
 	public int hashCode() {
-		/* Simplified hash. Use id field instead of username,
-		 * since username can change in the database.
+		/*
+		 * Simplified hash. Use id field instead of username, since username can change
+		 * in the database.
 		 */
 		return Objects.hash(this.id);
 	}

@@ -12,12 +12,14 @@ import com.cooksys.server.entities.Team;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
+	Optional<Project> findByName(String projectName);
+	
+	List<Project> findAllByIsDeletedFalse();
 
-	List<Project> findAllByNotDeleted();
+	Optional<Project> findByNameAndIsDeletedFalse(String name);
 
-	Optional<Project> findByNameAndNotDeleted(String name);
+	Optional<Project> findByIdAndIsDeletedFalse(Long id);
 
-	Optional<Project> findByIdAndNotDeleted(Long id);
-
-	Optional<Project> findByTeamAndNotDeleted(Team team);
+	Optional<Project> findByTeamAndIsDeletedFalse(Team team);
 }
+

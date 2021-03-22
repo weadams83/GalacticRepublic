@@ -1,25 +1,23 @@
 package com.cooksys.server.mappers;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import java.util.List;
 
-import com.cooksys.server.DTOs.UserSignInRequestDTO;
-import com.cooksys.server.DTOs.UserCreateRequestDTO;
+import org.mapstruct.Mapper;
+import com.cooksys.server.DTOs.CompanyResponseUserDTO;
+import com.cooksys.server.DTOs.UserDTO;
 import com.cooksys.server.DTOs.UserResponseDTO;
+import com.cooksys.server.DTOs.UserSignInRequestDTO;
 import com.cooksys.server.entities.User;
 
+
 @Mapper(componentModel = "spring")
-public interface UserMapper {
-
-	UserResponseDTO EntityToDTO(User user);
-
-	User DTOtoEntity(UserSignInRequestDTO userSignInRequestDTO);
+public interface UserMapper {	
+	CompanyResponseUserDTO EntityToCompanyResponseUserDTO(User user);
 	
-	@Mappings({
-		@Mapping(target="userCompany.companyName", source="userCreateRequestDTO.companyName"),
-		@Mapping(target="associatedTeam.teamName", source="userCreateRequestDTO.teamName")
-		})
-	User CreateDTOtoEntity(UserCreateRequestDTO userCreateRequestDTO);
+	User DTOtoEntity(UserDTO userDTO);
+	
+	UserResponseDTO EntityToDTO(User user);
+	
+	List<UserResponseDTO> EntitiesToDTO(List<User> users);
+
+	User UserSignInDTOtoEntity(UserSignInRequestDTO userSignInRequestDTO);
 }

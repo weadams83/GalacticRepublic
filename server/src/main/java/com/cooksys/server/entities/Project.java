@@ -1,7 +1,6 @@
 package com.cooksys.server.entities;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -9,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,6 +35,7 @@ public class Project {
 	@ManyToOne
 	private Team team;
 
+	@Column(unique = true)
 	private String name;
 
 	private String description;
@@ -52,12 +51,6 @@ public class Project {
 
 	@OneToOne
 	private User updatedBy;
-
-	@OneToMany(mappedBy = "userProject")
-	private List<User> projectUsers;
-
-	@ManyToOne
-	private Team projectTeam;
 
 	/*
 	 * equals() compares the database entries by id and the objects in memory in
@@ -87,6 +80,15 @@ public class Project {
 		 * in the database.
 		 */
 		return Objects.hash(this.id);
+	}
+
+	@Override
+	public String toString() {
+		String retString = String.format("id %d projectname %s isDeleted %b description %s", id, name, isDeleted,
+				description);
+		retString += team != null ? "\n" + team.toString() : "";
+		retString += user != null ? "\n" + user.toString() : "";
+		return retString;
 	}
 
 }
