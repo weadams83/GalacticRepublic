@@ -61,9 +61,6 @@ export const MemberPage = () => {
           <CreateP type="submit">Create Project</CreateP>
         </NavLink>
         </div>
-
-        
-
       </StyledMemberPage>
     </Fragment>
   )
