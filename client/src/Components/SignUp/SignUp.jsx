@@ -48,17 +48,17 @@ const SignUp = () => {
 
   const addCompany = (e) => {
 
-    const data = {
-            "credentials":{
-                "userName":"JP Lobster",
-                "password":"Money"
-            },
-            "companyName":"d"
+    // const data = {
+    //         "credentials":{
+    //             "userName":"JP Lobster",
+    //             "password":"Money"
+    //         },
+    //         "companyName":"d"
        
-    }
-    console.log(e.target)
-
-    // axios.post('http://localhost:8080/user/{username}/company, data)
+    // }
+    console.log(form)
+    
+    // axios.post('http://localhost:8080/user/{username}/company, )
     // .then((res) => {       
     // console.log(res.data)
 
@@ -73,11 +73,11 @@ const SignUp = () => {
         e.preventDefault();
         // if (formIsValid()) {
 
-        axios.get('http://localhost:8080/company')
+        axios.post('http://localhost:8080/user', form)
             .then((res) => {
                 // console.log(res.data[0]["companyName"]);
                 const data = res.data
-
+                    console.log(data)
                 // const r = (res.data)
                 // r.forEach(function(entry){
                 //    const bi = (entry["companyName"])
