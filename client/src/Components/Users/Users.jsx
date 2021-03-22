@@ -1,6 +1,4 @@
-import Card from "../Card/Card";
 import { StyledUsers } from "./StyledUsers";
-import dummyData from "../../DummyData.json";
 import Navbar from "../Navbar/Navbar";
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
@@ -11,18 +9,26 @@ export const Users = () => {
   const [teamlessCount, setTeamlessCount] = useState(0);
 
   const getUsers = () => {
+    const companyName = JSON.parse(localStorage.getItem("currentUser"))
+      .userCompany.companyName;
     axios
-      .get("http://localhost:8080/user")
+      .get(`http://localhost:8080/company/${companyName}`)
       .then((res) => {
-        setUsers(res.data.filter((user) => !user.isDeleted));
+        console.log("users", res.data.users);
+        setUsers(res.data.users.filter((user) => !user.isDeleted));
         setTeamlessCount(
-          res.data.filter(
-            (user) => user.associatedTeam === null && !user.isDeleted
+          res.data.users.filter(
+            (user) =>
+              user.associatedTeam === null &&
+              !user.isDeleted &&
+              user.firstName !== null
           ).length
         );
       })
       .catch((err) => console.log(err));
   };
+
+  console.log(JSON.parse(localStorage.getItem("currentUser")));
 
   useEffect(() => {
     getUsers();

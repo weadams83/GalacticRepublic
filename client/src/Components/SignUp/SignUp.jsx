@@ -1,224 +1,185 @@
-
-import React from 'react'
+import React from "react";
 import axios from "axios";
 
-// import { useHistory } from "react-router";
+import { useHistory } from "react-router";
 import { useState, useEffect } from "react";
-import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledSignUp';
-
-
+import {
+  InspectP,
+  Styledmain,
+  Form,
+  Input,
+  Button,
+  Select,
+} from "./StyledSignUp";
 
 const SignUp = () => {
-    const [selectCompanyName, updateCompanyName] = useState([])
+  const [selectCompanyName, updateCompanyName] = useState("");
+  const [companies, setCompanies] = useState([]);
+  const history = useHistory();
 
+  const [form, updateForm] = useState({
+    firstName: {
+      value: "",
+      placeholder: "First Name",
+      type: "text",
+    },
 
+    lastName: {
+      value: "",
+      placeholder: "Last Name",
+      type: "text",
+    },
 
+    userName: {
+      value: "",
+      placeholder: "Username",
+      type: "text",
+      name: "text",
+    },
 
-    const initialFormError = {
-        isError: false,
-        message: '',
-        field: ''
+    password: {
+      value: "",
+      placeholder: "Password",
+      type: "password",
+    },
+  });
+
+  const initialFormError = {
+    isError: false,
+    message: "",
+    field: "",
+  };
+
+  const [formError, updateFormError] = useState(initialFormError);
+  const resetError = () => updateFormError(initialFormError);
+
+  const formIsValid = () => {
+    if (
+      !form.firstName.value ||
+      !form.lastName.value ||
+      !form.username.value ||
+      !form.password.value
+    ) {
+      updateFormError({
+        ...formError,
+        isError: true,
+        message: "All fields are required",
+      });
+      return false;
     }
+    return true;
+  };
 
-    const [formError, updateFormError] = useState(initialFormError)
-    const resetError = () => updateFormError(initialFormError)
+  const assignUserToRole = () => {
+    const postInfo = {
+      credentials: {
+        userName: "JP Lobster",
+        password: "Money",
+      },
+      roleName: "Member",
+    };
+    axios
+      .patch(`http://localhost:8080/user/${form.userName.value}/role`, postInfo)
+      .then((res) => console.log(res));
+  };
 
-    const formIsValid = () => {
-        if (!form.firstName.value || !form.lastName.value
-            || !form.username.value || !form.password.value) {
-            updateFormError({
-                ...formError, isError: true, message: 'All fields are required'
-            })
-            return false
-        }
-        return true
-    }
+  const getCompanies = () => {
+    axios.get("http://localhost:8080/company").then((res) => {
+      const data = res.data;
 
-  const getTeams = () =>{
+      setCompanies(data);
+    });
+  };
 
-    axios.get('http://localhost:8080/company')
-    .then((res) => {
-        // console.log(res.data[0]["companyName"]);
-        const data = res.data
+  const assignCompany = (e) => {
+    updateCompanyName(e.target.value);
+  };
 
-        updateCompanyName(data)
-        console.log(selectCompanyName)
+  const handleFormSubmitt = (e) => {
+    e.preventDefault();
 
-    })
-  }
+    const postInfo = {
+      createUser: {
+        userName: form.userName.value,
+        firstName: form.firstName.value,
+        lastName: form.lastName.value,
+        password: form.password.value,
+      },
+      companyName: selectCompanyName,
+    };
+    const patchInfo = {
+      credentials: {
+        userName: "JP Lobster",
+        password: "Money",
+      },
+      roleName: "Member",
+    };
 
-  const addCompany = (e) => {
+    axios
+      .post("http://localhost:8080/user", postInfo)
+      .then((res) =>
+        axios
+          .patch(
+            `http://localhost:8080/user/${form.userName.value}/role`,
+            patchInfo
+          )
+          .then((res) => console.log(res))
+      )
+      .then((res) => history.push("/"))
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
-    // const data = {
-    //         "credentials":{
-    //             "userName":"JP Lobster",
-    //             "password":"Money"
-    //         },
-    //         "companyName":"d"
-       
-    // }
-    console.log(form)
-    
-    // axios.post('http://localhost:8080/user/{username}/company, )
-    // .then((res) => {       
-    // console.log(res.data)
+  useEffect(() => {
+    getCompanies();
+  }, []);
 
-    //   history.push("/company");
-    // })
-  }
+  return (
+    <InspectP>
+      <Styledmain>
+        <Form onSubmit={handleFormSubmitt}>
+          <h1 style={{ margin: "20px", color: "blue" }}>Member</h1>
 
-  
+          {Object.entries(form).map(([key, props]) => (
+            <Input
+              key={key}
+              {...props}
+              onChange={(event) => {
+                updateForm({
+                  ...form,
+                  [key]: { ...props, value: event.target.value },
+                });
+                resetError();
+              }}
+            />
+          ))}
 
-    // const history = useHistory();
-    const handleFormSubmitt = (e) => {
-        e.preventDefault();
-        // if (formIsValid()) {
+          <Select onChange={assignCompany}>
+            <option>Select a company</option>
+            {companies.map((company) => (
+              <option key={`${company.companyName}`}>
+                {company.companyName}
+              </option>
+            ))}
+          </Select>
 
-        axios.post('http://localhost:8080/user', form)
-            .then((res) => {
-                // console.log(res.data[0]["companyName"]);
-                const data = res.data
-                    console.log(data)
-                // const r = (res.data)
-                // r.forEach(function(entry){
-                //    const bi = (entry["companyName"])
-                //        console.log(bi)
-                //        return bi
-                // })
+          <Button type="submit" onClick={handleFormSubmitt}>
+            Sign Up
+          </Button>
 
+          {formError.isError && !formError.field ? (
+            <p style={{ color: "red", textSizeAdjust: "25" }}>
+              {formError.message}
+            </p>
+          ) : (
+            ""
+          )}
 
-                updateCompanyName(data)
-                console.log(selectCompanyName)
+          {/* <Select options = {options} /> */}
+        </Form>
+      </Styledmain>
+    </InspectP>
+  );
+};
 
-                //   history.push("/company");
-            })
-
-        //     .then(data => data.json())
-        // .then(response => console.log(response))
-        // .catch(error => console.log(error))
-        //     .catch((err) => console.log(err));
-        // }
-
-
-        // axios.post('http://localhost:8080/company', form)
-        // .then((res) => {       
-        // console.log(res.data)
-
-        // //   history.push("/company");
-        // })
-
-
-        //after user is created 
-        // axios.post('http://localhost:8080/user/{username}/company , form)
-        // .then((res) => {       
-        // console.log(res.data)
-
-        // //   history.push("/company");
-        // })
-
-
-
-
-    }
-
-    // history.push("/member");
-    const [form, updateForm] = useState({
-        firstName: {
-            value: '',
-            placeholder: 'First Name',
-            type: 'text'
-        },
-
-        lastName: {
-            value: '',
-            placeholder: 'Last Name',
-            type: 'text'
-        },
-
-        username: {
-            value: '',
-            placeholder: 'Username',
-            type: 'text',
-            name: 'username'
-        },
-
-        password: {
-            value: '',
-            placeholder: 'Password',
-            type: 'password'
-        },
-    })
-
-
-    // const [selectCompanyName, UpdateCompanyName] = useState("")
-    useEffect(() => {
-        getTeams()
-    }, [])
-
-
-    return (
-
-        <InspectP>
-
-            <Styledmain >
-
-                <Form onSubmit={handleFormSubmitt}>
-                    <h1 style={{ margin: '20px', color: 'blue' }} >Team</h1>
-
-                    {Object.entries(form).map(([key, props]) => (
-                        <Input key={key}
-                            {...props}
-                            onChange={event => {
-                                updateForm({
-                                    ...form,
-                                    [key]: { ...props, value: event.target.value }
-                                })
-                                resetError()
-                            }
-                            }
-                        />
-                    ))}
-
-                    {/* <Select
-                        value={selectCompanyName}
-                        onChange={(e) => {
-                            const selectedCompany = e.target.value;
-                            UpdateCompanyName(selectedCompany);
-                        }}
-                    >
-                        <option value= "Company A">Company A </option>
-                        <option value="Company B">Company B</option>
-                        <option value="Company C">Company C</option>
-                    </Select> */}
-
-                    <Select onChange={addCompany}> 
-                    {selectCompanyName.map(team=>(
-                        <option>{team.companyName}</option>
-                    ))}
-                    </Select>
-
-
-
-                    <Button type="submit" onClick={handleFormSubmitt}>Sign Up</Button>
-
-                    {formError.isError && !formError.field ? (
-                        <p style={{ color: 'red', textSizeAdjust: '25' }}>{formError.message}</p>
-                    ) : (
-                        ''
-                    )}
-
-
-                    {/* <Select options = {options} /> */}
-
-
-
-
-                </Form>
-            </Styledmain>
-        </InspectP>
-    )
-}
-
-export default SignUp
-
-
+export default SignUp;
