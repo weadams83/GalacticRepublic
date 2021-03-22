@@ -2,19 +2,29 @@ import $ from "jquery";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
-import { CompanyPage } from "../../Screens/CompanyPage/CompanyPage";
+
+import "../SignUp/SignUp";
+import "../SignUp/CompanySignUp";
+import {
+  StyledLogin,
+  SignUpB,
+  CompanySignUpB,
+  SignUpForm,
+} from "./StyledLogin";
+
 import "../SignUp/SignUp";
 
-import { StyledLogin, SignUpB } from "./StyledLogin";
+import axios from "axios";
+
 const dummyData = require("../../DummyData.json");
 
 const initialMemberForm = {
-  username: "",
+  userName: "",
   password: "",
 };
 
 const initialCompanyForm = {
-  companyUsername: "",
+  userName: "",
   password: "",
 };
 
@@ -31,47 +41,17 @@ export const Login = () => {
     if (e.target.placeholder === "Company Username") {
       setCompanyFormValues({
         ...companyFormValues,
-        companyUsername: e.target.value,
+        userName: e.target.value,
       });
     }
     if (e.target.id === "company-password") {
       setCompanyFormValues({ ...companyFormValues, password: e.target.value });
     }
     if (e.target.placeholder === "Username") {
-      setMemberFormValues({ ...memberFormValues, username: e.target.value });
+      setMemberFormValues({ ...memberFormValues, userName: e.target.value });
     }
     if (e.target.id === "member-password") {
       setMemberFormValues({ ...memberFormValues, password: e.target.value });
-    }
-  };
-  const handleSubmit = (e) => {
-    console.log(e.target.role.value);
-    e.preventDefault();
-    if (e.target.role.value === "company") {
-      if (
-        dummyData.data[0].user.filter(
-          (user) => user.username === companyFormValues.companyUsername
-        ) &&
-        dummyData.data[0].user.filter(
-          (user) => user.password === companyFormValues.password
-        )
-      ) {
-        setCurrentUser(companyFormValues.companyUsername);
-        history.push("/company");
-      }
-    }
-    if (e.target.role.value === "member") {
-      if (
-        dummyData.data[0].user.filter(
-          (user) => user.username === memberFormValues.username
-        ) &&
-        dummyData.data[0].user.filter(
-          (user) => user.password === memberFormValues.password
-        )
-      ) {
-        setCurrentUser(memberFormValues.username);
-        history.push("/member");
-      }
     }
   };
   const handleSelect = (e) => {
@@ -92,6 +72,45 @@ export const Login = () => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (e.target.role.value === "company") {
+      if (
+        dummyData.data[0].user.filter(
+          (user) => user.userName === companyFormValues.userName
+        ) &&
+        dummyData.data[0].user.filter(
+          (user) => user.password === companyFormValues.password
+        )
+      ) {
+        axios
+          .post("http://localhost:8080/user/login", companyFormValues)
+          .then((res) => {
+            localStorage.setItem("currentCompany", JSON.stringify(res.data));
+            history.push("/company");
+          })
+          .catch((err) => console.log(err));
+      }
+    }
+    if (e.target.role.value === "member") {
+      if (
+        dummyData.data[0].user.filter(
+          (user) => user.userName === memberFormValues.userName
+        ) &&
+        dummyData.data[0].user.filter(
+          (user) => user.password === memberFormValues.password
+        )
+      ) {
+        axios
+          .post("http://localhost:8080/user/login", memberFormValues)
+          .then((res) => {
+            localStorage.setItem("currentMember", JSON.stringify(res.data));
+            history.push("/member");
+          })
+          .catch((err) => console.log(err));
+      }
+    }
+  };
   return (
     <StyledLogin className="login">
       <div className="login-container">
@@ -105,7 +124,7 @@ export const Login = () => {
           <div className="member-select hide">
             <input
               onChange={handleChange}
-              value={memberFormValues.username}
+              value={memberFormValues.userName}
               placeholder="Username"
               type="text"
             />
@@ -120,7 +139,7 @@ export const Login = () => {
           <div className="company-select hide">
             <input
               onChange={handleChange}
-              value={companyFormValues.companyUsername}
+              value={companyFormValues.userName}
               placeholder="Company Username"
               type="text"
             />
@@ -137,10 +156,14 @@ export const Login = () => {
           </div>
         </form>
 
-        <NavLink to="./SignUp">
-          <SignUpB type="submit">SignUp</SignUpB>
-        </NavLink>
-
+        <SignUpForm>
+          <NavLink to="/SignUp">
+            <SignUpB type="submit">Sign Up as a Team </SignUpB>
+          </NavLink>
+          <NavLink to="/CompanySignUp">
+            <CompanySignUpB type="submit">Sign Up as a Company</CompanySignUpB>
+          </NavLink>
+        </SignUpForm>
       </div>
     </StyledLogin>
   );

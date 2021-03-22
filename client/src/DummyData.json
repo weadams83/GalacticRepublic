@@ -7,16 +7,21 @@
       "id": 1,
       "firstname": "Galo",
       "lastname": "Sandoval",
-      "role": "member"
+      "role": "member",
+      "projects":["Project Bojack","Project AppleJax"]
     },
     {
       "username": "cooksys",
       "password": "password",
-      "group_id": 2,
+      "group_id": "undefined",
       "id": 2,
       "firstname": "cook",
       "lastname": "systems",
-      "role": "company"
+      "role": "company",
+      "projects":[
+        "Project Jerry","Project Seinfeld"
+      ]
+      
     }
   ]},
   {"company": [
@@ -50,6 +55,32 @@
       "company_id": 1,
       "name": "Team Crossfit",
       "description": "Changing the world one tire lift at a time"
+    }
+  ]},
+  {"projects": [
+    {
+      "id": 1,
+      "name": "Maintenance",
+      "description": "Mantance",
+      "users":[
+        1, 2
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Project Swoll Patrol",
+      "description": "Get yoked",
+      "users": [
+        1, 2
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Red Eagle",
+      "description": "Top secret",
+      "users": [
+        1
+      ]
     }
   ]}
 ]}

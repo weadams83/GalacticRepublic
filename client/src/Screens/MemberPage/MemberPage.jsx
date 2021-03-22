@@ -1,42 +1,71 @@
-import { StyledMemberPage } from './StyledMemberPage';
+import StyledMemberPage from './StyledMemberPage';
 import NavBar from '../../Components/Navbar/Navbar';
-import Card from '../../Components/Card/Card'
-import Button from '../../Components/Button/Button'
+import TeamCard from '../../Components/Card/TeamCard';
+import { Fragment } from "react";
+import {NavLink} from 'react-router-dom'
+import CreateP from './StyledMemberPage'
+const dummyData = require("../../DummyData.json");
 
-//test points!
-const newMember = false;
-//TODO: make function to check if the login is a new member or not
 
-const amountOfCards = [1,2,3,4,5];
-//TODO: find out the amount of projects the user is in
+//this equation is supposed to get the user data 
+//now its hard coded to one user
+
+//TODO: set up the equation to retrieve the data called from the login info
+const filterUser = (dummyData.data[0].user.filter((u => u.username === 'gmoney')))
+
+// this euqation determines if the user is a part of a team
+const newMemberTag = ((filterUser[0].group_id) === 'undefined') ? true : false;
 
 
 
 
 export const MemberPage = () => {
-  if (newMember === true) {
+  if (newMemberTag === true) {
     return (
       <div>
         <h2>MemberPage</h2>
-        <p>Your account was successfully created!</p>
+        <p>You are still not on a team.</p>
         <p>Your company has been notified.</p>
       </div>
 
     );
   }
 
-  return (
-<StyledMemberPage>
-  <NavBar></NavBar>
-   <div>
-     {amountOfCards.map((object, i) => {
-     return <Card obj={object} key = {i}/>
-     })}
+  const getProjectsArray = () => {
+    let projectsArray = [];
+    filterUser.forEach((u) => {
+      u.projects.forEach((project) => {
+        projectsArray.push(project)
+      })
+    })
+    return projectsArray
+  }
 
-   </div>
-   <Button>Create (todo)</Button>
-  
-   </StyledMemberPage>
+  return (
+    <Fragment>
+      <NavBar />
+      <StyledMemberPage className='member-page'>
+        <div className='member-page-container'>
+          <div className='title'>
+            <h2>Member Page</h2>
+          </div>
+          <div className='card-container'>
+            {getProjectsArray().map((project) =>
+            (<TeamCard
+              className='card'
+              name={project}
+              key={`${project}`}/>
+            ))}
+          </div>
+          <NavLink to="./createproject">
+          <CreateP type="submit">Create Project</CreateP>
+        </NavLink>
+        </div>
+
+        
+
+      </StyledMemberPage>
+    </Fragment>
   )
 
 

@@ -22,5 +22,5 @@ const Card = (props) => {
 };
 
 
-//when going to click edit button, bring up pop up or another window so that we can eit the project. => onclick function and new pop up window with project information
 export default Card;
+

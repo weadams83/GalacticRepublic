@@ -14,7 +14,4 @@ export const StyledCompanyPage = styled.div`
     flex-wrap: wrap;
     width: 100%;
   }
-  .company-page-container .card {
-    border: 1px solid red;
-  }
 `;
