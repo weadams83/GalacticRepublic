@@ -1,6 +1,7 @@
 import React from 'react'
+import axios from "axios";
 
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import { useState } from "react";
 import { InspectP, Styledmain, Form, Input, Button } from './StyledSignUp';
 
@@ -16,8 +17,8 @@ const CompanySignUp = () => {
     const resetError = () => updateFormError(initialFormError)
 
     const formIsValid = () => {
-        if (!form.name.value || !form.description.value
-            || !form.username.value || !form.password.value) {
+        if (!form.companyName.value || !form.companyDescription.value
+            || !form.userName.value || !form.password.value) { 
             updateFormError({
                 ...formError, isError: true, message: 'All fields are required'
             })
@@ -26,29 +27,42 @@ const CompanySignUp = () => {
         return true
     }
 
-    const history = useHistory();
-    const handleFormSubmitt = (e) => {
-        if (formIsValid()) {
-            history.push("/company")
-            //API Call since form is valid 
-        }
+    // const userRole = {
+    //     roleTitle: "company",
+    //   }
 
+    // const history = useHistory();
+    const handleFormSubmitt = (e) => {
+        // if (formIsValid()) {
+           
+          axios.post('http://localhost:8080/company', form)
+            .then((res) => {
+            console.log(res.data);
+            //   history.push("/company");
+            })
+        //     .then(data => data.json())
+        // .then(response => console.log(response))
+        // .catch(error => console.log(error))
+        //     .catch((err) => console.log(err));
+        // }  
     }
 
+    
+
     const [form, updateForm] = useState({
-        name: {
+        companyName: {
             value: '',
             placeholder: 'Company Name',
             type: 'text'
         },
 
-        description: {
+        companyDescription: {
             value: '',
             placeholder: 'Company Description',
             type: 'text'
         },
 
-        username: {
+        userName: {
             value: '',
             placeholder: 'Username',
             type: 'text',
@@ -60,6 +74,8 @@ const CompanySignUp = () => {
             placeholder: 'Password',
             type: 'password'
         },
+
+
     })
 
 

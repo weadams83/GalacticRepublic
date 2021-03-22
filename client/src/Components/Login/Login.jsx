@@ -15,6 +15,8 @@ import {
 import "../SignUp/SignUp";
 
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { saveUser } from "../../store/loginReducer";
 
 const dummyData = require("../../DummyData.json");
 
@@ -29,7 +31,8 @@ const initialCompanyForm = {
 };
 
 export const Login = () => {
-  const [currentUser, setCurrentUser] = useState("");
+  const dispatch = useDispatch()
+  dispatch(saveUser())
   const [memberFormValues, setMemberFormValues] = useState(initialMemberForm);
   const [companyFormValues, setCompanyFormValues] = useState(
     initialCompanyForm
@@ -37,6 +40,7 @@ export const Login = () => {
 
   const history = useHistory();
 
+  
   const handleChange = (e) => {
     if (e.target.placeholder === "Company Username") {
       setCompanyFormValues({
@@ -86,7 +90,7 @@ export const Login = () => {
         axios
           .post("http://localhost:8080/user/login", companyFormValues)
           .then((res) => {
-            localStorage.setItem("currentCompany", JSON.stringify(res.data));
+            dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName))
             history.push("/company");
           })
           .catch((err) => console.log(err));
@@ -104,7 +108,7 @@ export const Login = () => {
         axios
           .post("http://localhost:8080/user/login", memberFormValues)
           .then((res) => {
-            localStorage.setItem("currentMember", JSON.stringify(res.data));
+            dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName, res.data.userCompany))
             history.push("/member");
           })
           .catch((err) => console.log(err));
