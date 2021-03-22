@@ -5,11 +5,10 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class ProjectResponseDTO {
+public class TeamEditRequestDTO {
 	
-	private String name;
+	private UserSignInRequestDTO credentials;
 	
-	private String description;
-	
-	private UserResponseDTO user;
+	private TeamRequestDTO changes;
+
 }

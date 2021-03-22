@@ -8,18 +8,15 @@ import org.springframework.stereotype.Service;
 import com.cooksys.server.DTOs.CompanyCreateRequestDTO;
 import com.cooksys.server.DTOs.CompanyEditRequestDTO;
 import com.cooksys.server.DTOs.CompanyResponseDTO;
-import com.cooksys.server.DTOs.UserResponseDTO;
 import com.cooksys.server.entities.Company;
 import com.cooksys.server.entities.Role;
 import com.cooksys.server.entities.User;
 import com.cooksys.server.exceptions.ImUsedException;
 import com.cooksys.server.exceptions.NotFoundException;
 import com.cooksys.server.mappers.CompanyMapper;
-import com.cooksys.server.mappers.TeamMapper;
 import com.cooksys.server.mappers.UserMapper;
 import com.cooksys.server.repositories.CompanyRepository;
 import com.cooksys.server.repositories.RoleRepository;
-import com.cooksys.server.repositories.TeamRepository;
 import com.cooksys.server.repositories.UserRepository;
 import com.cooksys.server.services.CompanyService;
 

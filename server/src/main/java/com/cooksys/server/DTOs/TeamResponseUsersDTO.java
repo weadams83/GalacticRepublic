@@ -1,20 +1,20 @@
 package com.cooksys.server.DTOs;
 
+import com.cooksys.server.entities.Role;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class CompanyResponseUserDTO {
+public class TeamResponseUsersDTO {
 	private String userName;
-	
+
 	private String firstName;
 
 	private String lastName;
-	
-	private Boolean isDeleted;
+
+	private String password;
 	
 	private RoleResponseDTO userRole;
-	
-	private boolean newUser;
 }

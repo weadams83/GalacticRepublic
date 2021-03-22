@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-
 public class TeamDTO {
 	private Company parentCompany;
 	

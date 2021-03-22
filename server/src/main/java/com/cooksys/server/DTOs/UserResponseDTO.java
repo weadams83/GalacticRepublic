@@ -2,11 +2,6 @@ package com.cooksys.server.DTOs;
 
 import java.util.List;
 
-import com.cooksys.server.entities.Company;
-import com.cooksys.server.entities.Project;
-import com.cooksys.server.entities.Role;
-import com.cooksys.server.entities.Team;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
