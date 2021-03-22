@@ -29,9 +29,7 @@ border-color: black;
 padding: 5px ;
 border-radius: 5px;
 border: 1px solid #ccc;
-   width:90%;s
-   border:;
-   color: ;
+   width:90%;
    background: white;
    textalign: center;
    font-size:15px;
@@ -55,7 +53,8 @@ font-size:15px;
 export const Select = styled.select`
 display:block;
 margin: 8px 0% 0px 5%;
-padding: 5px 169px 5px 25px ;
+width: 90%;
+padding: 5px 25px 5px 25px ;
 border-radius: 5px;
 border: 1px solid #ccc;
 `
