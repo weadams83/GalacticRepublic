@@ -52,24 +52,26 @@ GET user with userName = {username}
 </br>
 Returns Json:
 ```json
-
 {
-    "userName": "JP Lobster",
-    "firstName": "Mr.",
-    "lastName": "Krabbs",
-    "associatedTeam": null,
+    "userName": "Loki",
+    "firstName": "Jim",
+    "lastName": "Halpert",
+    "associatedTeam": {
+        "teamName": "Sales",
+        "teamDescription": "Sell products to Clients."
+    },
     "isDeleted": false,
     "userCompany": {
-        "companyName": "Krusty Krab",
-        "companyDescription": "The squeaking of the horrible boots!"
+        "companyName": "Dunder Mifflin",
+        "companyDescription": "Paper and paper accessories."
     },
     "userRole": {
-        "roleTitle": "Company"
+        "roleTitle": "Member"
     },
     "projects": [
         {
-            "name": "Count ma money!",
-            "description": "Stop the squeaking of horrible boots!"
+            "name": "Prank Dwight.",
+            "description": "Bears, Beets, BattleStar Galactica."
         }
     ],
     "newUser": false
@@ -105,6 +107,14 @@ Returns Json:
         {
             "name": "Count ma money!",
             "description": "Stop the squeaking of horrible boots!"
+        },
+        {
+            "name": "The perfect burger.",
+            "description": "Imagination!"
+        },
+        {
+            "name": "Endure.",
+            "description": "Envy SpongeBob."
         }
     ],
     "newUser": false
@@ -138,7 +148,9 @@ Returns Json:
         "companyName": "Krusty Krab",
         "companyDescription": "The squeaking of the horrible boots!"
     },
-    "userRole": null,
+    "userRole": {
+        "roleTitle": "Member"
+    },
     "projects": [],
     "newUser": true
 }
@@ -171,10 +183,18 @@ Returns Json:
     "userName": "Squiddy",
     "firstName": "Kraken",
     "lastName": "Unleashed",
-    "associatedTeam": null,
+    "associatedTeam": {
+        "teamName": "Service Staff",
+        "teamDescription": "Customer Service"
+    },
     "isDeleted": false,
-    "userCompany": null,
-    "userRole": null,
+    "userCompany": {
+        "companyName": "Krusty Krab",
+        "companyDescription": "The squeaking of the horrible boots!"
+    },
+    "userRole": {
+        "roleTitle": "Member"
+    },
     "projects": [],
     "newUser": false
 }
