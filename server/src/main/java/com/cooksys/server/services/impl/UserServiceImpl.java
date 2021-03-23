@@ -74,6 +74,13 @@ public class UserServiceImpl implements UserService {
 		} else {
 			throw new NotFoundException(String.format("Company name: '%s' does not exist.", findUser.get().getUserName()));
 		}
+		//This below is bad code (by me, nathan). It means we have to populate database with this role.
+		//I'm not sure if we can default the Role assignment because it is an entity itself
+		Optional<Role> findRole = roleRepo.findByroleTitle("Member");
+		if(findRole.isEmpty()) {
+			throw new NotFoundException(String.format("Role name: '%s' does not exist.", findUser.get().getUserName()));
+		}
+		createUser.setUserRole(findRole.get());
 		createUser.setUpdated(new Timestamp(System.currentTimeMillis()));
 		createUser = userRepo.saveAndFlush(createUser);
 		createUser.setUpdatedBy(createUser);
@@ -94,7 +101,10 @@ public class UserServiceImpl implements UserService {
 		Utils.validateUserExistsAndNotDeleted(findUser,userName);
 		Utils.validateCredentials(findUser,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
 		User user = findUser.get();
-		user = userMap.DTOtoEntity(userRequest.getNewData());
+		user.setUserName(userRequest.getNewData().getUserName());
+		user.setFirstName(userRequest.getNewData().getFirstName());
+		user.setLastName(userRequest.getNewData().getLastName());
+		user.setPassword(userRequest.getNewData().getPassword());
 		user.setNewUser(findUser.get().isNewUser());
 		user.setUpdated(new Timestamp(System.currentTimeMillis()));
 		user.setUpdatedBy(user);

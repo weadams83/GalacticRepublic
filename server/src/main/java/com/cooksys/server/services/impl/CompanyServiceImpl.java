@@ -44,7 +44,7 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	/*
 	 * GET Company 
-	 * if Company doesn't exist, notify User
+	 * if Company doesn't exist throw exception
 	 */
 	
 	@Override
@@ -58,7 +58,7 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	/*
 	 * POST (Create Company)
-	 * if Company name exists, notify user
+	 * if Company name exists throw exception
 	 */
 
 	@Override
@@ -87,6 +87,16 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyMap.entityToResponseDTO(createCompany);
 	}
 
+	/*
+	 * if company not found throw exception
+	 * if user not found or deleted throw exception
+	 * if user is a new user throw exception
+	 * if user doesn't have role "Company" throw exception
+	 * if user password wrong throw exception
+	 * if boss and user don't belong to same company throw exception
+	 * 
+	 * else throw exception
+	 */
 	@Override
 	public CompanyResponseDTO updateCompanyDescription(String companyName, CompanyEditRequestDTO companyUpdate) {
 		Optional<User> findUser = userRepo.findByUserName(companyUpdate.getCredentials().getUserName());

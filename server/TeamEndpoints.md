@@ -68,15 +68,6 @@ Returns Json:
     },
     "teamMembers": [
         {
-            "userName": "Loki",
-            "firstName": "Jim",
-            "lastName": "Halpert",
-            "password": "Pranks",
-            "userRole": {
-                "roleTitle": "Member"
-            }
-        },
-        {
             "userName": "Darth Shrewt",
             "firstName": "Dwight",
             "lastName": "Schrute",
@@ -156,15 +147,6 @@ Returns Json:
     },
     "teamMembers": [
         {
-            "userName": "Loki",
-            "firstName": "Jim",
-            "lastName": "Halpert",
-            "password": "Pranks",
-            "userRole": {
-                "roleTitle": "Member"
-            }
-        },
-        {
             "userName": "Darth Shrewt",
             "firstName": "Dwight",
             "lastName": "Schrute",
@@ -197,13 +179,31 @@ Request Json:
 Returns Json:
 ```json
 {
-    "teamName": "Sales",
-    "teamDescription": "Sell products to Clients.",
+    "teamName": "Accounting",
+    "teamDescription": "Crunch the numbers.",
     "parentCompany": {
         "companyName": "Dunder Mifflin",
         "companyDescription": "Paper and paper accessories."
     },
     "teamMembers": [
+        {
+            "userName": "Stanley0689",
+            "firstName": "Stanley",
+            "lastName": "Hudson",
+            "password": "Money",
+            "userRole": {
+                "roleTitle": "Member"
+            }
+        },
+        {
+            "userName": "Wunderkind",
+            "firstName": "Ryan",
+            "lastName": "Howard",
+            "password": "Temp",
+            "userRole": {
+                "roleTitle": "Member"
+            }
+        },
         {
             "userName": "Loki",
             "firstName": "Jim",
@@ -212,21 +212,12 @@ Returns Json:
             "userRole": {
                 "roleTitle": "Member"
             }
-        },
-        {
-            "userName": "Darth Shrewt",
-            "firstName": "Dwight",
-            "lastName": "Schrute",
-            "password": "Beets",
-            "userRole": {
-                "roleTitle": "Member"
-            }
         }
     ],
     "projects": [
         {
-            "name": "Sell Paper",
-            "description": "Without watermarks."
+            "name": "Count Paper",
+            "description": "At least the sales team can get away from Michael."
         }
     ],
     "isDeleted": true

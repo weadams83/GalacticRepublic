@@ -48,8 +48,7 @@ public class TeamController {
 
 	@PatchMapping("/update/{teamName}")
 	@ResponseStatus(HttpStatus.OK)
-	public TeamResponseDTO updateTeam(@PathVariable String teamName,
-			@RequestBody TeamRequestDTO teamRequestDTO) {
+	public TeamResponseDTO updateTeam(@PathVariable String teamName, @RequestBody TeamRequestDTO teamRequestDTO) {
 		return teamService.updateTeam(teamName, teamRequestDTO);
 	}
 

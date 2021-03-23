@@ -33,6 +33,9 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectMapper.entitiesToResponseDTOs(projectRepository.findAllByIsDeletedFalse());
 	}
 
+	/*
+	 * if user doesn't exist or is deleted throw exception
+	 */
 	@Override
 	public ProjectResponseDTO getProjectByName(String name) {
 		Optional<Project> findProject = projectRepository.findByName(name);
@@ -40,7 +43,14 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectMapper.entityToResponseDTO(findProject.get());
 	}
 	
-	//TODO: should only users with role "Company" be able to create projects?
+	/*
+	 * if project with same name exists, throw exception
+	 * if user doesn't exist or is deleted throw exception
+	 * if user is a new user throw exception
+	 * if user password incorrect throw exception
+	 * if user doesn't have role "company" throw exception
+	 * create project
+	 */
 	@Override
 	public ProjectResponseDTO createProject(ProjectCreateRequestDTO projectRequestDTO) {
 		Optional<Project> findProject = projectRepository.findByName(projectRequestDTO.getProject().getName());
@@ -50,6 +60,8 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 		Utils.validateUserExistsAndNotDeleted(findUser, projectRequestDTO.getCredentials().getUserName());
 		Utils.validateNewUser(findUser);
+		Utils.validateCredentials(findUser, projectRequestDTO.getCredentials().getUserName(), projectRequestDTO.getCredentials().getPassword());
+		Utils.validateAuthorization(findUser, projectRequestDTO.getCredentials().getUserName());
 		
 		Project projectToSave = projectMapper.DTOtoEntity(projectRequestDTO.getProject());
 		projectToSave.setUser(findUser.get());
@@ -58,15 +70,23 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(projectToSave));
 	}
 
+	/* 
+	 * if project doesn't exist or is deleted throw exception
+	 * if user doesn't exist or is deleted throw exception
+	 * if user is a new user throw exception
+	 * if user password incorrect throw exception
+	 * if user doesn't have role "Company" throw exception
+	 * edit project
+	 */
 	@Override
 	public ProjectResponseDTO updateProject(String projectName, ProjectCreateRequestDTO projectRequestDTO) {
 		Optional<Project> findProject = projectRepository.findByName(projectName);
 		Optional<User> findUser = userRepo.findByUserName(projectRequestDTO.getCredentials().getUserName());
 		Utils.validateProjectExistsAndNotDeleted(findProject, projectName);
 		Utils.validateUserExistsAndNotDeleted(findUser, projectRequestDTO.getCredentials().getUserName());
-		Utils.validateCredentials(findUser, projectRequestDTO.getCredentials().getUserName(), projectRequestDTO.getCredentials().getPassword());
 		Utils.validateNewUser(findUser);
-		Utils.validateUserIsAssignedProject(findUser,findProject);
+		Utils.validateCredentials(findUser, projectRequestDTO.getCredentials().getUserName(), projectRequestDTO.getCredentials().getPassword());
+		Utils.validateAuthorization(findUser, projectRequestDTO.getCredentials().getUserName());
 		
 		findProject.get().setName(projectRequestDTO.getProject().getName());
 		findProject.get().setDescription(projectRequestDTO.getProject().getDescription());
@@ -76,15 +96,23 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectMapper.entityToResponseDTO(projectRepository.saveAndFlush(findProject.get()));
 	}
 
+	/* 
+	 * if project with same name exists, throw exception
+	 * if user doesn't exist or is deleted throw exception
+	 * if user is a new user throw exception
+	 * if user password incorrect throw exception
+	 * if user doesn't have role "Company" throw exception
+	 * delete project
+	 */
 	@Override
 	public ProjectResponseDTO deleteProject(String projectName, UserSignInRequestDTO credentials) {
 		Optional<Project> findProject = projectRepository.findByName(projectName);
 		Optional<User> findUser = userRepo.findByUserName(credentials.getUserName());
 		Utils.validateProjectExistsAndNotDeleted(findProject, projectName);
 		Utils.validateUserExistsAndNotDeleted(findUser, credentials.getUserName());
-		Utils.validateCredentials(findUser, credentials.getUserName(), credentials.getPassword());
 		Utils.validateNewUser(findUser);
-		Utils.validateUserIsAssignedProject(findUser,findProject);
+		Utils.validateCredentials(findUser, credentials.getUserName(), credentials.getPassword());
+		Utils.validateAuthorization(findUser, credentials.getUserName());
 
 		findProject.get().setIsDeleted(true);
 		findProject.get().setUpdated(new Timestamp(System.currentTimeMillis()));

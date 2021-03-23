@@ -34,6 +34,16 @@ public class TeamServiceImpl implements TeamService {
 		return teamMapper.EntityToDto(teamToGet.get());
 	}
 
+	/*
+	 * if team exists 
+	 * 		if team is deleted, set isDeleted to false
+	 * 		else throw exception
+	 * if user doesn't exist or is deleted throw exception
+	 * if user is a new user throw exception
+	 * if user password incorrect throw exception
+	 * if user doesn't have role "company" throw exception
+	 * create team
+	 */
 	@Override
 	public TeamResponseDTO createTeam(TeamRequestDTO teamRequestDTO) {
 		Optional<Team> findTeam = teamRepository.findByTeamName(teamRequestDTO.getTeam().getTeamName());
@@ -66,6 +76,15 @@ public class TeamServiceImpl implements TeamService {
 		return teamMapper.entitesToResponseDTO(teamRepository.findAllByIsDeletedFalse());
 	}
 
+	/* 
+	 * if team doesn't exist or is deleted throw exception
+	 * if user doesn't exist or is deleted throw exception
+	 * if user is a new user throw exception
+	 * if user password incorrect throw exception
+	 * if user doesn't have role "company" throw exception
+	 * if user and team don't belong to the same company throw exception
+	 * update team
+	 */
 	@Override
 	public TeamResponseDTO updateTeam(String teamName, TeamRequestDTO teamRequestDTO) {
 		Optional<Team> optionalTeam = teamRepository.findByTeamNameIgnoreCase(teamName);
@@ -83,6 +102,15 @@ public class TeamServiceImpl implements TeamService {
 		return teamMapper.EntityToDto(teamRepository.saveAndFlush(teamToUpdate));
 	}
 
+	/*
+	 * if team doesn't exist or is deleted throw exception
+	 * if user doesn't exist or is deleted throw exception
+	 * if user is a new user throw exception
+	 * if user password incorrect throw exception
+	 * if user doesn't have role "company" throw exception
+	 * if user and team don't belong to the same company throw exception
+	 * update team
+	 */
 	@Override
 	public TeamResponseDTO deleteTeam(String teamName, UserSignInRequestDTO teamRequestDTO) {
 		Optional<Team> optionalTeam = teamRepository.findByTeamNameIgnoreCase(teamName);
@@ -90,8 +118,8 @@ public class TeamServiceImpl implements TeamService {
 		Utils.validateTeamExistsAndNotDeleted(optionalTeam,teamName);
 		Utils.validateUserExistsAndNotDeleted(findUser, teamRequestDTO.getUserName());
 		Utils.validateNewUser(findUser);
-		Utils.validateAuthorization(findUser, teamRequestDTO.getUserName());
 		Utils.validateCredentials(findUser, teamRequestDTO.getUserName(), teamRequestDTO.getPassword());
+		Utils.validateAuthorization(findUser, teamRequestDTO.getUserName());
 		Utils.validateBossIsSameCompanyAsTeam(optionalTeam, findUser);
 		
 		Team teamToUpdate = optionalTeam.get();

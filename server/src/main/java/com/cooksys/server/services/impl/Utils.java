@@ -29,13 +29,6 @@ public class Utils {
 		}
 	}
 	
-	static void validateBossIsSameCompanyAsTeam(Optional<Team> findTeam, Optional<User> findBoss) {
-		if(!findTeam.get().getParentCompany().equals(findBoss.get().getUserCompany())){
-			throw new BadRequestException(String.format("Boss with user name: '%s can not modify team with name: '%s' "
-					+ "as they work for different companies." , findBoss.get().getUserName(),findTeam.get().getTeamName()));
-		}
-	}
-	
 	static void validateNewUser(Optional<User> findUser) {
 		if(findUser.get().isNewUser()) {
 			throw new BadRequestException(String.format("User with user name: '%s' has not been assigned a Role.", findUser.get().getUserName()));
@@ -47,7 +40,7 @@ public class Utils {
 			throw new BadRequestException(String.format("User with user name: '%s' does not have authorization.", userName));
 		}
 	}
-
+	
 	static void validateCredentials(Optional<User> findUser, String userName, String password) {
 		if(!findUser.get().getUserName().equals(userName) || !findUser.get().getPassword().equals(password)) {
 			throw new BadRequestException("Username/Password do not match.");
@@ -68,10 +61,17 @@ public class Utils {
 		}
 	}
 
-	public static void validateUserIsAssignedProject(Optional<User> findUser, Optional<Project> findProject) {
-		if(!findProject.get().getUser().equals(findUser.get())) {
-			throw new BadRequestException(String.format("User with user name: '%s' can not edit team: '%s'"
-					+ "as they are not assigned to that team.",findUser.get().getUserName(),findProject.get().getName()));
+//	public static void validateUserIsAssignedProject(Optional<User> findUser, Optional<Project> findProject) {
+//		if(!findProject.get().getUser().equals(findUser.get())) {
+//			throw new BadRequestException(String.format("User with user name: '%s' can not edit project: '%s'"
+//					+ "as they are not assigned to that project.",findUser.get().getUserName(),findProject.get().getName()));
+//		}
+//	}
+	
+	static void validateBossIsSameCompanyAsTeam(Optional<Team> findTeam, Optional<User> findBoss) {
+		if(!findTeam.get().getParentCompany().equals(findBoss.get().getUserCompany())){
+			throw new BadRequestException(String.format("Boss with user name: '%s can not modify team with name: '%s' "
+					+ "as they work for different companies." , findBoss.get().getUserName(),findTeam.get().getTeamName()));
 		}
 	}
 }

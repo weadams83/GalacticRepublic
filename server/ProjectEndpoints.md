@@ -17,16 +17,16 @@ Returns Json:
 ```json
 [
     {
-        "name": "Count ma money!",
-        "description": "Stop the squeaking of horrible boots!",
-        "company": "Krusty Krab",
+        "name": "Prank Dwight.",
+        "description": "Bears, Beets, BattleStar Galactica.",
+        "company": "Dunder Mifflin",
         "user": {
-            "userName": "JP Lobster",
-            "firstName": "Mr.",
-            "lastName": "Krabbs",
-            "password": "Money",
+            "userName": "Loki",
+            "firstName": "Jim",
+            "lastName": "Halpert",
+            "password": "Pranks",
             "userRole": {
-                "roleTitle": "Company"
+                "roleTitle": "Member"
             }
         },
         "team": null,
@@ -65,8 +65,8 @@ Request Json:
 ```json
 {
     "credentials":{
-        "userName": "The Quickster",
-        "password": "Gary"
+        "userName": "JP Lobster",
+        "password": "Money"
     },
     
     "project":{
@@ -82,12 +82,12 @@ Returns Json:
     "description": "Catch the blue whale!",
     "company": "Krusty Krab",
     "user": {
-        "userName": "The Quickster",
-        "firstName": "Spongebob",
-        "lastName": "Squarepants",
-        "password": "Gary",
+        "userName": "JP Lobster",
+        "firstName": "Mr.",
+        "lastName": "Krabbs",
+        "password": "Money",
         "userRole": {
-            "roleTitle": "Member"
+            "roleTitle": "Company"
         }
     },
     "team": null,
@@ -138,8 +138,8 @@ DELETE project
 Request Json:
 ```json
 {
-    "userName":"Michael Scarn",
-    "password": "Friendship"
+    "userName":"Loki",
+    "password":"Pranks"
 }
 ```
 Returns Json:

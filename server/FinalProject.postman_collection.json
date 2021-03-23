@@ -3653,7 +3653,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"teamName\":\"Party Planning Committee\",\r\n    \"teamDescription\":\"Plans Parties.\"\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\":\"Friendship\"\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Party Planning Committee\",\r\n        \"teamDescription\":\"Plans Parties.\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3701,7 +3701,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"teamName\":\"Sales\",\r\n    \"teamDescription\":\"Plans Parties.\"\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\":\"Friendship\"\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Sales\",\r\n        \"teamDescription\":\"Plans Parties.\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3749,7 +3749,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"teamName\":\"Crossfit\",\r\n    \"teamDescription\":\"Pain.\"\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\":\"Friendship\"\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Crossfit\",\r\n        \"teamDescription\":\"Pain.\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3797,7 +3797,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\": \"Friendship\"\r\n\r\n    },\r\n    \"changes\":{\r\n        \"teamName\":\"Sales Team Fun Parade\",\r\n        \"teamDescription\":\"Selling Smiles\"\r\n    }\r\n\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\": \"Friendship\"\r\n\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Sales Team Fun Parade\",\r\n        \"teamDescription\":\"Selling Smiles\"\r\n    }\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3846,7 +3846,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\": \"Friendship\"\r\n\r\n    },\r\n    \"changes\":{\r\n        \"teamName\":\"Sales Team Fun Parade\",\r\n        \"teamDescription\":\"Selling Smiles\"\r\n    }\r\n\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\": \"Friendship\"\r\n\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Sales Team Fun Parade\",\r\n        \"teamDescription\":\"Selling Smiles\"\r\n    }\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3895,7 +3895,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\": \"Friendship\"\r\n\r\n    },\r\n    \"changes\":{\r\n        \"teamName\":\"Sales Team Fun Parade\",\r\n        \"teamDescription\":\"Selling Smiles\"\r\n    }\r\n\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\": \"Friendship\"\r\n\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Sales Team Fun Parade\",\r\n        \"teamDescription\":\"Selling Smiles\"\r\n    }\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3944,7 +3944,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"NoOne\",\r\n        \"password\": \"Friendship\"\r\n\r\n    },\r\n    \"changes\":{\r\n        \"teamName\":\"Sales Team Fun Parade\",\r\n        \"teamDescription\":\"Selling Smiles\"\r\n    }\r\n\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"NoOne\",\r\n        \"password\": \"Friendship\"\r\n\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Sales Team Fun Parade\",\r\n        \"teamDescription\":\"Selling Smiles\"\r\n    }\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3993,7 +3993,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Stanley0689\",\r\n        \"password\": \"Money\"\r\n\r\n    },\r\n    \"changes\":{\r\n        \"teamName\":\"Accounting Team Fun Parade\",\r\n        \"teamDescription\":\"Count the Smiles\"\r\n    }\r\n\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Stanley0689\",\r\n        \"password\": \"Money\"\r\n\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Accounting Team Fun Parade\",\r\n        \"teamDescription\":\"Count the Smiles\"\r\n    }\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4042,7 +4042,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"StepBro\",\r\n        \"password\": \"Elf\"\r\n\r\n    },\r\n    \"changes\":{\r\n        \"teamName\":\"Accounting Team Fun Parade\",\r\n        \"teamDescription\":\"Count the Smiles\"\r\n    }\r\n\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"StepBro\",\r\n        \"password\": \"Elf\"\r\n\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Accounting Team Fun Parade\",\r\n        \"teamDescription\":\"Count the Smiles\"\r\n    }\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4091,7 +4091,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Loki\",\r\n        \"password\": \"Pranks\"\r\n\r\n    },\r\n    \"changes\":{\r\n        \"teamName\":\"Accounting Team Fun Parade\",\r\n        \"teamDescription\":\"Count the Smiles\"\r\n    }\r\n\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Loki\",\r\n        \"password\": \"Pranks\"\r\n\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Accounting Team Fun Parade\",\r\n        \"teamDescription\":\"Count the Smiles\"\r\n    }\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4140,7 +4140,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\": \"Friendshi\"\r\n\r\n    },\r\n    \"changes\":{\r\n        \"teamName\":\"Accounting Team Fun Parade\",\r\n        \"teamDescription\":\"Count the Smiles\"\r\n    }\r\n\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\": \"Friendshi\"\r\n\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Accounting Team Fun Parade\",\r\n        \"teamDescription\":\"Count the Smiles\"\r\n    }\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4189,7 +4189,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"JP Lobster\",\r\n        \"password\": \"Money\"\r\n\r\n    },\r\n    \"changes\":{\r\n        \"teamName\":\"Accounting Team Fun Parade\",\r\n        \"teamDescription\":\"Count the Smiles\"\r\n    }\r\n\r\n}",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"JP Lobster\",\r\n        \"password\": \"Money\"\r\n\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Accounting Team Fun Parade\",\r\n        \"teamDescription\":\"Count the Smiles\"\r\n    }\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4262,7 +4262,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Team - NEED TO TEST ALL OTHER DELETE POSSIBILITIES",
+					"name": "Should test other outcomes in delete team",
 					"event": [
 						{
 							"listen": "test",
@@ -4305,6 +4305,415 @@
 								"team",
 								"delete",
 								"Sales"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Project Endpoints",
+			"item": [
+				{
+					"name": "Get all Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful Get Projects\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"return all projects\", function(){\r",
+									"    responseJson = JSON.parse(responseBody);\r",
+									"\r",
+									"//Finding the length of the Response Array\r",
+									"    var length = responseJson.length;\r",
+									"    pm.expect(length).to.eq(8);\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Project by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful Get Project\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"returned project\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Prank Dwight.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/project/Prank Dwight.",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"project",
+								"Prank Dwight."
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Project by name - project doesn't exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"message displayed correctly\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"Project with name: 'Prank Dwight' not found or deleted.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/project/Prank Dwight",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"project",
+								"Prank Dwight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful Post Project\", function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"returned project\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Hunt Jellyfish\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\": \"JP Lobster\",\r\n        \"password\": \"Money\"\r\n    },\r\n    \r\n    \"project\":{\r\n        \"name\": \"Hunt Jellyfish\",\r\n        \"description\": \"Catch the blue whale!\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Project - name already taken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful Post Project\", function(){\r",
+									"    pm.response.to.have.status(226);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"returned project\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.eql(\"Project with name: 'Prank Dwight.' already taken\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\": \"The Quickster\",\r\n        \"password\": \"Gary\"\r\n    },\r\n    \r\n    \"project\":{\r\n        \"name\": \"Prank Dwight.\",\r\n        \"description\": \"I'm not in that universe!\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch project (update project info)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful Patch Project\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"returned project\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Balance the register\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\": \"JP Lobster\",\r\n        \"password\": \"Money\"\r\n    },\r\n    \r\n    \"project\":{\r\n        \"name\": \"Balance the register\",\r\n        \"description\": \"Sell some boots!\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/project/Count ma money!",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"project",
+								"Count ma money!"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Should do tests for other outcomes in update Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// pm.test(\"Successful Patch Project\", function(){\r",
+									"//     pm.response.to.have.status(200);\r",
+									"// })\r",
+									"\r",
+									"// pm.test(\"returned project\", function () {\r",
+									"//     var jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData.name).to.eql(\"Balance the register\");\r",
+									"// });\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\": \"JP Lobster\",\r\n        \"password\": \"Money\"\r\n    },\r\n    \r\n    \"project\":{\r\n        \"name\": \"Balance the register\",\r\n        \"description\": \"Sell some boots!\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/project/Count ma money!",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"project",
+								"Count ma money!"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful Delete Project\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"returned project\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.isDeleted).to.eql(true);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"Michael Scarn\",\r\n    \"password\":\"Friendship\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/project/Prank Dwight.",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"project",
+								"Prank Dwight."
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Should do tests for other outcome in Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// pm.test(\"Successful Delete Project\", function(){\r",
+									"//     pm.response.to.have.status(200);\r",
+									"// })\r",
+									"\r",
+									"// pm.test(\"returned project\", function () {\r",
+									"//     var jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData.isDeleted).to.eql(true);\r",
+									"// });\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"Michael Scarn\",\r\n    \"password\":\"Friendship\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/project/Prank Dwight.",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"project",
+								"Prank Dwight."
 							]
 						}
 					},
