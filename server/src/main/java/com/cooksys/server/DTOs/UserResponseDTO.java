@@ -2,11 +2,6 @@ package com.cooksys.server.DTOs;
 
 import java.util.List;
 
-import com.cooksys.server.entities.Company;
-import com.cooksys.server.entities.Project;
-import com.cooksys.server.entities.Role;
-import com.cooksys.server.entities.Team;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,12 +14,15 @@ public class UserResponseDTO {
 
 	private String lastName;
 	
-	private TeamResponseDTO associatedTeam; 
-//	
+	private UserResponseTeamDTO associatedTeam; 
+
 	private Boolean isDeleted;
-	private CompanyResponseDTO userCompany;
-//	
-//	private List<Project> projects;
-//	
-	private RoleResponseDTO userRole;
+	
+	private UserResponseCompanyDTO userCompany;
+
+	private UserResponseRoleDTO userRole;
+	
+	private List<UserResponseProjectDTO> projects;
+	
+	private boolean newUser;
 }

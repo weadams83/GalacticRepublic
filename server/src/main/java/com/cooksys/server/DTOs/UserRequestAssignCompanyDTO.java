@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class UserRequestAssignCompanyDTO {
-	private UserSignInRequestDTO credentials;//holds the username/password of user that is editing 
+	private UserSignInRequestDTO credentials;
 
 	private String companyName;
 }

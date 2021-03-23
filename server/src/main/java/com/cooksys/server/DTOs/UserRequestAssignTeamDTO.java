@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UserRequestAssignTeamDTO {
-	private UserSignInRequestDTO credentials;//holds the username/password of user that is editing 
+	private UserSignInRequestDTO credentials;
 
 	private String teamName;
 }

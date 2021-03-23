@@ -1,18 +1,19 @@
 package com.cooksys.server.services.impl;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.cooksys.server.DTOs.TeamRequestDTO;
 import com.cooksys.server.DTOs.TeamResponseDTO;
+import com.cooksys.server.DTOs.UserSignInRequestDTO;
 import com.cooksys.server.entities.Team;
+import com.cooksys.server.entities.User;
+import com.cooksys.server.exceptions.ImUsedException;
 import com.cooksys.server.mappers.TeamMapper;
 import com.cooksys.server.repositories.TeamRepository;
+import com.cooksys.server.repositories.UserRepository;
 import com.cooksys.server.services.TeamService;
 
 import lombok.AllArgsConstructor;
@@ -21,56 +22,108 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TeamServiceImpl implements TeamService {
 	private TeamRepository teamRepository;
+	private UserRepository userRepo;
 	private TeamMapper teamMapper;
 
+	
+	
 	@Override
-	public ResponseEntity<TeamResponseDTO> getTeam(String teamName) {
-		// TODO Auto-generated method stub
-		Optional<Team> teamToGet = teamRepository.findByTeamNameIgnoreCase(teamName);
-		if (teamToGet.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(teamMapper.EntityToDto(teamToGet.get()), HttpStatus.OK);
-
+	public TeamResponseDTO getTeam(String teamName) {
+		Optional<Team> teamToGet = teamRepository.findByTeamNameAndIsDeletedFalse(teamName);
+		Utils.validateTeamExistsAndNotDeleted(teamToGet,teamName);
+		return teamMapper.EntityToDto(teamToGet.get());
 	}
 
+	/*
+	 * if team exists 
+	 * 		if team is deleted, set isDeleted to false
+	 * 		else throw exception
+	 * if user doesn't exist or is deleted throw exception
+	 * if user is a new user throw exception
+	 * if user password incorrect throw exception
+	 * if user doesn't have role "company" throw exception
+	 * create team
+	 */
 	@Override
 	public TeamResponseDTO createTeam(TeamRequestDTO teamRequestDTO) {
-		// TODO Auto-generated method stub
-		Team teamToSave = teamMapper.DTOtoEntity(teamRequestDTO);
-//		teamToSave.setIsDeleted(false);
-		return teamMapper.EntityToDto(teamRepository.saveAndFlush(teamToSave));
+		Optional<Team> findTeam = teamRepository.findByTeamName(teamRequestDTO.getTeam().getTeamName());
+		if(findTeam.isPresent()) {
+			if(findTeam.get().getIsDeleted()) {
+				findTeam.get().setIsDeleted(false);
+				return teamMapper.EntityToDto(teamRepository.saveAndFlush(findTeam.get()));
+			}else {
+				throw new ImUsedException(String.format("Team with name: '%s' is already taken.", teamRequestDTO.getTeam().getTeamName()));
+			}
+		}
+		Optional<User> findUser = userRepo.findByUserName(teamRequestDTO.getCredentials().getUserName());
+		Utils.validateUserExistsAndNotDeleted(findUser, teamRequestDTO.getCredentials().getUserName());
+		Utils.validateNewUser(findUser);
+		Utils.validateCredentials(findUser,teamRequestDTO.getCredentials().getUserName(),teamRequestDTO.getCredentials().getPassword());
+		Utils.validateAuthorization(findUser, teamRequestDTO.getCredentials().getUserName());
+
+		Team teamToSave = teamMapper.DTOtoEntity(teamRequestDTO.getTeam());
+		teamToSave.setParentCompany(findUser.get().getUserCompany());
+		teamToSave = teamRepository.saveAndFlush(teamToSave);
+		findUser.get().setAssociatedTeam(teamToSave);
+		findUser.get().setUpdated(new Timestamp(System.currentTimeMillis()));
+		findUser.get().setUpdatedBy(findUser.get());
+		userRepo.saveAndFlush(findUser.get());
+		return teamMapper.EntityToDto(teamToSave);
 	}
 
 	@Override
 	public List<TeamResponseDTO> getAllTeams() {
-
 		return teamMapper.entitesToResponseDTO(teamRepository.findAllByIsDeletedFalse());
 	}
 
+	/* 
+	 * if team doesn't exist or is deleted throw exception
+	 * if user doesn't exist or is deleted throw exception
+	 * if user is a new user throw exception
+	 * if user password incorrect throw exception
+	 * if user doesn't have role "company" throw exception
+	 * if user and team don't belong to the same company throw exception
+	 * update team
+	 */
 	@Override
-	public ResponseEntity<TeamResponseDTO> updateTeam(String teamName, TeamRequestDTO teamRequestDTO) {
+	public TeamResponseDTO updateTeam(String teamName, TeamRequestDTO teamRequestDTO) {
 		Optional<Team> optionalTeam = teamRepository.findByTeamNameIgnoreCase(teamName);
-		if (optionalTeam.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
+		Optional<User> findUser = userRepo.findByUserName(teamRequestDTO.getCredentials().getUserName());
+		Utils.validateTeamExistsAndNotDeleted(optionalTeam,teamName);
+		Utils.validateUserExistsAndNotDeleted(findUser, teamRequestDTO.getCredentials().getUserName());
+		Utils.validateNewUser(findUser);
+		Utils.validateAuthorization(findUser, teamRequestDTO.getCredentials().getUserName());
+		Utils.validateCredentials(findUser, teamRequestDTO.getCredentials().getUserName(), teamRequestDTO.getCredentials().getPassword());
+		Utils.validateBossIsSameCompanyAsTeam(optionalTeam, findUser);
+		
 		Team teamToUpdate = optionalTeam.get();
-//		teamToUpdate.setTeamName("Harry");
-		teamToUpdate.setTeamDescription(teamRequestDTO.getTeamDescription());
-		teamToUpdate.setTeamName(teamRequestDTO.getTeamName());
-		return new ResponseEntity<>(teamMapper.EntityToDto(teamRepository.saveAndFlush(teamToUpdate)), HttpStatus.OK);
-
+		teamToUpdate.setTeamDescription(teamRequestDTO.getTeam().getTeamDescription());
+		teamToUpdate.setTeamName(teamRequestDTO.getTeam().getTeamName());
+		return teamMapper.EntityToDto(teamRepository.saveAndFlush(teamToUpdate));
 	}
 
+	/*
+	 * if team doesn't exist or is deleted throw exception
+	 * if user doesn't exist or is deleted throw exception
+	 * if user is a new user throw exception
+	 * if user password incorrect throw exception
+	 * if user doesn't have role "company" throw exception
+	 * if user and team don't belong to the same company throw exception
+	 * update team
+	 */
 	@Override
-	public ResponseEntity<TeamResponseDTO> deleteTeam(String teamName) {
+	public TeamResponseDTO deleteTeam(String teamName, UserSignInRequestDTO teamRequestDTO) {
 		Optional<Team> optionalTeam = teamRepository.findByTeamNameIgnoreCase(teamName);
-		if (optionalTeam.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
+		Optional<User> findUser = userRepo.findByUserName(teamRequestDTO.getUserName());
+		Utils.validateTeamExistsAndNotDeleted(optionalTeam,teamName);
+		Utils.validateUserExistsAndNotDeleted(findUser, teamRequestDTO.getUserName());
+		Utils.validateNewUser(findUser);
+		Utils.validateCredentials(findUser, teamRequestDTO.getUserName(), teamRequestDTO.getPassword());
+		Utils.validateAuthorization(findUser, teamRequestDTO.getUserName());
+		Utils.validateBossIsSameCompanyAsTeam(optionalTeam, findUser);
+		
 		Team teamToUpdate = optionalTeam.get();
 		teamToUpdate.setIsDeleted(true);
-		return new ResponseEntity<>(teamMapper.EntityToDto(teamRepository.saveAndFlush(teamToUpdate)), HttpStatus.GONE);
+		return teamMapper.EntityToDto(teamRepository.saveAndFlush(teamToUpdate));
 	}
-
 }

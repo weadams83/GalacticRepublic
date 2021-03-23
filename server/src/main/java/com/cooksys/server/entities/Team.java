@@ -1,5 +1,6 @@
 package com.cooksys.server.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,6 +30,7 @@ public class Team {
 	@ManyToOne
 	private Company parentCompany;
 
+	@Column(unique = true)
 	private String teamName;
 
 	private String teamDescription;
@@ -37,10 +39,10 @@ public class Team {
 	private Boolean isDeleted = false;
 
 	@OneToMany(mappedBy = "associatedTeam")
-	private List<User> teamMembers;
+	private List<User> teamMembers = new ArrayList<>();
 
 	@OneToMany(mappedBy = "team")
-	private List<Project> projects;
+	private List<Project> projects = new ArrayList<>();
 
 	@Override
 	public String toString() {

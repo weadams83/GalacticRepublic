@@ -1,29 +1,23 @@
 package com.cooksys.server.mappers;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+import java.util.List;
 
-import com.cooksys.server.DTOs.UserCreateRequestDTO;
-import com.cooksys.server.DTOs.UserEditRequestDTO;
-import com.cooksys.server.DTOs.UserRequestAssignProjectDTO;
+import org.mapstruct.Mapper;
+import com.cooksys.server.DTOs.CompanyResponseUserDTO;
+import com.cooksys.server.DTOs.UserDTO;
 import com.cooksys.server.DTOs.UserResponseDTO;
 import com.cooksys.server.DTOs.UserSignInRequestDTO;
 import com.cooksys.server.entities.User;
 
 
 @Mapper(componentModel = "spring")
-public interface UserMapper {
-
+public interface UserMapper {	
+	CompanyResponseUserDTO EntityToCompanyResponseUserDTO(User user);
+	
+	User DTOtoEntity(UserDTO userDTO);
+	
 	UserResponseDTO EntityToDTO(User user);
+	
+	List<UserResponseDTO> EntitiesToDTO(List<User> users);
 
-//	User DTOtoEntity(UserSignInRequestDTO userSignInRequestDTO);
-	
-	@Mappings({
-		@Mapping(target="userRole.roleTitle", source="userCreateRequestDTO.roleTitle")
-		})
-	User CreateDTOtoEntity(UserCreateRequestDTO userCreateRequestDTO);
-	
-	User EditDTOtoEntity(UserEditRequestDTO userEditRequestDTO);
-	
 	User UserSignInDTOtoEntity(UserSignInRequestDTO userSignInRequestDTO);
 }

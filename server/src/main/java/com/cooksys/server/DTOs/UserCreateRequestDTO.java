@@ -8,13 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class UserCreateRequestDTO {
-	private String userName;
-
-	private String firstName;
-
-	private String lastName;
 	
-	private String password;
+	private UserDTO createUser;
 	
-	private String roleTitle;
+	private String companyName;
 }
