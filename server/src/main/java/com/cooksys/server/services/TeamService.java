@@ -20,4 +20,6 @@ public interface TeamService {
 	TeamResponseDTO updateTeam(String teamName, TeamRequestDTO teamRequestDTO);
 
 	TeamResponseDTO deleteTeam(String teamName, UserSignInRequestDTO teamRequestDTO);
+
+	TeamResponseDTO assignTeamProject(String projectName, TeamRequestDTO teamRequestDTO);
 }

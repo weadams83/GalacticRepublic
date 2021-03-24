@@ -3821,6 +3821,55 @@
 					"response": []
 				},
 				{
+					"name": "Update Team - assign project to team",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful Patch Team\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Get Sales Team\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.teamName).to.eql(\"Accounting\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"credentials\":{\r\n        \"userName\":\"Michael Scarn\",\r\n        \"password\": \"Friendship\"\r\n\r\n    },\r\n    \"team\":{\r\n        \"teamName\":\"Accounting\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/team/assign/Make Friends, Don't die alone.",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"team",
+								"assign",
+								"Make Friends, Don't die alone."
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update Team (edit team information) - team doesn't exist",
 					"event": [
 						{
