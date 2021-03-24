@@ -101,10 +101,19 @@ public class UserServiceImpl implements UserService {
 		Utils.validateUserExistsAndNotDeleted(findUser,userName);
 		Utils.validateCredentials(findUser,userRequest.getCredentials().getUserName(),userRequest.getCredentials().getPassword());
 		User user = findUser.get();
-		user.setUserName(userRequest.getNewData().getUserName());
-		user.setFirstName(userRequest.getNewData().getFirstName());
-		user.setLastName(userRequest.getNewData().getLastName());
-		user.setPassword(userRequest.getNewData().getPassword());
+		
+		if(userRequest.getNewData().getUserName() != null) {
+			user.setUserName(userRequest.getNewData().getUserName());
+		}
+		if(userRequest.getNewData().getFirstName() != null) {
+			user.setFirstName(userRequest.getNewData().getFirstName());
+		}
+		if(userRequest.getNewData().getLastName() != null) {
+			user.setLastName(userRequest.getNewData().getLastName());
+		}
+		if(userRequest.getNewData().getPassword() != null) {
+			user.setPassword(userRequest.getNewData().getPassword());
+		}
 		user.setNewUser(findUser.get().isNewUser());
 		user.setUpdated(new Timestamp(System.currentTimeMillis()));
 		user.setUpdatedBy(user);
