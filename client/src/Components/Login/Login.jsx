@@ -31,11 +31,11 @@ const initialCompanyForm = {
 };
 
 export const Login = () => {
-<<<<<<< Updated upstream
+
   const dispatch = useDispatch()
   dispatch(saveUser())
-=======
->>>>>>> Stashed changes
+
+
   const [memberFormValues, setMemberFormValues] = useState(initialMemberForm);
   const [companyFormValues, setCompanyFormValues] = useState(
     initialCompanyForm
@@ -93,13 +93,13 @@ export const Login = () => {
         axios
           .post("http://localhost:8080/user/login", companyFormValues)
           .then((res) => {
-<<<<<<< Updated upstream
+
             dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName))
             history.push("/company");
-=======
+
             localStorage.setItem("currentUser", JSON.stringify(res.data));
             history.push("/users");
->>>>>>> Stashed changes
+
           })
           .catch((err) => console.log(err));
       }
@@ -116,11 +116,11 @@ export const Login = () => {
         axios
           .post("http://localhost:8080/user/login", memberFormValues)
           .then((res) => {
-<<<<<<< Updated upstream
+
             dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName, res.data.userCompany))
-=======
+
             localStorage.setItem("currentUser", JSON.stringify(res.data));
->>>>>>> Stashed changes
+
             history.push("/member");
           })
           .catch((err) => console.log(err));
