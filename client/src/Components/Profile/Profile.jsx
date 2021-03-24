@@ -1,26 +1,29 @@
 import { Fragment, useState } from "react";
+import store from "../../index";
 import Navbar from "../Navbar/Navbar";
 import { StyledProfile } from "./StyledProfile";
-import { store } from "../../index";
-import Button from "../Button/Button";
 import $ from "jquery";
 import axios from "axios";
 
-const initialFormState = store.getState();
 const initialCredentialsForm = {
   userName: "",
   password: "",
 };
 
 export const Profile = () => {
+  const initialFormState = {
+    editForm: store.getState(),
+    credentials: {
+      userName: "",
+      password: "",
+    },
+  };
+
   const [editFormValues, setEditFormValues] = useState(initialFormState);
   const [showCancel, setShowCancel] = useState(false);
   const [credentials, setCredentials] = useState(initialCredentialsForm);
-
-  console.log(editFormValues)
-  console.log(credentials)
-
   const user = store.getState();
+
   const handleClick = () => {
     $(".show").toggleClass("hide");
     showCancel ? setShowCancel(false) : setShowCancel(true);
@@ -31,17 +34,17 @@ export const Profile = () => {
 
     const patchData = {
       credentials: {
-        userName: credentials.userName,
-        password: credentials.password,
+        userName: editFormValues.credentials.userName,
+        password: editFormValues.credentials.password,
       },
       newData: {
-        userName: editFormValues.userName,
+        userName: editFormValues.editForm.userName,
 
-        firstName: editFormValues.firstName,
+        firstName: editFormValues.editForm.firstName,
 
-        lastName: editFormValues.lastName,
+        lastName: editFormValues.editForm.lastName,
 
-        password: editFormValues.password,
+        password: editFormValues.editForm.password,
       },
     };
 
@@ -150,7 +153,7 @@ export const Profile = () => {
           <button type="submit" className="show hide">
             Save
           </button>
-          <button onClick={(e) => handleClick(e)}>
+          <button type="button" onClick={(e) => handleClick(e)}>
             {showCancel ? "Cancel" : "Edit"}
           </button>
           <div className="company">
@@ -172,7 +175,7 @@ export const Profile = () => {
             </div>
             <div className="pair">
               <p>Name</p>
-              <p>{user.associatedTeam.teamName}</p>
+              {/* <p>{user?.associatedTeam.teamName}</p> */}
             </div>
             <div className="pair">
               <p>Description</p>

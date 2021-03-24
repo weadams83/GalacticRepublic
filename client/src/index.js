@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { loginReducer } from "./store/loginReducer";
 
-export const store = createStore(
+const store = createStore(
   loginReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
@@ -22,3 +22,5 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+export default store
