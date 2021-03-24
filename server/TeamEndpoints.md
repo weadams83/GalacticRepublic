@@ -166,6 +166,65 @@ Returns Json:
 }
 ```
 
+### **PATCH Path: '/team/assign/{projectName}'**
+PATCH team assign project to team
+</br>
+Request Json:
+```json
+{
+    "credentials":{
+        "userName":"Michael Scarn",
+        "password": "Friendship"
+
+    },
+    "team":{
+        "teamName":"Accounting"
+    }
+}
+```
+Returns Json:
+```json
+{
+    "teamName": "Accounting",
+    "teamDescription": "Crunch the numbers.",
+    "parentCompany": {
+        "companyName": "Dunder Mifflin",
+        "companyDescription": "Paper and paper accessories."
+    },
+    "teamMembers": [
+        {
+            "userName": "Stanley0689",
+            "firstName": "Stanley",
+            "lastName": "Hudson",
+            "password": "Money",
+            "userRole": {
+                "roleTitle": "Member"
+            }
+        },
+        {
+            "userName": "Wunderkind",
+            "firstName": "Ryan",
+            "lastName": "Howard",
+            "password": "Temp",
+            "userRole": {
+                "roleTitle": "Member"
+            }
+        }
+    ],
+    "projects": [
+        {
+            "name": "Count Paper",
+            "description": "At least the sales team can get away from Michael."
+        },
+        {
+            "name": "Make Friends, Don't die alone.",
+            "description": "Make more 'thats what she said' jokes."
+        }
+    ],
+    "isDeleted": false
+}
+```
+
 ### **DELETE Path: '/team/delete/{teamName}'**
 DELETE team 
 </br>

@@ -74,4 +74,11 @@ public class Utils {
 					+ "as they work for different companies." , findBoss.get().getUserName(),findTeam.get().getTeamName()));
 		}
 	}
+	
+	static void validateProjectIsSameCompanyAsTeam(Optional<Project> findProject, Optional<Team> findTeam) {
+		if(!findProject.get().getUser().getUserCompany().equals(findTeam.get().getParentCompany())){
+			throw new BadRequestException(String.format("Boss with user name: '%s can not modify team with name: '%s' "
+					+ "as they work for different companies." , findTeam.get().getParentCompany(),findProject.get().getName()));
+		}
+	}
 }

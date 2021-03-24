@@ -13,7 +13,7 @@ import com.cooksys.server.entities.Project;
 @Mapper(componentModel = "spring")
 public interface ProjectMapper {
 	
-//	ProjectDTO entityToDTO(Project project);
+	ProjectDTO entityToDTO(Project project);
 	
 	Project DTOtoEntity(ProjectDTO projectDTO);
 
@@ -27,14 +27,4 @@ public interface ProjectMapper {
 	List<ProjectResponseDTO> entitiesToResponseDTOs(List<Project> projects);
 
 }
-//=======
-//import org.mapstruct.Mapper;
-//
-//import com.cooksys.server.DTOs.ProjectResponseDTO;
-//import com.cooksys.server.entities.Project;
-//
-//@Mapper(componentModel = "spring")
-//public interface ProjectMapper {
-//	ProjectResponseDTO EntityToProjectResponseDTO(Project project);
-//}
-//>>>>>>> backend
+

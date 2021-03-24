@@ -51,6 +51,12 @@ public class TeamController {
 	public TeamResponseDTO updateTeam(@PathVariable String teamName, @RequestBody TeamRequestDTO teamRequestDTO) {
 		return teamService.updateTeam(teamName, teamRequestDTO);
 	}
+	
+	@PatchMapping("/assign/{projectName}")
+	@ResponseStatus(HttpStatus.OK)
+	public TeamResponseDTO assignTeamProject(@PathVariable String projectName, @RequestBody TeamRequestDTO teamRequestDTO) {
+		return teamService.assignTeamProject(projectName, teamRequestDTO);
+	}
 
 	@DeleteMapping("/delete/{teamName}")
 	@ResponseStatus(HttpStatus.OK)
