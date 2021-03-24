@@ -131,13 +131,10 @@ const SignUp = () => {
   };
 
 }
-
   useEffect(() => {
     getCompanies();
   }, []);
     
-
-
   return (
     <InspectP>
       <Styledmain>
