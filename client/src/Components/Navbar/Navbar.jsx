@@ -7,8 +7,8 @@ import GR from '../Navbar/GR.png'
 const Navbar = () => {
   const dispatch = useDispatch();
   const logout = () => {
-    dispatch(removeUser())
-  }
+    dispatch(removeUser());
+  };
   return (
     <div>
       <NavbarStyles>
@@ -17,8 +17,10 @@ const Navbar = () => {
         <Link to="/users">Users</Link>
         <Link to="/projects">Projects</Link>
         <Link to="/company">Teams</Link>
-        <Link onClick={logout} to="/">Logout</Link>
-        
+        <Link to="/profile">Profile</Link>
+        <Link onClick={logout} to="/">
+          Logout
+        </Link>
       </NavbarStyles>
     </div>
   );

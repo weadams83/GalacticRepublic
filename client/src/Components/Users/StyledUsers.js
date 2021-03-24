@@ -19,7 +19,6 @@ export const StyledUsers = styled.div`
   .users-container {
     width: 100%;
     display: flex;
-    /* flex-direction: column; */
     align-items: center;
   }
   .card-container {
@@ -34,4 +33,9 @@ export const StyledUsers = styled.div`
   .right {
     width: 50%;
   }
+`;
+
+export const StyledForm = styled.form`
+  display: flex;
+  justify-content: flex-end;
 `;

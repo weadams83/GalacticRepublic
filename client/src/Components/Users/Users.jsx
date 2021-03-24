@@ -1,4 +1,4 @@
-import { StyledUsers } from "./StyledUsers";
+import { StyledForm, StyledUsers } from "./StyledUsers";
 import Navbar from "../Navbar/Navbar";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -23,7 +23,7 @@ export const Users = () => {
     const postBody = {
       teamName: teamForm.teamName,
       teamDescription: teamForm.teamDescription,
-      parentCompany: store.getState().userCompany
+      parentCompany: store.getState().userCompany,
     };
     axios
       .post("http://localhost:8080/team/create", postBody)
@@ -131,7 +131,7 @@ export const Users = () => {
   const handleTeamSubmit = (event) => {
     event.preventDefault();
     createTeam();
-    setTeamForm(initialTeamForm)
+    setTeamForm(initialTeamForm);
   };
 
   useEffect(() => {
@@ -142,26 +142,28 @@ export const Users = () => {
   return (
     <Fragment>
       <Navbar />
-      <form onSubmit={handleTeamSubmit}>
-        <input
-          onChange={(e) =>
-            setTeamForm({ ...teamForm, teamName: e.target.value })
-          }
-          value={teamForm.teamName}
-          placeholder="team name"
-          type="text"
-        />
-        <input
-          onChange={(e) =>
-            setTeamForm({ ...teamForm, teamDescription: e.target.value })
-          }
-          value={teamForm.teamDescription}
-          placeholder="team description"
-          type="text"
-        />
-        <Button type="submit" name="+" />
-      </form>
       {usersWithoutRole.length === 0 ? allUsersHaveTeams : addTeamToUser}
+      <div className="form-container">
+        <StyledForm className="form" onSubmit={handleTeamSubmit}>
+          <input
+            onChange={(e) =>
+              setTeamForm({ ...teamForm, teamName: e.target.value })
+            }
+            value={teamForm.teamName}
+            placeholder="team name"
+            type="text"
+          />
+          <input
+            onChange={(e) =>
+              setTeamForm({ ...teamForm, teamDescription: e.target.value })
+            }
+            value={teamForm.teamDescription}
+            placeholder="team description"
+            type="text"
+          />
+          <Button type="submit" name="+" />
+        </StyledForm>
+      </div>
     </Fragment>
   );
 };
