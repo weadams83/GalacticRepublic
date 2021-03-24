@@ -4,6 +4,8 @@ import Navbar from "../Navbar/Navbar";
 import { StyledProfile } from "./StyledProfile";
 import $ from "jquery";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { saveUser } from "../../store/loginReducer";
 
 const initialCredentialsForm = {
   userName: "",
@@ -11,18 +13,14 @@ const initialCredentialsForm = {
 };
 
 export const Profile = () => {
-  const initialFormState = {
-    editForm: store.getState(),
-    credentials: {
-      userName: "",
-      password: "",
-    },
-  };
+  const dispatch = useDispatch();
+  const user = store.getState();
+  user.password = "";
+  const initialFormState = user;
 
   const [editFormValues, setEditFormValues] = useState(initialFormState);
   const [showCancel, setShowCancel] = useState(false);
   const [credentials, setCredentials] = useState(initialCredentialsForm);
-  const user = store.getState();
 
   const handleClick = () => {
     $(".show").toggleClass("hide");
@@ -34,27 +32,61 @@ export const Profile = () => {
 
     const patchData = {
       credentials: {
-        userName: editFormValues.credentials.userName,
-        password: editFormValues.credentials.password,
+        userName: credentials.userName,
+        password: credentials.password,
       },
       newData: {
-        userName: editFormValues.editForm.userName,
-
-        firstName: editFormValues.editForm.firstName,
-
-        lastName: editFormValues.editForm.lastName,
-
-        password: editFormValues.editForm.password,
+        userName: editFormValues.userName,
+        firstName: editFormValues.firstName,
+        lastName: editFormValues.lastName,
+        password: editFormValues.password,
       },
     };
 
     axios
       .patch(`http://localhost:8080/user/${user.userName}`, patchData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        $(".show").toggleClass("hide");
+        setShowCancel(false);
+        setCredentials(initialCredentialsForm);
+        const {
+          firstName,
+          lastName,
+          userName,
+          userCompany,
+          userRole,
+          projects,
+          associatedTeam,
+          isDeleted,
+          newUser,
+        } = res.data;
+        dispatch(
+          saveUser(
+            firstName,
+            lastName,
+            userName,
+            userCompany,
+            userRole,
+            projects,
+            associatedTeam,
+            isDeleted,
+            newUser
+          )
+        );
+        // user = store.getState();
+        setEditFormValues(user);
+      })
+      .catch((err) => console.log("error", err));
     // handleClick();
   };
 
+  const handleChange = (e, state, setState) => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
+
+  console.log(editFormValues);
+  console.log(credentials);
   return (
     <Fragment>
       <Navbar />
@@ -64,15 +96,13 @@ export const Profile = () => {
           <div className="user">
             <div className="pair">
               <p>Username</p>
-              <p className="show">{user.userName}</p>
+              <p className="show">{editFormValues.userName}</p>
               <input
                 className="hide show"
+                name="userName"
                 value={editFormValues.userName}
-                onChange={(event) =>
-                  setEditFormValues({
-                    ...editFormValues,
-                    userName: event.target.value,
-                  })
+                onChange={(e) =>
+                  handleChange(e, editFormValues, setEditFormValues)
                 }
                 placeholder="new username"
                 type="text"
@@ -80,15 +110,13 @@ export const Profile = () => {
             </div>
             <div className="pair">
               <p>First Name</p>
-              <p className="show">{user.firstName}</p>
+              <p className="show">{editFormValues.firstName}</p>
               <input
                 className="hide show"
+                name="firstName"
                 value={editFormValues.firstName}
-                onChange={(event) =>
-                  setEditFormValues({
-                    ...editFormValues,
-                    firstName: event.target.value,
-                  })
+                onChange={(e) =>
+                  handleChange(e, editFormValues, setEditFormValues)
                 }
                 placeholder="new first name"
                 type="text"
@@ -96,15 +124,13 @@ export const Profile = () => {
             </div>
             <div className="pair">
               <p>Last Name</p>
-              <p className="show">{user.lastName}</p>
+              <p className="show">{editFormValues.lastName}</p>
               <input
                 className="hide show"
+                name="lastName"
                 value={editFormValues.lastName}
-                onChange={(event) =>
-                  setEditFormValues({
-                    ...editFormValues,
-                    lastName: event.target.value,
-                  })
+                onChange={(e) =>
+                  handleChange(e, editFormValues, setEditFormValues)
                 }
                 placeholder="new last name"
                 type="text"
@@ -114,11 +140,9 @@ export const Profile = () => {
               <p>Enter your new password</p>
               <input
                 value={editFormValues.password}
-                onChange={(event) =>
-                  setEditFormValues({
-                    ...editFormValues,
-                    password: event.target.value,
-                  })
+                name="password"
+                onChange={(e) =>
+                  handleChange(e, editFormValues, setEditFormValues)
                 }
                 placeholder="new password"
                 type="text"
@@ -131,9 +155,7 @@ export const Profile = () => {
           </p>
           <input
             className="show hide"
-            onChange={(e) =>
-              setCredentials({ ...credentials, userName: e.target.value })
-            }
+            onChange={(e) => handleChange(e, credentials, setCredentials)}
             value={credentials.userName}
             placeholder="username"
             name="userName"
@@ -141,9 +163,7 @@ export const Profile = () => {
           />
           <input
             className="show hide"
-            onChange={(e) =>
-              setCredentials({ ...credentials, password: e.target.value })
-            }
+            onChange={(e) => handleChange(e, credentials, setCredentials)}
             value={credentials.password}
             placeholder="password"
             name="password"
@@ -175,11 +195,11 @@ export const Profile = () => {
             </div>
             <div className="pair">
               <p>Name</p>
-              {/* <p>{user?.associatedTeam.teamName}</p> */}
+              <p>{user?.associatedTeam?.teamName}</p>
             </div>
             <div className="pair">
               <p>Description</p>
-              <p>{user.associatedTeam.teamDescription}</p>
+              <p>{user?.associatedTeam?.teamDescription}</p>
             </div>
           </div>
           <div className="projects">
