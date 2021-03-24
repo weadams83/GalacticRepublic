@@ -2,7 +2,7 @@ import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
 import Button from "../Button/Button";
 import { StyledCard } from "./StyledCard";
-import { store } from "../../index";
+import store from "../../index";
 import { credentials } from "../../utils/Credentials";
 
 export const UserCard = (props) => {

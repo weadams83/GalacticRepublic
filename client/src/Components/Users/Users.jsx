@@ -3,7 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { UserCard } from "../Card/UserCard";
-import { store } from "../../index";
+import store from "../../index";
 import Button from "../Button/Button";
 
 const initialTeamForm = {
