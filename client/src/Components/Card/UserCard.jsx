@@ -2,16 +2,17 @@ import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
 import Button from "../Button/Button";
 import { StyledCard } from "./StyledCard";
-
+import { store } from "../../index";
 import { credentials } from "../../utils/Credentials";
 
-const TeamCard = (props) => {
+export const UserCard = (props) => {
   const [teams, setTeams] = useState([]);
   const [teamName, setTeamName] = useState("");
   const patchBody = {
     credentials,
     teamName,
   };
+
 
   const getTeams = () => {
     axios
@@ -23,12 +24,12 @@ const TeamCard = (props) => {
   };
 
   const handleClick = (e) => {
-    console.log(props.userName, patchBody);
     e.preventDefault();
     axios
       .patch(`http://localhost:8080/user/${props.userName}/team`, patchBody)
       .then((res) => {
-        props.getUsers();
+        props.getUsersFromCompany();
+        props.getUsersWithRole();
         setTeamName("");
       })
       .catch((err) => console.log(err));
@@ -57,7 +58,7 @@ const TeamCard = (props) => {
       {props.name.includes("null") ? (
         <h3>{props.userName}</h3>
       ) : props.team !== undefined ||
-        JSON.parse(localStorage.getItem("currentUser"))?.userRole.roleTitle ===
+        store.getState()?.userRole.roleTitle ===
           "Member" ? (
         <p>{props.team}</p>
       ) : (
@@ -67,12 +68,7 @@ const TeamCard = (props) => {
         <div className="button">
           <Button name="Edit"></Button>
         </div>
-        <div className="button">
-          <Button name="View"></Button>
-        </div>
       </div>
     </StyledCard>
   );
 };
-
-export default TeamCard;
