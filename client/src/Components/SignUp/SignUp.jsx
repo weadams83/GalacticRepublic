@@ -57,7 +57,7 @@ const SignUp = () => {
     if (
       !form.firstName.value ||
       !form.lastName.value ||
-      !form.username.value ||
+      !form.userName.value ||
       !form.password.value
     ) {
       updateFormError({
@@ -92,12 +92,12 @@ const SignUp = () => {
   };
 
   const assignCompany = (e) => {
-    updateCompanyName(e.target.value);
+    updateCompanyName(e.target.value);  
   };
 
   const handleFormSubmitt = (e) => {
     e.preventDefault();
-
+   if(formIsValid()){
     const postInfo = {
       createUser: {
         userName: form.userName.value,
@@ -130,9 +130,13 @@ const SignUp = () => {
       .catch((err) => console.log(err));
   };
 
+}
+
   useEffect(() => {
     getCompanies();
   }, []);
+    
+
 
   return (
     <InspectP>
