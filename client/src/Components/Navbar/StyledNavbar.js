@@ -16,6 +16,4 @@ width:90%;
 margin: auto;
 margin-top: 10px;
 margin-bottom: 10px;
-
-
 `
