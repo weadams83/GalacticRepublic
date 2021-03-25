@@ -26,7 +26,6 @@ function App() {
         <Route path="/projects" component={Projects} />
         <Route path="/profile" component={Profile} />
         <Route path="/" component={Login} />
-        
       </Switch>
     </div>
   );
