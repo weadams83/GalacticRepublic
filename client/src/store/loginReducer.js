@@ -13,6 +13,7 @@ const initialUserState = {
   userCompany: {},
   userName: "",
   userRole: {},
+  password: "",
 };
 
 export const saveUser = (
@@ -24,7 +25,8 @@ export const saveUser = (
   projects,
   associatedTeam,
   isDeleted,
-  newUser
+  newUser,
+  password
 ) => ({
   type: SAVE_USER,
   firstName,
@@ -36,11 +38,12 @@ export const saveUser = (
   associatedTeam,
   isDeleted,
   newUser,
+  password,
 });
 
 export const removeUser = () => ({
-  type: REMOVE_USER
-})
+  type: REMOVE_USER,
+});
 
 // Reducer
 
@@ -58,6 +61,7 @@ export const loginReducer = (state = initialUserState, action) => {
         associatedTeam: action.associatedTeam,
         isDeleted: action.isDeleted,
         newUser: action.newUser,
+        password: action.password,
       };
     case REMOVE_USER:
       return { initialUserState };

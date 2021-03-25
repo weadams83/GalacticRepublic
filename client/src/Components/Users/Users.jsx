@@ -15,21 +15,8 @@ export const Users = () => {
   const [usersWithoutRole, setUsersWithoutRole] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [teamlessCount, setTeamlessCount] = useState(0);
-  const [teamForm, setTeamForm] = useState(initialTeamForm);
 
   const companyName = store.getState().userCompany.companyName;
-
-  const createTeam = () => {
-    const postBody = {
-      teamName: teamForm.teamName,
-      teamDescription: teamForm.teamDescription,
-      parentCompany: store.getState().userCompany,
-    };
-    axios
-      .post("http://localhost:8080/team/create", postBody)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  };
 
   const getUsersFromCompany = useCallback(() => {
     axios
@@ -128,12 +115,6 @@ export const Users = () => {
     </StyledUsers>
   );
 
-  const handleTeamSubmit = (event) => {
-    event.preventDefault();
-    createTeam();
-    setTeamForm(initialTeamForm);
-  };
-
   useEffect(() => {
     getUsersFromCompany();
     getUsersWithRole();
@@ -143,27 +124,6 @@ export const Users = () => {
     <Fragment>
       <Navbar />
       {usersWithoutRole.length === 0 ? allUsersHaveTeams : addTeamToUser}
-      <div className="form-container">
-        <StyledForm className="form" onSubmit={handleTeamSubmit}>
-          <input
-            onChange={(e) =>
-              setTeamForm({ ...teamForm, teamName: e.target.value })
-            }
-            value={teamForm.teamName}
-            placeholder="team name"
-            type="text"
-          />
-          <input
-            onChange={(e) =>
-              setTeamForm({ ...teamForm, teamDescription: e.target.value })
-            }
-            value={teamForm.teamDescription}
-            placeholder="team description"
-            type="text"
-          />
-          <Button type="submit" name="+" />
-        </StyledForm>
-      </div>
     </Fragment>
   );
 };

@@ -15,7 +15,6 @@ const initialCredentialsForm = {
 export const Profile = () => {
   const dispatch = useDispatch();
   const user = store.getState();
-  user.password = "";
   const initialFormState = user;
 
   const [editFormValues, setEditFormValues] = useState(initialFormState);
@@ -73,11 +72,9 @@ export const Profile = () => {
             newUser
           )
         );
-        // user = store.getState();
         setEditFormValues(user);
       })
       .catch((err) => console.log("error", err));
-    // handleClick();
   };
 
   const handleChange = (e, state, setState) => {
@@ -85,8 +82,6 @@ export const Profile = () => {
     setState({ ...state, [name]: value });
   };
 
-  console.log(editFormValues);
-  console.log(credentials);
   return (
     <Fragment>
       <Navbar />
