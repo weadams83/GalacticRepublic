@@ -32,10 +32,12 @@ export const CompanyPage = () => {
   }, []);
 
     
-  
+
+
   // const usertwo = store.getState();
   // console.log(usertwo)
-
+  
+    const handleFormSubmitt = (e) => {
     const deleteTeam = () => {
     //   {
     //     "userName":"Michael Scarn",
@@ -50,7 +52,7 @@ export const CompanyPage = () => {
       //   console.log(n)
     });
     }
-
+  }
 
   return (
     <Fragment>
@@ -89,7 +91,7 @@ export const CompanyPage = () => {
               </option>
             ))}
           </select>
-          <button type="submit">
+          <button  type="submit" onClick={handleFormSubmitt}>
            Delete Team
           </button>
 
