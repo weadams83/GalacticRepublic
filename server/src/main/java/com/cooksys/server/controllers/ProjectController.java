@@ -3,6 +3,7 @@ package com.cooksys.server.controllers;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,6 +22,8 @@ import com.cooksys.server.services.ProjectService;
 import lombok.AllArgsConstructor;
 
 @RestController
+@CrossOrigin(origins = "*")
+
 @RequestMapping("project")
 @AllArgsConstructor
 public class ProjectController {
@@ -43,16 +46,18 @@ public class ProjectController {
 	public ProjectResponseDTO createProject(@RequestBody ProjectCreateRequestDTO projectRequestDTO) {
 		return projectService.createProject(projectRequestDTO);
 	}
-	
+
 	@PatchMapping("/{updateProject}")
 	@ResponseStatus(HttpStatus.OK)
-	public ProjectResponseDTO updateProject(@PathVariable("updateProject") String projectName, @RequestBody ProjectCreateRequestDTO projectRequestDTO) {
-		return projectService.updateProject(projectName,projectRequestDTO);
+	public ProjectResponseDTO updateProject(@PathVariable("updateProject") String projectName,
+			@RequestBody ProjectCreateRequestDTO projectRequestDTO) {
+		return projectService.updateProject(projectName, projectRequestDTO);
 	}
 
 	@DeleteMapping("/{projectName}")
 	@ResponseStatus(HttpStatus.OK)
-	public ProjectResponseDTO deleteProject(@PathVariable("projectName") String projectName, @RequestBody UserSignInRequestDTO credentials) {
+	public ProjectResponseDTO deleteProject(@PathVariable("projectName") String projectName,
+			@RequestBody UserSignInRequestDTO credentials) {
 		return projectService.deleteProject(projectName, credentials);
 	}
 
