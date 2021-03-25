@@ -13,12 +13,17 @@ export const UserCard = (props) => {
     teamName,
   };
 
+  const filterTeams = (array) =>
+    array.filter(
+      (team) => team.parentCompany.companyName === store.getState().userCompany.companyName
+    );
 
   const getTeams = () => {
     axios
       .get("http://localhost:8080/team")
       .then((res) => {
-        setTeams(res.data);
+        console.log(res.data);
+        setTeams(filterTeams(res.data));
       })
       .catch((err) => console.log(err));
   };
@@ -58,8 +63,7 @@ export const UserCard = (props) => {
       {props.name.includes("null") ? (
         <h3>{props.userName}</h3>
       ) : props.team !== undefined ||
-        store.getState()?.userRole.roleTitle ===
-          "Member" ? (
+        store.getState()?.userRole.roleTitle === "Member" ? (
         <p>{props.team}</p>
       ) : (
         teamForm
