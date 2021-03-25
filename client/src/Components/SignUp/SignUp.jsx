@@ -176,7 +176,7 @@ const SignUp = () => {
             ""
           )}
 
-          {/* <Select options = {options} /> */}
+         
         </Form>
       </Styledmain>
     </InspectP>

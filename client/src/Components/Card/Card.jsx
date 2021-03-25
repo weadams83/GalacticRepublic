@@ -5,6 +5,7 @@ const Card = (props) => {
   return (
     <StyledCard>
       <p>{props.name}</p>
+      
       <div className="buttons">
         <div className="button">
           <Button name="Edit"></Button>
