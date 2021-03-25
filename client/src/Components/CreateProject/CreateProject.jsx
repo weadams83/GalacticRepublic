@@ -2,7 +2,7 @@
 import React from 'react'
 
 import { useState } from "react";
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { InspectP, Styledmain, Form, Input, Button, Select } from './StyledCreateProject';
 import dummyData from '../../DummyData.json'
 

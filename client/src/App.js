@@ -7,7 +7,6 @@ import  SignUp  from "./Components/SignUp/SignUp";
 import { Users } from "./Components/Users/Users";
 import { Projects } from "./Components/Projects/Projects";
 import CreateProject from "./Components/CreateProject/CreateProject";
-import CreateTeam from "./Components/CreateTeam/CreateTeam";
 import CreateProjectSuccess from "./Components/CreateProject/CreateProjectSuccess";
 
 import CompanySignUp from "./Components/SignUp/CompanySignUp";
@@ -19,7 +18,6 @@ function App() {
       <Switch>
         <Route path="/createprojectsuccess" component={CreateProjectSuccess}/>
         <Route path="/createproject" component={CreateProject}/>
-        <Route path="/createteam" component={CreateTeam}/>
         <Route path="/member" component={MemberPage} />
         <Route path="/company" component={CompanyPage} />
         <Route path="/SignUp" component={SignUp} />
