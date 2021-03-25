@@ -62,6 +62,7 @@ const CompanySignUp = () => {
   };
 
   const handleFormSubmitt = (e) => {
+    if(formIsValid()){
     const postData = {
       seedCompany: {
         companyName: form.companyName.value,
@@ -72,7 +73,6 @@ const CompanySignUp = () => {
         password: form.password.value,
       },
     };
-    // if (formIsValid()) {
 
     axios
       .post("http://localhost:8080/company", postData)
@@ -81,6 +81,7 @@ const CompanySignUp = () => {
       })
       .catch((err) => console.log(err));
   };
+}
 
   return (
     <InspectP>

@@ -27,4 +27,30 @@ export const StyledCard = styled.div`
     width: 100%;
     padding: 0 25px;
   }
+  .team-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 15px 0;
+  }
+  .team-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  .left, .right {
+    width: 50%;
+  }
+  .left p {
+    font-weight: 600;
+    padding: 5px 0;
+  }
+  .right p {
+    padding: 5px 0;
+  }
+  .hide {
+    display: none;
+  }
+  h3 {
+    padding-bottom: 10px;
+  }
 `;

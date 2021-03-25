@@ -17,6 +17,7 @@ import "../SignUp/SignUp";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { saveUser } from "../../store/loginReducer";
+import {store} from "../../index"
 
 const dummyData = require("../../DummyData.json");
 
@@ -99,10 +100,12 @@ export const Login = () => {
                 res.data.projects,
                 res.data.associatedTeam,
                 res.data.isDeleted,
-                res.data.newUser
+                res.data.newUser,
+                companyFormValues.password
               )
             );
             history.push("/users");
+            console.log(store.getState())
           })
           .catch((err) => console.log(err));
       }
@@ -129,9 +132,11 @@ export const Login = () => {
                 res.data.projects,
                 res.data.associatedTeam,
                 res.data.isDeleted,
-                res.data.newUser
+                res.data.newUser,
+                memberFormValues.password
               )
             );
+            console.log(store.getState())
             history.push("/member");
           })
           .catch((err) => console.log(err));
