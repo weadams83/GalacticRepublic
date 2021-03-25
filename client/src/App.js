@@ -11,6 +11,7 @@ import CreateTeam from "./Components/CreateTeam/CreateTeam";
 import CreateProjectSuccess from "./Components/CreateProject/CreateProjectSuccess";
 
 import CompanySignUp from "./Components/SignUp/CompanySignUp";
+import { Profile } from "./Components/Profile/Profile";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
         <Route path="/CompanySignUp" component={CompanySignUp} />
         <Route path="/users" component={Users} />
         <Route path="/projects" component={Projects} />
-
+        <Route path="/profile" component={Profile} />
         <Route path="/" component={Login} />
         
       </Switch>
