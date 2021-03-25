@@ -5,8 +5,6 @@ import TeamCard from "../../Components/Card/TeamCard";
 import Navbar from "../../Components/Navbar/Navbar";
 import { StyledCompanyPage } from "./StyledCompanyPage";
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import Button from "../../Components/Button/Button";
 import $ from "jquery";
 
 const initialTeamForm = {
@@ -32,7 +30,7 @@ export const CompanyPage = () => {
         const filteredTeams = data.teams.filter((team) => !team.isDeleted);
         setCompanies(filteredTeams);
       });
-  }, []);
+  }, [user.userCompany.companyName]);
 
   const createTeam = () => {
     const postBody = {

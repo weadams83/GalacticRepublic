@@ -70,19 +70,6 @@ const SignUp = () => {
     return true;
   };
 
-  const assignUserToRole = () => {
-    const postInfo = {
-      credentials: {
-        userName: "JP Lobster",
-        password: "Money",
-      },
-      roleName: "Member",
-    };
-    axios
-      .patch(`http://localhost:8080/user/${form.userName.value}/role`, postInfo)
-      .then((res) => console.log(res));
-  };
-
   const getCompanies = () => {
     axios.get("http://localhost:8080/company").then((res) => {
       const data = res.data;
