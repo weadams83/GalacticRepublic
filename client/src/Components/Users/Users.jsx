@@ -1,15 +1,10 @@
-import { StyledForm, StyledUsers } from "./StyledUsers";
+import { StyledUsers } from "./StyledUsers";
 import Navbar from "../Navbar/Navbar";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { UserCard } from "../Card/UserCard";
 import store from "../../index";
-import Button from "../Button/Button";
 
-const initialTeamForm = {
-  teamName: "",
-  teamDescription: "",
-};
 
 export const Users = () => {
   const [usersWithoutRole, setUsersWithoutRole] = useState([]);
