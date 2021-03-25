@@ -11,6 +11,7 @@ import CreateProjectSuccess from "./Components/CreateProject/CreateProjectSucces
 
 import CompanySignUp from "./Components/SignUp/CompanySignUp";
 import EditProject from "./Components/Projects/EditProject"
+import { Profile } from "./Components/Profile/Profile";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/projects" component={Projects} />
       
 
+        <Route path="/profile" component={Profile} />
         <Route path="/" component={Login} />
         
       </Switch>

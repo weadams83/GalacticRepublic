@@ -31,8 +31,8 @@ const initialCompanyForm = {
 };
 
 export const Login = () => {
-  const dispatch = useDispatch()
-  dispatch(saveUser())
+  const dispatch = useDispatch();
+  dispatch(saveUser());
   const [memberFormValues, setMemberFormValues] = useState(initialMemberForm);
   const [companyFormValues, setCompanyFormValues] = useState(
     initialCompanyForm
@@ -40,7 +40,6 @@ export const Login = () => {
 
   const history = useHistory();
 
-  
   const handleChange = (e) => {
     if (e.target.placeholder === "Company Username") {
       setCompanyFormValues({
@@ -90,8 +89,20 @@ export const Login = () => {
         axios
           .post("http://localhost:8080/user/login", companyFormValues)
           .then((res) => {
-            dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName))
-            history.push("/company");
+            dispatch(
+              saveUser(
+                res.data.firstName,
+                res.data.lastName,
+                res.data.userName,
+                res.data.userCompany,
+                res.data.userRole,
+                res.data.projects,
+                res.data.associatedTeam,
+                res.data.isDeleted,
+                res.data.newUser
+              )
+            );
+            history.push("/users");
           })
           .catch((err) => console.log(err));
       }
@@ -108,7 +119,19 @@ export const Login = () => {
         axios
           .post("http://localhost:8080/user/login", memberFormValues)
           .then((res) => {
-            dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName, res.data.userCompany))
+            dispatch(
+              saveUser(
+                res.data.firstName,
+                res.data.lastName,
+                res.data.userName,
+                res.data.userCompany,
+                res.data.userRole,
+                res.data.projects,
+                res.data.associatedTeam,
+                res.data.isDeleted,
+                res.data.newUser
+              )
+            );
             history.push("/member");
           })
           .catch((err) => console.log(err));
