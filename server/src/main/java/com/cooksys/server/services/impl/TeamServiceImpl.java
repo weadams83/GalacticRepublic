@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 import com.cooksys.server.DTOs.TeamRequestDTO;
 import com.cooksys.server.DTOs.TeamResponseDTO;
 import com.cooksys.server.DTOs.UserSignInRequestDTO;
+import com.cooksys.server.entities.Project;
 import com.cooksys.server.entities.Team;
 import com.cooksys.server.entities.User;
 import com.cooksys.server.exceptions.ImUsedException;
+import com.cooksys.server.mappers.ProjectMapper;
 import com.cooksys.server.mappers.TeamMapper;
+import com.cooksys.server.repositories.ProjectRepository;
 import com.cooksys.server.repositories.TeamRepository;
 import com.cooksys.server.repositories.UserRepository;
 import com.cooksys.server.services.TeamService;
@@ -23,10 +26,10 @@ import lombok.AllArgsConstructor;
 public class TeamServiceImpl implements TeamService {
 	private TeamRepository teamRepository;
 	private UserRepository userRepo;
+	private ProjectRepository projectRepo;
 	private TeamMapper teamMapper;
+	private ProjectMapper projectMap;
 
-	
-	
 	@Override
 	public TeamResponseDTO getTeam(String teamName) {
 		Optional<Team> teamToGet = teamRepository.findByTeamNameAndIsDeletedFalse(teamName);
@@ -125,5 +128,25 @@ public class TeamServiceImpl implements TeamService {
 		Team teamToUpdate = optionalTeam.get();
 		teamToUpdate.setIsDeleted(true);
 		return teamMapper.EntityToDto(teamRepository.saveAndFlush(teamToUpdate));
+	}
+
+	@Override
+	public TeamResponseDTO assignTeamProject(String projectName, TeamRequestDTO teamRequestDTO) {
+		Optional<Team> optionalTeam = teamRepository.findByTeamName(teamRequestDTO.getTeam().getTeamName());
+		Optional<User> findUser = userRepo.findByUserName(teamRequestDTO.getCredentials().getUserName());
+		Optional<Project> findProject = projectRepo.findByName(projectName);
+		
+		Utils.validateTeamExistsAndNotDeleted(optionalTeam, optionalTeam.get().getTeamName());
+		Utils.validateUserExistsAndNotDeleted(findUser, teamRequestDTO.getCredentials().getUserName());
+		Utils.validateProjectExistsAndNotDeleted(findProject, projectName);
+		Utils.validateNewUser(findUser);
+		Utils.validateCredentials(findUser, teamRequestDTO.getCredentials().getUserName(), teamRequestDTO.getCredentials().getPassword());
+		Utils.validateAuthorization(findUser, teamRequestDTO.getCredentials().getUserName());
+		Utils.validateBossIsSameCompanyAsTeam(optionalTeam, findUser);
+		Utils.validateProjectIsSameCompanyAsTeam(findProject, optionalTeam);
+		
+		findProject.get().setTeam(optionalTeam.get());
+		projectRepo.saveAndFlush(findProject.get());
+		return teamMapper.EntityToDto(optionalTeam.get());
 	}
 }
