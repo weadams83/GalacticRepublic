@@ -9,6 +9,7 @@ import {
   Select,
 } from "../CreateProject/StyledCreateProject";
 import { EditProjectInput } from "./StyledProjects";
+import store from "../../index";
 import { Redirect } from "react-router";
 export default function EditProject(props) {
   // console.log(this.queryParams)
@@ -21,6 +22,9 @@ export default function EditProject(props) {
     firld: "",
   };
   const [selectTeam, UpdateTeam] = useState("");
+  const user = store.getState();
+  console.log(user.userName)
+  console.log(user.password)
 
   //   const inputEl = useRef(null)
 
@@ -83,7 +87,8 @@ export default function EditProject(props) {
   const deleteProject = ()=>{
       isDeleted(true);
       fetch(`http://localhost:8080/project/${data.name}`,{
-          method:'DELETE'
+          method:'DELETE',
+         
       })
       if(deleted){
           <Redirect to ="/project"/>

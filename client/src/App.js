@@ -11,6 +11,7 @@ import CreateProjectSuccess from "./Components/CreateProject/CreateProjectSucces
 
 import CompanySignUp from "./Components/SignUp/CompanySignUp";
 import EditProject from "./Components/Projects/EditProject"
+import ViewProject from "./Components/Projects/ViewProject"
 import { Profile } from "./Components/Profile/Profile";
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
         <Route path="/SignUp" component={SignUp} />
         <Route path="/CompanySignUp" component={CompanySignUp} />
         <Route path="/users" component={Users} />
-        <Route path="/projects/edit/:id"   component={EditProject} />
+        <Route path = "/projects/view/:name" component = {ViewProject}/>
+        <Route path="/projects/edit/:name"   component={EditProject} />
         <Route path="/projects" component={Projects} />
       
 
