@@ -12,17 +12,22 @@ const dummyData = require("../../DummyData.json");
 export const CompanyPage = () => {
 
   const user = store.getState();
-
+//  const [teamMembers, setTeamMembers] = useState([])
   const [companies, setCompanies] = useState([]);
   // const [teamMembers, setTeamMembers] = useState([])
   const getCompanies = () => {
     axios.get(`http://localhost:8080/company/${user.userCompany.companyName}`).then((res) => {
       const data = res.data;
+      console.log(data)
       setCompanies(data.teams);
+      console.log(data.teams)
+      //iterate through it
       //  console.log(data.teams)
       // setTeamMembers(data.teams.teamName)
+        
+
       // const n =(data.teams.map((item)=> item.teamMembers))
-        // console.log(n)
+      //   console.log(n)
         // setTeamMembers(n)
     });
   };
@@ -72,6 +77,20 @@ export const CompanyPage = () => {
             ))}
           </div>
 
+
+          {/* <div className="card-container">
+            {companies.map((user) => (
+              <Card
+                className="card"
+                name={user.teamMembers}
+                key={`${user.teamMembers}-${team.teamMembers}`}
+              />
+            ))}
+          </div> */}
+
+
+
+
               
           {/* {teamMembers.map((member) => (
               <Card
@@ -80,9 +99,7 @@ export const CompanyPage = () => {
                 key={`${member.userName}-${member.firstName}`}
               />
             ))} */}
-
-
-              
+            
           <select >
             <option>Select a Team</option>
             {companies.map((team) => (
