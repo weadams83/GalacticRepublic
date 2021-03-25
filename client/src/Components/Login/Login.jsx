@@ -2,6 +2,7 @@ import $ from "jquery";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
+import Error from "../Error/Error";
 
 import "../SignUp/SignUp";
 import "../SignUp/CompanySignUp";
@@ -38,6 +39,10 @@ export const Login = () => {
   const [companyFormValues, setCompanyFormValues] = useState(
     initialCompanyForm
   );
+
+  const [errorData, updateError] = useState({
+    message: "",
+  });
 
   const history = useHistory();
 
@@ -89,6 +94,10 @@ export const Login = () => {
       ) {
         axios
           .post("http://localhost:8080/user/login", companyFormValues)
+          .then(function(response){
+            console.log(response);
+            return response;
+          })
           .then((res) => {
             dispatch(
               saveUser(
@@ -107,7 +116,15 @@ export const Login = () => {
             history.push("/users");
             console.log(store.getState())
           })
-          .catch((err) => console.log(err));
+          .catch(function (err) {
+            console.log(err);
+            if( err.response ){
+              console.log(err.response.data);
+              return updateError((mess) => ({
+                message : err.response.data.message
+              }));
+            }
+          });
       }
     }
     if (e.target.role.value === "member") {
@@ -139,7 +156,15 @@ export const Login = () => {
             console.log(store.getState())
             history.push("/member");
           })
-          .catch((err) => console.log(err));
+          .catch(function (err) {
+            console.log(err);
+            if( err.response ){
+              console.log(err.response.data);
+              return updateError((mess) => ({
+                message : err.response.data.message
+              }));
+            }
+          });
       }
     }
   };
@@ -196,6 +221,7 @@ export const Login = () => {
             <CompanySignUpB type="submit">Sign Up as a Company</CompanySignUpB>
           </NavLink>
         </SignUpForm>
+        <Error>{errorData}</Error>
       </div>
     </StyledLogin>
   );
