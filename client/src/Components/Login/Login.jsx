@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
 import Error from "../Error/Error";
@@ -18,9 +18,6 @@ import "../SignUp/SignUp";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { saveUser } from "../../store/loginReducer";
-import {store} from "../../index"
-
-const dummyData = require("../../DummyData.json");
 
 const initialMemberForm = {
   userName: "",
@@ -33,8 +30,12 @@ const initialCompanyForm = {
 };
 
 export const Login = () => {
-  const dispatch = useDispatch();
-  dispatch(saveUser());
+
+  const dispatch = useDispatch()
+  dispatch(saveUser())
+
+
+  const [users, setUsers] = useState({});
   const [memberFormValues, setMemberFormValues] = useState(initialMemberForm);
   const [companyFormValues, setCompanyFormValues] = useState(
     initialCompanyForm
@@ -81,24 +82,41 @@ export const Login = () => {
     }
   };
 
+  const getUsers = () => {
+    axios
+      .get(`http://localhost:8080/user`)
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (e.target.role.value === "company") {
       if (
-        dummyData.data[0].user.filter(
-          (user) => user.userName === companyFormValues.userName
-        ) &&
-        dummyData.data[0].user.filter(
-          (user) => user.password === companyFormValues.password
-        )
+        users.filter((user) => user.userName === companyFormValues.userName) &&
+        users.filter((user) => user.password === companyFormValues.password)
       ) {
         axios
           .post("http://localhost:8080/user/login", companyFormValues)
-          .then(function(response){
+          .then(function (response) {
             console.log(response);
             return response;
           })
           .then((res) => {
+
+
+
+            dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName))
+            history.push("/company");
+
+            localStorage.setItem("currentUser", JSON.stringify(res.data));
+            history.push("/users");
+
+
+
+
             dispatch(
               saveUser(
                 res.data.firstName,
@@ -114,14 +132,13 @@ export const Login = () => {
               )
             );
             history.push("/users");
-            console.log(store.getState())
           })
           .catch(function (err) {
             console.log(err);
-            if( err.response ){
+            if (err.response) {
               console.log(err.response.data);
               return updateError((mess) => ({
-                message : err.response.data.message
+                message: err.response.data.message,
               }));
             }
           });
@@ -129,16 +146,21 @@ export const Login = () => {
     }
     if (e.target.role.value === "member") {
       if (
-        dummyData.data[0].user.filter(
-          (user) => user.userName === memberFormValues.userName
-        ) &&
-        dummyData.data[0].user.filter(
-          (user) => user.password === memberFormValues.password
-        )
+        users.filter((user) => user.userName === memberFormValues.userName) &&
+        users.filter((user) => user.password === memberFormValues.password)
       ) {
         axios
           .post("http://localhost:8080/user/login", memberFormValues)
           .then((res) => {
+
+
+
+            dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName, res.data.userCompany))
+
+            localStorage.setItem("currentUser", JSON.stringify(res.data));
+
+
+
             dispatch(
               saveUser(
                 res.data.firstName,
@@ -153,21 +175,24 @@ export const Login = () => {
                 memberFormValues.password
               )
             );
-            console.log(store.getState())
             history.push("/member");
           })
           .catch(function (err) {
             console.log(err);
-            if( err.response ){
+            if (err.response) {
               console.log(err.response.data);
               return updateError((mess) => ({
-                message : err.response.data.message
+                message: err.response.data.message,
               }));
             }
           });
       }
     }
   };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
   return (
     <StyledLogin className="login">
       <div className="login-container">
