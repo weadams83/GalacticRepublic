@@ -39,15 +39,6 @@ export const Login = () => {
   const dispatch = useDispatch()
   dispatch(saveUser())
 
-
-
-  const dispatch = useDispatch();
-  dispatch(saveUser());
-
-
-  const dispatch = useDispatch();
-  dispatch(saveUser());
-
   const [memberFormValues, setMemberFormValues] = useState(initialMemberForm);
   const [companyFormValues, setCompanyFormValues] = useState(
     initialCompanyForm
