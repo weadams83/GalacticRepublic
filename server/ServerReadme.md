@@ -85,7 +85,3 @@ Update Project Description | PUT </br>``` /project ```</br> Json code required <
 Update Project Users | PUT </br>``` /project ```</br> Json code required </br>```{"projectUsers": "updated project users"}  ```
 Update Project Team | PUT </br>``` /project ```</br> Json code required </br>```{"projectTeam": "updated project team"}  ```
 Delete Project | DELETE </br> ``` /team/{id} ```</br> example</br> ```  /team/12 ```
-
-
-
-

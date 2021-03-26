@@ -1,19 +1,12 @@
 package com.cooksys.server.DTOs;
 
-import com.cooksys.server.entities.Company;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-
-
-public class CompanyRequestDTO {
-	
+public class TeamResponseCompanyDTO {
 	private String companyName;
-	
-	private String companyDescription;
 
-
+	private String companyDescription;	
 }

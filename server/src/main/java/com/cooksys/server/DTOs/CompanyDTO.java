@@ -7,5 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 
 public class CompanyDTO {
-
+	private String companyName;
+	
+	private String companyDescription;
 }

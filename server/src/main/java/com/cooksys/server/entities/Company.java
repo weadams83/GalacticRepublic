@@ -1,8 +1,10 @@
 package com.cooksys.server.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,15 +26,18 @@ public class Company {
 	@GeneratedValue
 	private Long id;
 
+	@Column(unique = true)
 	private String companyName;
 
 	private String companyDescription;
 
 	@OneToMany(mappedBy = "parentCompany")
-	private List<Team> teams;
+	private List<Team> teams = new ArrayList<>();
 
+	//TODO: is this good coding? list of objects defaults to null, is it ideal to 
+	//declare emptpy ArrayList as default? if so is their a better default collection?
 	@OneToMany(mappedBy = "userCompany")
-	private List<User> users;
+	private List<User> users = new ArrayList<>();
 
 	@Override
 	public String toString() {

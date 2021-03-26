@@ -1,6 +1,7 @@
 package com.cooksys.server.controllers;
 
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,15 +15,16 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
-import com.cooksys.server.DTOs.CompanyRequestDTO;
+import com.cooksys.server.DTOs.CompanyCreateRequestDTO;
+import com.cooksys.server.DTOs.CompanyEditRequestDTO;
 import com.cooksys.server.DTOs.CompanyResponseDTO;
-import com.cooksys.server.entities.Company;
 import com.cooksys.server.services.CompanyService;
 
 
 import lombok.AllArgsConstructor;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("company")
 @AllArgsConstructor
 
@@ -30,7 +32,7 @@ public class CompanyController {
 	private CompanyService compServ;
 	
 	@GetMapping
-	public List<Company> getAllCompanies(){
+	public List<CompanyResponseDTO> getAllCompanies(){
 		return compServ.getAllCompanies();
 	}
 	
@@ -42,12 +44,13 @@ public class CompanyController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CompanyRequestDTO postCompany(@RequestBody CompanyRequestDTO companyRequest) {
+	public CompanyResponseDTO postCompany(@RequestBody CompanyCreateRequestDTO companyRequest) {
 		return compServ.postCompany(companyRequest);
 	}
+	
 	@PutMapping("/{companyName}")
-	@ResponseStatus(HttpStatus.CREATED)
-	public CompanyRequestDTO updateCompanyDescription(@PathVariable("companyName") String companyName, @RequestBody CompanyRequestDTO companyUpdate) {
+	@ResponseStatus(HttpStatus.OK)
+	public CompanyResponseDTO updateCompanyDescription(@PathVariable("companyName") String companyName, @RequestBody CompanyEditRequestDTO companyUpdate) {
 		return compServ.updateCompanyDescription(companyName, companyUpdate);
 	}
 	
