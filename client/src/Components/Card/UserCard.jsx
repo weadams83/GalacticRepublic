@@ -6,7 +6,7 @@ import store from "../../index";
 import { credentials } from "../../utils/Credentials";
 
 export const UserCard = (props) => {
-  const [teams, setTeams] = useState([]);
+  const [teams, setTeams] = useState("");
   const [teamName, setTeamName] = useState("");
   const patchBody = {
     credentials,
@@ -51,7 +51,7 @@ export const UserCard = (props) => {
       <form onSubmit={handleClick}>
         <select onChange={(e) => setTeamName(e.target.value)}>
           <option>Assign a team...</option>
-          {teams.map((team) => (
+          {teams && teams.map((team) => (
             <option key={`${team.teamName}`}>{team.teamName}</option>
           ))}
         </select>
