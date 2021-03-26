@@ -33,8 +33,21 @@ const initialCompanyForm = {
 };
 
 export const Login = () => {
+
+
+
+  const dispatch = useDispatch()
+  dispatch(saveUser())
+
+
+
   const dispatch = useDispatch();
   dispatch(saveUser());
+
+
+  const dispatch = useDispatch();
+  dispatch(saveUser());
+
   const [memberFormValues, setMemberFormValues] = useState(initialMemberForm);
   const [companyFormValues, setCompanyFormValues] = useState(
     initialCompanyForm
@@ -99,6 +112,18 @@ export const Login = () => {
             return response;
           })
           .then((res) => {
+
+
+
+            dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName))
+            history.push("/company");
+
+            localStorage.setItem("currentUser", JSON.stringify(res.data));
+            history.push("/users");
+
+
+
+
             dispatch(
               saveUser(
                 res.data.firstName,
@@ -114,7 +139,6 @@ export const Login = () => {
               )
             );
             history.push("/users");
-            console.log(store.getState())
           })
           .catch(function (err) {
             console.log(err);
@@ -139,6 +163,15 @@ export const Login = () => {
         axios
           .post("http://localhost:8080/user/login", memberFormValues)
           .then((res) => {
+
+
+
+            dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName, res.data.userCompany))
+
+            localStorage.setItem("currentUser", JSON.stringify(res.data));
+
+
+
             dispatch(
               saveUser(
                 res.data.firstName,
@@ -153,7 +186,6 @@ export const Login = () => {
                 memberFormValues.password
               )
             );
-            console.log(store.getState())
             history.push("/member");
           })
           .catch(function (err) {
