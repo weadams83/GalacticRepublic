@@ -24,13 +24,13 @@ export const CompanyPage = () => {
   };
   const getCompanies = useCallback(() => {
     axios
-      .get(`http://localhost:8080/company/${user.userCompany.companyName}`)
+      .get(`http://localhost:8080/company/${user.userCompany?.companyName}`)
       .then((res) => {
         const data = res.data;
         const filteredTeams = data.teams.filter((team) => !team.isDeleted);
         setCompanies(filteredTeams);
       });
-  }, [user.userCompany.companyName]);
+  }, [user?.userCompany?.companyName]);
 
   const createTeam = () => {
     const postBody = {

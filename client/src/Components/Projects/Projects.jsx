@@ -1,5 +1,4 @@
 import { StyledProjects } from "./StyledProjects";
-import dummyData from "../../DummyData.json";
 // import Card from "../Card/Card";
 import { Fragment } from "react";
 import Navbar from "../Navbar/Navbar";

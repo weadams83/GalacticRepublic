@@ -5,13 +5,12 @@ import axios from "axios";
 import { UserCard } from "../Card/UserCard";
 import store from "../../index";
 
-
 export const Users = () => {
   const [usersWithoutRole, setUsersWithoutRole] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [teamlessCount, setTeamlessCount] = useState(0);
 
-  const companyName = store.getState().userCompany.companyName;
+  const companyName = store.getState().userCompany?.companyName;
 
   const getUsersFromCompany = useCallback(() => {
     axios
