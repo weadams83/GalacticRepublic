@@ -2,6 +2,7 @@ import $ from "jquery";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
+import Error from "../Error/Error";
 
 import "../SignUp/SignUp";
 import "../SignUp/CompanySignUp";
@@ -17,6 +18,7 @@ import "../SignUp/SignUp";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { saveUser } from "../../store/loginReducer";
+import {store} from "../../index"
 
 const dummyData = require("../../DummyData.json");
 
@@ -50,6 +52,10 @@ export const Login = () => {
   const [companyFormValues, setCompanyFormValues] = useState(
     initialCompanyForm
   );
+
+  const [errorData, updateError] = useState({
+    message: "",
+  });
 
   const history = useHistory();
 
@@ -101,6 +107,10 @@ export const Login = () => {
       ) {
         axios
           .post("http://localhost:8080/user/login", companyFormValues)
+          .then(function(response){
+            console.log(response);
+            return response;
+          })
           .then((res) => {
 
 
@@ -124,15 +134,21 @@ export const Login = () => {
                 res.data.projects,
                 res.data.associatedTeam,
                 res.data.isDeleted,
-                res.data.newUser
+                res.data.newUser,
+                companyFormValues.password
               )
             );
             history.push("/users");
-
-
-
           })
-          .catch((err) => console.log(err));
+          .catch(function (err) {
+            console.log(err);
+            if( err.response ){
+              console.log(err.response.data);
+              return updateError((mess) => ({
+                message : err.response.data.message
+              }));
+            }
+          });
       }
     }
     if (e.target.role.value === "member") {
@@ -166,13 +182,21 @@ export const Login = () => {
                 res.data.projects,
                 res.data.associatedTeam,
                 res.data.isDeleted,
-                res.data.newUser
+                res.data.newUser,
+                memberFormValues.password
               )
             );
-
             history.push("/member");
           })
-          .catch((err) => console.log(err));
+          .catch(function (err) {
+            console.log(err);
+            if( err.response ){
+              console.log(err.response.data);
+              return updateError((mess) => ({
+                message : err.response.data.message
+              }));
+            }
+          });
       }
     }
   };
@@ -229,6 +253,7 @@ export const Login = () => {
             <CompanySignUpB type="submit">Sign Up as a Company</CompanySignUpB>
           </NavLink>
         </SignUpForm>
+        <Error>{errorData}</Error>
       </div>
     </StyledLogin>
   );

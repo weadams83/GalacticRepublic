@@ -1,64 +1,76 @@
 import axios from "axios";
-import { store } from "../../index"
-import { Fragment } from "react";
-import Card from "../../Components/Card/Card";
+import { store } from "../../index";
+import { Fragment, useCallback } from "react";
+import TeamCard from "../../Components/Card/TeamCard";
 import Navbar from "../../Components/Navbar/Navbar";
 import { StyledCompanyPage } from "./StyledCompanyPage";
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-const dummyData = require("../../DummyData.json");
+import $ from "jquery";
 
+const initialTeamForm = {
+  teamName: "",
+  teamDescription: "",
+};
 
 export const CompanyPage = () => {
-
   const user = store.getState();
-//  const [teamMembers, setTeamMembers] = useState([])
+  const [teamForm, setTeamForm] = useState(initialTeamForm);
   const [companies, setCompanies] = useState([]);
-  // const [teamMembers, setTeamMembers] = useState([])
-  const getCompanies = () => {
-    axios.get(`http://localhost:8080/company/${user.userCompany.companyName}`).then((res) => {
-      const data = res.data;
-      console.log(data)
-      setCompanies(data.teams);
-      console.log(data.teams)
-      //iterate through it
-      //  console.log(data.teams)
-      // setTeamMembers(data.teams.teamName)
-        
+  const [showSave, setShowSave] = useState(false);
 
-      // const n =(data.teams.map((item)=> item.teamMembers))
-      //   console.log(n)
-        // setTeamMembers(n)
-    });
+  const credentials = {
+    userName: store.getState().userName,
+    password: store.getState().password,
   };
+  const getCompanies = useCallback(() => {
+    axios
+      .get(`http://localhost:8080/company/${user.userCompany.companyName}`)
+      .then((res) => {
+        const data = res.data;
+        const filteredTeams = data.teams.filter((team) => !team.isDeleted);
+        setCompanies(filteredTeams);
+      });
+  }, [user.userCompany.companyName]);
+
+  const createTeam = () => {
+    const postBody = {
+      credentials: credentials,
+      team: {
+        teamName: teamForm.teamName,
+        teamDescription: teamForm.teamDescription,
+      },
+    };
+    axios
+      .post("http://localhost:8080/team/create", postBody)
+      .then((res) => {
+        getCompanies();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleTeamSubmit = (event) => {
+    event.preventDefault();
+    createTeam();
+    setTeamForm(initialTeamForm);
+  };
+
+  const hideElements = () => {
+    $(`.show`).toggleClass("hide");
+    if (!showSave) {
+      setShowSave(true);
+    } else {
+      setShowSave(false);
+    }
+  };
+
+  const handleClick = (event) => {
+    hideElements()
+
+  }
 
   useEffect(() => {
     getCompanies();
-  }, []);
-
-    
-
-
-  // const usertwo = store.getState();
-  // console.log(usertwo)
-  
-    const handleFormSubmitt = (e) => {
-    const deleteTeam = () => {
-    //   {
-    //     "userName":"Michael Scarn",
-    //     "password": "Friendship"
-    // }
-    axios.delete(`http://localhost:8080/company/${user.userCompany.companyName}`).then((res) => {
-      const data = res.data;
-      setCompanies(data.teams);
-      //  console.log(data.teams)
-      // setTeamMembers(data.teams.teamName)
-      // const n =(data.teams.map((item)=> item.teamMembers))
-      //   console.log(n)
-    });
-    }
-  }
-
+  }, [getCompanies]);
   return (
     <Fragment>
       <Navbar />
@@ -68,65 +80,49 @@ export const CompanyPage = () => {
             <h2>Teams</h2>
           </div>
           <div className="card-container">
-            {companies.map((team) => (
-              <Card
+            {companies.map((team, index) => (
+              <TeamCard
                 className="card"
                 name={team.teamName}
-                key={`${team.teamName}-${team.teamDescription}`}
+                key={`${team.teamName}-${index}`}
+                members={team.teamMembers}
+                teamDescription={team.teamDescription}
+                credentials={credentials}
+                getCompanies={getCompanies}
+                index={index}
               />
             ))}
           </div>
-
-
-          {/* <div className="card-container">
-            {companies.map((user) => (
-              <Card
-                className="card"
-                name={user.teamMembers}
-                key={`${user.teamMembers}-${team.teamMembers}`}
+          <div className="form">
+            <form onSubmit={handleTeamSubmit}>
+              <input
+                onChange={(e) =>
+                  setTeamForm({ ...teamForm, teamName: e.target.value })
+                }
+                value={teamForm.teamName}
+                placeholder="team name"
+                type="text"
+                className="show hide"
               />
-            ))}
-          </div> */}
-
-
-
-
-              
-          {/* {teamMembers.map((member) => (
-              <Card
-                className="card"
-                name={member.userName}
-                key={`${member.userName}-${member.firstName}`}
+              <input
+                onChange={(e) =>
+                  setTeamForm({ ...teamForm, teamDescription: e.target.value })
+                }
+                value={teamForm.teamDescription}
+                placeholder="team description"
+                type="text"
+                className="show hide"
               />
-            ))} */}
-            
-          <select >
-            <option>Select a Team</option>
-            {companies.map((team) => (
-              <option key={`${team.teamName}`}>
-                {team.teamName}
-              </option>
-            ))}
-          </select>
-          <button  type="submit" onClick={handleFormSubmitt}>
-           Delete Team
-          </button>
-
-
-
-
-
-
-
-
-        <NavLink to="./createTeam">
-          <button type="submit">Create Team</button>
-        </NavLink>
-
-
-
-
-
+              {!showSave ? (
+                <button onClick={handleClick} type="button" name="+">+</button>
+              ) : (
+                <div className="button-container">
+                  <button onClick={handleClick}>cancel</button>
+                  <button type="submit">save</button>
+                </div>
+              )}
+            </form>
+          </div>
         </div>
       </StyledCompanyPage>
     </Fragment>

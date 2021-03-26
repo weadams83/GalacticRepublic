@@ -10,7 +10,6 @@ const Navbar = () => {
     dispatch(removeUser());
   };
   return (
-    <div>
       <NavbarStyles>
         <img src={GR} alt="Logo" width='40' height='30'/>
         
@@ -22,7 +21,6 @@ const Navbar = () => {
           Logout
         </Link>
       </NavbarStyles>
-    </div>
   );
 };
 
