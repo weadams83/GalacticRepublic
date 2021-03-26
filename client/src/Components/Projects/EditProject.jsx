@@ -11,6 +11,8 @@ import {
 import { EditProjectInput } from "./StyledProjects";
 import store from "../../index";
 import { Redirect } from "react-router";
+import { render } from "react-dom";
+import Navbar from "../Navbar/Navbar";
 export default function EditProject(props) {
   // console.log(this.queryParams)
   console.log(props.location.state.name);
@@ -19,85 +21,124 @@ export default function EditProject(props) {
   const initialFormError = {
     isError: false,
     message: "",
-    firld: "",
+    field: "",
   };
-  const [selectTeam, UpdateTeam] = useState("");
+
   const user = store.getState();
-  console.log(user.userName)
-  console.log(user.password)
+  console.log(user.userName);
+  console.log(user.password);
 
-  //   const inputEl = useRef(null)
+  const [data, setData] = useState({});
+  const [updated,setUpdated] = useState(false)
 
-  const [data, setData] = useState({ name: "", description: "" });
-  
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
         `http://localhost:8080/project/${props.location.state.name}`
       );
 
-      setData( result.data);
-     
-      //   console.log(result.data);
-    //   setProjectName(data.name);
-    //   // inputEl.current.value = data.name
-    //   setProjectDesc(data.description);
+      setData( await result.data);
     };
 
     fetchData();
   }, [setData]);
 
-  useEffect(() => {})
+  const [values, setValues] = useState({
+    projectName: "",
+    projectDesc: "",
+    projectTeam: "",
+  });
+  const [team, setTeam] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(`http://localhost:8080/team`);
 
-  const [values ,setValues] = useState({ projectName:"",projectDesc:""})
+      setTeam(await result.data);
+    };
 
-  useEffect(()=>{
-      setValues((state)=>({...state,projectName:data.name}))
-  },[data.name])
-  useEffect(()=>{
-      setValues((state)=>({...state,projectDesc:data.description}))
-  },[data.description])
+    fetchData();
+  }, [setTeam]);
+  console.log(team);
 
-
-
+  useEffect(() => {
+    setValues((state) => ({ ...state, projectName: data.name }));
+  }, [data.name]);
+  useEffect(() => {
+    setValues((state) => ({ ...state, projectDesc: data.description }));
+  }, [data.description]);
+  useEffect(() => {
+    // if (data.team == null || team.team === undefined) {
+    //   setValues((state) => ({ ...state, projectTeam: "Non-Existent" }));
+    // } else {
+    //   setValues((state) => ({ ...state, projectTeam: data.team.teamName }));
+    // }
+    if(data.team){
+      setValues((state) => ({ ...state, projectTeam: data.team.teamName}))
+    }
+    else{
+      setValues((state) => ({ ...state,projectTeam: ""}))
+    }
+  }, [data.team]);
+  // useEffect(() => {
+  //   setValues((state) => ({ ...state, projectTeam: data.team.teamName }));
+  // },[data.team.teamName]);
   //   console.log(data);
-//   console.log(data.name);
+  //   console.log(data.name);
 
-  // const [formError, updateFormError] = useState(initialFormError)
-  // const resetError = () => updateFormError(initialFormError)
+  const [deleted, isDeleted] = useState(false);
+  //   setProjectDesc(data.name)
+  const handleFormSubmit = (event) => {
 
-  // const formIsValid = () => {
-  //     if (!form.name.value || !form.description.value
-  //     ) {
-  //         updateFormError({
-  //             ...formError, isError: true, message: 'All fields are required'
-  //         })
-  //         return false
-  //     }
-  //     return true
-  // }
-
-  const [deleted, isDeleted] = useState(false)
-//   setProjectDesc(data.name)
-  const handleFormSubmit = () => {};
-  const handleChange = (event) => {
-   
-  };
-  const deleteProject = ()=>{
-      isDeleted(true);
-      fetch(`http://localhost:8080/project/${data.name}`,{
-          method:'DELETE',
-         
-      })
-      if(deleted){
-          <Redirect to ="/project"/>
+    console.log(values)
+    event.preventDefault();
+    const updatedProject = { 
+      credentials:{
+      userName: user.userName,
+      password: user.password}, 
+      project:{
+        name: values.projectName,
+        description: values.projectDesc,
+        team: {teamName:values.projectTeam}
       }
-      
-  }
+        
+     
+    }
+    axios.patch(`http://localhost:8080/project/${props.location.state.name}`,updatedProject)
+    setUpdated(true)
 
+  };
+  const handleChange = (event) => {
+    // use spread operator
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
+  const deleteProject = () => {
+    let deleteBody = { userName: user.userName, password: user.password };
+    isDeleted(true);
+    axios
+      .delete(`http://localhost:8080/project/${props.location.state.name}`, {
+        data: {
+          userName: deleteBody.userName,
+          password: deleteBody.password,
+        },
+      })
+
+      .catch((err) => console.log(err));
+  };
+  console.log(values);
+
+  if (deleted) {
+    return <Redirect to="/project" />;
+  }
+  if(updated){
+    return<Redirect to='/project'/>;
+  }
   return (
     <div>
+      <Navbar />
       <InspectP>
         <Styledmain>
           <Form>
@@ -107,27 +148,33 @@ export default function EditProject(props) {
               type="text"
               onChange={handleChange}
               placeholder="Project Name"
+              name="projectName"
             />
             <Input
               value={values.projectDesc}
               type="text"
               placeholder="Project Description"
               onChange={handleChange}
+              name="projectDesc"
             />
 
             <Select
-              value={selectTeam}
+              value={values.projectTeam}
               onChange={(e) => {
                 const team = e.target.value;
                 console.log(team);
-                UpdateTeam({
+                setTeam({
                   team,
                 });
               }}
+              name="team"
             >
               {/* <option value='' defaultValue disabled >choose a team</option>
                         {dummyData.data[2].teams.map((team) => ( */}
-              {/* // <option key={`${team.name}-${team.id}`} name={team.name}  >{team.name}</option> */}
+              <option value={values.projectTeam}>{values.projectTeam}</option>
+              {team.map((team) => {
+                return <option value={team.teamName}>{team.teamName}</option>;
+              })}
               ))
             </Select>
 

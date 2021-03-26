@@ -12,14 +12,14 @@ const CreateProject = () => {
     const initialFormError = {
         isError: false,
         message: '',
-        firld: ''
+        field: ''
     }
 
     const [formError, updateFormError] = useState(initialFormError)
     const resetError = () => updateFormError(initialFormError)
 
     const formIsValid = () => {
-        if (!form.name.value || !form.discription.value
+        if (!form.name.value || !form.description.value
         ) {
             updateFormError({
                 ...formError, isError: true, message: 'All fields are required'
@@ -33,7 +33,7 @@ const CreateProject = () => {
         if (formIsValid()) {
             e.preventDefault();
             console.log(form.name)
-            console.log(form.discription)
+            console.log(form.description)
             console.log(selectTeam.team)
             history.push("/createprojectsuccess")
             //{
@@ -60,7 +60,7 @@ const CreateProject = () => {
             type: 'text'
         },
 
-        discription: {
+        description: {
             value: '',
             placeholder: 'project description',
             type: 'text'

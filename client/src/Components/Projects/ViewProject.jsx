@@ -2,9 +2,16 @@ import React, { useState, useEffect } from "react";
 import { InspectP, Styledmain } from "../CreateProject/StyledCreateProject";
 import { Form } from "../SignUp/StyledSignUp";
 import axios from "axios";
-
+import Navbar from "../Navbar/Navbar";
 export default function ViewProject(props) {
-  const [data, setData] = useState({name:"",description:"",company:"",user:{userName:""},team:{teamName:"",teamMembers:[]}});
+  const [data, setData] = useState({});
+  const [values, setValues] = useState({
+    name: "",
+    description: "",
+    company: "",
+    userName:"",
+    team: { teamName: "", teamMembers: [] },
+  });
   console.log(props.location.state);
 
   useEffect(() => {
@@ -13,7 +20,7 @@ export default function ViewProject(props) {
         `http://localhost:8080/project/${props.location.state.name}`
       );
 
-      setData(result.data);
+      setData(await result.data);
 
       //   console.log(result.data);
       //   setProjectName(data.name);
@@ -23,23 +30,60 @@ export default function ViewProject(props) {
 
     fetchData();
   }, [setData]);
+  console.log(data);
+  useEffect(() => {
+    // if (data.team == null || team.team === undefined) {
+    //   setValues((state) => ({ ...state, projectTeam: "Non-Existent" }));
+    // } else {
+    //   setValues((state) => ({ ...state, projectTeam: data.team.teamName }));
+    // }
+    
+    if (data.team) {
+      setValues((state) => ({
+        ...state,
+        team: { teamName: data.team.teamName },
+      }));
+    } else {
+      setValues((state) => ({ ...state, team: { teamName: "" } }));
+    }
+  }, [data.team]);
+  useEffect(() => {
+    setValues((state) => ({ ...state, name: data.name }));
+  }, [data.name]);
+  useEffect(() => {
+    setValues((state) => ({ ...state, description: data.description }));
+  }, [data.description]);
 
-//   data.team == null ? "":data.team;
- const setValues = ()=>{
+  useEffect(() => {
+    setValues((state) => ({ ...state, company: data.company }));
+  }, [data.company]);
 
-   let dataTeam=data.team == null || data.team == undefined ? "":data.team;
-}
+//   useEffect(() => {
+//     setValues((state) => ({
+//       ...state,
+//       userName: data.user.userName
+//     }));
+//   }, [data.user.userName]);
+
+//   useEffect(() => {
+//     setValues((state) => ({ ...state, team:{teamName: data.team.teamName} }));
+//   }, [data.description]);
+
+//   useEffect(() => {
+//     setValues((state) => ({ ...state, description: data.description }));
+//   }, [data.description]);
 
   return (
     <div>
+        <Navbar/>
       <InspectP>
         <Styledmain>
           <Form>
-            <p>Name:{data.name}</p>
-            <p>Description:{data.description}</p>
-            <p>Company:{data.company}</p>
-            <p>Creator: {data.user.userName}</p>
-            <p>Team: {data.team.teamName}</p>
+            <p>Name:{values.name}</p>
+            <p>Description:{values.description}</p>
+            <p>Company:{values.company}</p>
+            {/* <p>Creator: {data.user.userName}</p> */}
+            <p>Team: {values.team.teamName}</p>
             {/* {data.team.teamMembers.map()} */}
           </Form>
         </Styledmain>
