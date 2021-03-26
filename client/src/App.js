@@ -3,13 +3,12 @@ import { Login } from "./Components/Login/Login";
 import { Route, Switch } from "react-router-dom";
 import { CompanyPage } from "./Screens/CompanyPage/CompanyPage";
 import { MemberPage } from "./Screens/MemberPage/MemberPage";
-import  SignUp  from "./Components/SignUp/SignUp";
+import SignUp from "./Components/SignUp/SignUp";
 import { Users } from "./Components/Users/Users";
 import { Projects } from "./Components/Projects/Projects";
 import CreateProject from "./Components/CreateProject/CreateProject";
 // import CreateTeam from "./Components/CreateTeam/CreateTeam";
 import CreateProjectSuccess from "./Components/CreateProject/CreateProjectSuccess";
-
 import CompanySignUp from "./Components/SignUp/CompanySignUp";
 import EditProject from "./Components/Projects/EditProject"
 import ViewProject from "./Components/Projects/ViewProject"
@@ -34,7 +33,6 @@ function App() {
 
         <Route path="/profile" component={Profile} />
         <Route path="/" component={Login} />
-        
       </Switch>
     </div>
   );

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import Button from "../Button/Button";
 import { StyledCard } from "./StyledCard";
 import store from "../../index";
@@ -13,15 +13,22 @@ export const UserCard = (props) => {
     teamName,
   };
 
+  const filterTeams = (array) =>
+    array.filter(
+      (team) =>
+        team.parentCompany.companyName ===
+        store.getState().userCompany.companyName
+    );
 
-  const getTeams = () => {
+  const getTeams = useCallback(() => {
     axios
       .get("http://localhost:8080/team")
       .then((res) => {
-        setTeams(res.data);
+        console.log(res.data);
+        setTeams(filterTeams(res.data));
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -37,7 +44,7 @@ export const UserCard = (props) => {
 
   useEffect(() => {
     getTeams();
-  }, []);
+  }, [getTeams]);
 
   const teamForm = (
     <Fragment>
@@ -58,8 +65,7 @@ export const UserCard = (props) => {
       {props.name.includes("null") ? (
         <h3>{props.userName}</h3>
       ) : props.team !== undefined ||
-        store.getState()?.userRole.roleTitle ===
-          "Member" ? (
+        store.getState()?.userRole.roleTitle === "Member" ? (
         <p>{props.team}</p>
       ) : (
         teamForm

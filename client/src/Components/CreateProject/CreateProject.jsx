@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useState, useEffect } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 import {
   InspectP,
   Styledmain,
