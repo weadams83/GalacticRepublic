@@ -18,7 +18,6 @@ import "../SignUp/SignUp";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { saveUser } from "../../store/loginReducer";
-import { store } from "../../index";
 
 const initialMemberForm = {
   userName: "",
@@ -32,19 +31,9 @@ const initialCompanyForm = {
 
 export const Login = () => {
 
-
-
   const dispatch = useDispatch()
   dispatch(saveUser())
 
-
-
-  const dispatch = useDispatch();
-  dispatch(saveUser());
-
-
-  const dispatch = useDispatch();
-  dispatch(saveUser());
 
   const [users, setUsers] = useState({});
   const [memberFormValues, setMemberFormValues] = useState(initialMemberForm);
