@@ -131,13 +131,10 @@ const SignUp = () => {
   };
 
 }
-
   useEffect(() => {
     getCompanies();
   }, []);
     
-
-
   return (
     <InspectP>
       <Styledmain>
@@ -179,7 +176,7 @@ const SignUp = () => {
             ""
           )}
 
-          {/* <Select options = {options} /> */}
+         
         </Form>
       </Styledmain>
     </InspectP>

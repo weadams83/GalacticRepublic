@@ -33,9 +33,14 @@ const initialCompanyForm = {
 export const Login = () => {
 
 
+
   const dispatch = useDispatch()
   dispatch(saveUser())
 
+
+
+  const dispatch = useDispatch();
+  dispatch(saveUser());
 
 
   const dispatch = useDispatch();
@@ -99,11 +104,14 @@ export const Login = () => {
           .then((res) => {
 
 
+
             dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName))
             history.push("/company");
 
             localStorage.setItem("currentUser", JSON.stringify(res.data));
             history.push("/users");
+
+
 
 
             dispatch(
@@ -120,6 +128,8 @@ export const Login = () => {
               )
             );
             history.push("/users");
+
+
 
           })
           .catch((err) => console.log(err));
@@ -139,9 +149,11 @@ export const Login = () => {
           .then((res) => {
 
 
+
             dispatch(saveUser(res.data.firstName, res.data.lastName, res.data.userName, res.data.userCompany))
 
             localStorage.setItem("currentUser", JSON.stringify(res.data));
+
 
 
             dispatch(
